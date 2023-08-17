@@ -23,8 +23,13 @@ export const LoginScreen = () => {
 
           <View style={styles.orangeBox}>
             <View style={styles.whiteBox}>
-              <Text>Email:</Text>
-              <TextInput placeholder="enter email here" />
+              <Text style={styles.label}>Email:</Text>
+              <TextInput style={styles.input} placeholder="enter email here" />
+              <Text style={styles.label}>Password:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="enter password here"
+              />
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.navigate("Login")}
@@ -32,6 +37,19 @@ export const LoginScreen = () => {
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
             </View>
+            <Text
+              style={{ alignSelf: "center", fontSize: 24, marginTop: "5%" }}
+            >
+              Login using social media
+            </Text>
+          </View>
+          <View style={{ marginBottom: "15%", alignItems: "center" }}>
+            <Text style={{ fontSize: 20 }}>Don't have an account?</Text>
+            <TouchableOpacity>
+              <Text style={{ textDecorationLine: "underline", fontSize: 20 }}>
+                Sign up today!
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </LinearGradient>
@@ -46,21 +64,23 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 70,
+    marginTop: "15%",
   },
   logo: {
     height: 150,
     width: 110,
     borderRadius: 10,
-    marginBottom: 50,
+    marginBottom: "5%",
   },
   button: {
     marginTop: 40,
     alignItems: "center",
-    backgroundColor: "rgba(239,160,79,1)",
+    backgroundColor: "rgba(250,160,77,1)",
     padding: 10,
     borderRadius: 40,
     width: 250,
+    alignSelf: "center",
+    marginBottom: "5%",
   },
   buttonText: {
     color: "black",
@@ -74,12 +94,29 @@ const styles = StyleSheet.create({
     width: "85%",
     flex: 1,
     alignItems: "center",
+    marginBottom: "15%",
   },
   whiteBox: {
     backgroundColor: "white",
     borderRadius: 10,
-    width: "80%",
-    flex: 1,
+    width: "90%",
     justifyContent: "center",
+    marginTop: "5%",
+  },
+  label: {
+    fontSize: 28,
+    marginTop: "5%",
+    marginLeft: "5%",
+  },
+  input: {
+    fontSize: 20,
+    marginBottom: 20,
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    borderRadius: 20,
+    paddingTop: 10,
+    paddingLeft: 12,
+    marginRight: 10,
+    marginLeft: "3%",
   },
 });
