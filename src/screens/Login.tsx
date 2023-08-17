@@ -118,5 +118,6 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     marginRight: 10,
     marginLeft: "3%",
+    //
   },
 });
