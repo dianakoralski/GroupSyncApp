@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
 import { TextInput } from "react-native-gesture-handler";
+import BackButton from "../components/BackButton";
 
 export const LoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
@@ -15,6 +16,8 @@ export const LoginScreen = () => {
         colors={["rgba(250,155,77,1)", "rgba(250,100,60,1)"]}
         style={styles.gradientBackground}
       >
+        <BackButton />
+
         <View style={styles.body}>
           <Image
             source={require("../images/GroupSyncLogo.png")}
@@ -23,7 +26,7 @@ export const LoginScreen = () => {
 
           <View style={styles.orangeBox}>
             <View style={styles.whiteBox}>
-              <Text style={styles.label}>Email:</Text>
+              <Text style={styles.label}>Email / Username:</Text>
               <TextInput style={styles.input} placeholder="enter email here" />
               <Text style={styles.label}>Password:</Text>
               <TextInput
@@ -32,7 +35,7 @@ export const LoginScreen = () => {
               />
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate("Login")}
+                onPress={() => navigation.navigate("Home")}
               >
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
@@ -64,13 +67,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "15%",
+    marginTop: "7%",
   },
   logo: {
     height: 150,
     width: 110,
     borderRadius: 10,
-    marginBottom: "5%",
+    marginBottom: "7%",
   },
   button: {
     marginTop: 40,

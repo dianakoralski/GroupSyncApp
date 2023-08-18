@@ -26,7 +26,10 @@ export const LandingScreen = () => {
           >
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("CreateAccount")}
+          >
             <Text style={styles.buttonText}>Create Account</Text>
           </TouchableOpacity>
         </View>
