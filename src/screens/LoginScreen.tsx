@@ -48,7 +48,9 @@ export const LoginScreen = () => {
           </View>
           <View style={{ marginBottom: "15%", alignItems: "center" }}>
             <Text style={{ fontSize: 20 }}>Don't have an account?</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("CreateAccount")}
+            >
               <Text style={{ textDecorationLine: "underline", fontSize: 20 }}>
                 Sign up today!
               </Text>
