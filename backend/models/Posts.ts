@@ -1,18 +1,33 @@
 import { Sequelize, DataTypes } from "sequelize";
-
+//Change data types later
+//Add RSVPd boolean
 module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
   const Posts = sequelize.define("Posts", {
     title: {
       type: dataTypes.STRING,
       allowNull: false,
     },
-    postText: {
+    location: {
       type: dataTypes.STRING,
       allowNull: false,
     },
-    username: {
+    date: {
+      type: dataTypes.STRING,
+    },
+    time: {
+      type: dataTypes.STRING,
+    },
+    description: {
+      type: dataTypes.STRING,
+      defaultValue:
+        "There is no description for this event, please contact the host for further information",
+    },
+    host: {
       type: dataTypes.STRING,
       allowNull: false,
+    },
+    participants: {
+      type: dataTypes.STRING,
     },
   });
   return Posts;

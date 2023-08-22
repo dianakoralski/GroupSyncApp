@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     borderRadius: 25,
-    width: "80%",
+    width: "100%",
     borderWidth: 1,
   },
 });
