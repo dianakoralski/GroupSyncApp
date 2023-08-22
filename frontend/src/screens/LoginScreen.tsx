@@ -1,4 +1,7 @@
 import React from "react";
+import { useEffect } from "react";
+import axios from "axios";
+
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
@@ -9,6 +12,8 @@ import BackButton from "../components/BackButton";
 
 export const LoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
+
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.container}>
