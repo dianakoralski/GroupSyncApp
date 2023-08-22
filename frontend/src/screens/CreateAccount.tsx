@@ -85,8 +85,8 @@ export const CreateAccount = () => {
                   value={date}
                   onChange={onChange}
                   maximumDate={new Date()}
-                  style={{ height: "20%" }}
                   minimumDate={minDate}
+                  style={{ height: "20%" }}
                 />
               )}
               {showPicker && Platform.OS === "ios" && (
