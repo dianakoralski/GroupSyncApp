@@ -5,12 +5,13 @@ import { LandingScreen } from "./src/screens/LandingScreen";
 import { HomeScreen } from "./src/screens/HomeScreen";
 import { LoginScreen } from "./src/screens/LoginScreen";
 import { CreateAccount } from "./src/screens/CreateAccount";
-
+import { ProfileScreen } from "./src/screens/ProfileScreen";
 export type StackParams = {
   Landing: object;
   Home: object;
   Login: object;
   CreateAccount: object;
+  Profile: object;
 };
 
 const Stack = createStackNavigator<StackParams>();
@@ -23,6 +24,7 @@ export default function App() {
         <Stack.Screen name="CreateAccount" component={CreateAccount} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

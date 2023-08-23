@@ -2,11 +2,11 @@ import { Sequelize, DataTypes } from "sequelize";
 
 module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
   const Users = sequelize.define("Users", {
-    firstname: {
+    firstName: {
       type: dataTypes.STRING,
       allowNull: false,
     },
-    lastname: {
+    lastName: {
       type: dataTypes.STRING,
       allowNull: false,
     },
@@ -17,6 +17,9 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
     password: {
       type: dataTypes.STRING,
       allowNull: false,
+    },
+    profilePicture: {
+      type: dataTypes.STRING,
     },
   });
   return Users;

@@ -18,7 +18,7 @@ import axios from "axios";
 
 export const HomeScreen = () => {
   //Taskbar tabs
-  const [activeTab, setActiveTab] = useState<"tab1" | "tab2" | "tab3">("tab1");
+  const [activeTab, setActiveTab] = useState("tab1");
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
     setActiveTab(tab);
   };
@@ -114,7 +114,7 @@ export const HomeScreen = () => {
         ))}
       </ScrollView>
       <View style={styles.bottomSection}>
-        <TaskBar activeTab={activeTab} onTabPress={handleTabPress} />
+        <TaskBar activeTab={"tab1"} onTabPress={handleTabPress} />
       </View>
     </View>
   );
