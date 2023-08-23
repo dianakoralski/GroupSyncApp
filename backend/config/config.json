@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
+    "username": "admin",
     "password": "ZorroKitty1",
     "database": "GroupSync",
-    "host": "127.0.0.1",
+    "host": "groupsync.cddk1kuzkxse.us-west-2.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
