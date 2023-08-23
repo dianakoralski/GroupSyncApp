@@ -8,6 +8,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import SearchBar from "../components/SearchBar";
 import TaskBar from "../components/TaskBar";
@@ -46,6 +47,23 @@ export const HomeScreen = () => {
     updatedAt: string;
     username: string;
   }
+  const [refreshing, setRefreshing] = useState(false);
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+
+    // Perform your data fetching here, e.g. call axios.get(...)
+    axios
+      .get("http://localhost:3001/posts")
+      .then((res) => {
+        setListOfPosts(res.data);
+        setRefreshing(false);
+      })
+      .catch((error) => {
+        console.error("Error refreshing data:", error);
+        setRefreshing(false);
+      });
+  };
 
   const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
   useEffect(() => {
@@ -63,12 +81,16 @@ export const HomeScreen = () => {
           <Icon name="qr-code-outline" size={38} color="black" />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.middleSection}>
+      <ScrollView
+        style={styles.middleSection}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
+      >
         {listOfPosts.map((value, key) => (
-          <>
+          <View key={key}>
             {/* Host name and photo (links to thier profile) */}
             <TouchableOpacity
-              key={key}
               style={{
                 flexDirection: "row",
                 alignItems: "baseline",
@@ -80,7 +102,7 @@ export const HomeScreen = () => {
               <Text style={{ paddingBottom: "1%" }}> {value.host}</Text>
             </TouchableOpacity>
             {/* event link */}
-            <TouchableOpacity key={key} style={styles.postBox}>
+            <TouchableOpacity style={styles.postBox}>
               <View style={styles.postText}>
                 <Text style={{ fontSize: 25 }}>{value.title}</Text>
                 <Text style={{ fontSize: 18 }}>{value.location}</Text>
@@ -88,7 +110,7 @@ export const HomeScreen = () => {
                 <Text style={{ fontSize: 18 }}>{value.time}</Text>
               </View>
             </TouchableOpacity>
-          </>
+          </View>
         ))}
       </ScrollView>
       <View style={styles.bottomSection}>
