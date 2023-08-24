@@ -6,12 +6,16 @@ import { HomeScreen } from "./src/screens/HomeScreen";
 import { LoginScreen } from "./src/screens/LoginScreen";
 import { CreateAccount } from "./src/screens/CreateAccount";
 import { ProfileScreen } from "./src/screens/ProfileScreen";
+import { ConfirmEmail } from "./src/screens/ConfirmEmail";
+import { ForgotPassword } from "./src/screens/ForgotPassword";
 export type StackParams = {
   Landing: object;
   Home: object;
   Login: object;
   CreateAccount: object;
   Profile: object;
+  ConfirmEmail: object;
+  ForgotPassword: object;
 };
 
 const Stack = createStackNavigator<StackParams>();
@@ -25,6 +29,8 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="ConfirmEmail" component={ConfirmEmail} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );

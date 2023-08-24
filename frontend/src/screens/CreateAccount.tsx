@@ -18,13 +18,21 @@ import { TextInput } from "react-native-gesture-handler";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import BackButton from "../components/BackButton";
 import RoundButton from "../components/RoundButton";
+import PasswordChecker from "../components/PasswordChecker";
 
 export const CreateAccount = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
+  const [profilePicture, setProfilePicture] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dateOfBirth, setDateofBirth] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  //Calendar Component - can move to own file later
   const today = new Date();
   const minDate = new Date(today);
   minDate.setFullYear(today.getFullYear() - 200);
-  const [dateOfBirth, setDateofBirth] = useState("");
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
@@ -51,6 +59,14 @@ export const CreateAccount = () => {
     toggleDatePicker();
   };
 
+  const onTermsOfUsePressed = () => {
+    console.log("Terms of Use");
+  };
+
+  const onPrivacyPolicyPressed = () => {
+    console.log("Privacy Policy");
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -71,11 +87,15 @@ export const CreateAccount = () => {
               <TextInput
                 style={styles.input}
                 placeholder="enter first name here"
+                value={firstName}
+                onChangeText={setFirstName}
               />
               <Text style={styles.label}>Last Name:</Text>
               <TextInput
                 style={styles.input}
                 placeholder="enter last name here"
+                value={lastName}
+                onChangeText={setLastName}
               />
               <Text style={styles.label}>Date of Birth:</Text>
               {showPicker && (
@@ -117,18 +137,31 @@ export const CreateAccount = () => {
                 </Pressable>
               )}
               <Text style={styles.label}>Email:</Text>
-              <TextInput style={styles.input} placeholder="enter email here" />
-              <Text style={styles.label}>Password:</Text>
               <TextInput
                 style={styles.input}
-                placeholder="enter password here"
+                placeholder="enter email here"
+                value={email}
+                onChangeText={setEmail}
               />
+              <Text style={styles.label}>Password:</Text>
+              <PasswordChecker setPasswordCallback={setPassword} />
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate("Home")}
+                onPress={() => navigation.navigate("ConfirmEmail")}
               >
                 <Text style={styles.buttonText}>Create Account</Text>
               </TouchableOpacity>
+              <Text style={styles.text}>
+                By registering, you confirm that you accept our{" "}
+                <Text style={styles.link} onPress={onTermsOfUsePressed}>
+                  {" "}
+                  Terms of Use
+                </Text>{" "}
+                and{" "}
+                <Text style={styles.link} onPress={onPrivacyPolicyPressed}>
+                  Privacy Policy
+                </Text>
+              </Text>
             </View>
             <Text
               style={{ alignSelf: "center", fontSize: 24, marginTop: "5%" }}
@@ -205,4 +238,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: "3%",
   },
+  text: { marginLeft: "5%", marginBottom: "5%" },
+  link: { color: "orange" },
 });

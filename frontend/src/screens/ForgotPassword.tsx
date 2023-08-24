@@ -7,17 +7,10 @@ import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/v
 import { StackParams } from "../../App";
 import { TextInput } from "react-native-gesture-handler";
 import BackButton from "../components/BackButton";
-import { IconButton } from "react-native-paper";
 
-export const LoginScreen = () => {
+export const ForgotPassword = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
-  const togglePasswordVisibility = () => {
-    setIsPasswordSecure(!isPasswordSecure);
-  };
-
   useEffect(() => {}, []);
 
   return (
@@ -36,62 +29,42 @@ export const LoginScreen = () => {
 
           <View style={styles.orangeBox}>
             <View style={styles.whiteBox}>
-              <Text style={styles.label}>Email:</Text>
+              <Text style={styles.label}>Reset Password</Text>
+
+              <Text
+                style={{ fontSize: 18, marginLeft: "5%", marginTop: "10%" }}
+              >
+                email:
+              </Text>
               <TextInput
                 style={styles.input}
-                //placeholder="enter email here"
                 value={email}
-                onChangeText={(text) => setEmail(text)}
+                onChangeText={setEmail}
               />
               <View style={styles.line}></View>
 
-              <Text style={styles.label}>Password:</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  //placeholder="enter password here"
-                  value={password}
-                  secureTextEntry={isPasswordSecure}
-                  onChangeText={(text) => setPassword(text)}
-                />
-                <IconButton
-                  icon={isPasswordSecure ? "eye-off" : "eye"}
-                  size={24}
-                  onPress={togglePasswordVisibility}
-                />
-              </View>
-              <View style={styles.line}></View>
-              <TouchableOpacity
-                style={{ marginLeft: "5%", marginTop: "5%" }}
-                onPress={() => navigation.navigate("ForgotPassword")}
-              >
-                <Text style={{ color: "grey", fontSize: 16 }}>
-                  Forgot Password
-                </Text>
-              </TouchableOpacity>
-
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate("Home")}
+                onPress={() => {
+                  navigation.navigate("Login");
+                  console.log(
+                    "send email to reset password and print out confirmation that email was sent"
+                  );
+                }}
               >
-                <Text style={styles.buttonText}>Login</Text>
+                <Text style={styles.buttonText}>Send</Text>
               </TouchableOpacity>
             </View>
-            <Text
-              style={{ alignSelf: "center", fontSize: 24, marginTop: "5%" }}
-            >
-              Login using social media
-            </Text>
-          </View>
-          <View style={{ marginBottom: "15%", alignItems: "center" }}>
-            <Text style={{ fontSize: 20 }}>Don't have an account?</Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("CreateAccount")}
-            >
-              <Text style={{ textDecorationLine: "underline", fontSize: 20 }}>
-                Sign up today!
+            <View style={styles.textOptions}>
+              <Text
+                style={{ fontWeight: "bold", fontSize: 16 }}
+                onPress={() => {
+                  navigation.navigate("Login");
+                }}
+              >
+                Back to Sign in
               </Text>
-            </TouchableOpacity>
+            </View>
           </View>
         </View>
       </LinearGradient>
@@ -136,7 +109,7 @@ const styles = StyleSheet.create({
     width: "85%",
     flex: 1,
     alignItems: "center",
-    marginBottom: "15%",
+    marginBottom: "50%",
   },
   whiteBox: {
     backgroundColor: "white",
@@ -151,7 +124,7 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
   },
   input: {
-    fontSize: 20,
+    fontSize: 30,
     borderRadius: 20,
     paddingTop: 10,
     paddingLeft: 12,
@@ -167,5 +140,15 @@ const styles = StyleSheet.create({
   line: {
     borderWidth: 0.5,
     marginHorizontal: "5%",
+  },
+  smallerLabel: {
+    fontSize: 14,
+    marginLeft: "5%",
+    marginTop: "10%",
+  },
+  textOptions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: "7%",
   },
 });

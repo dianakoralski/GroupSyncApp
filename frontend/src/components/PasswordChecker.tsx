@@ -19,18 +19,16 @@ const PasswordChecker: React.FC<PasswordCheckerProps> = ({
 
   return (
     <View>
-      <Text style={styles.txtStyle}>Password</Text>
       <TextInput
         style={styles.inputStyle}
-        placeholder="Type Here"
+        placeholder="enter password"
         value={password}
-        mode="outlined"
-        theme={{ roundness: 20 }}
         right={
           <TextInput.Icon
             icon={isPasswordSecure ? "eye-off" : "eye"}
             size={28}
-            color="black"
+            color="grey"
+            style={{ paddingTop: 7 }}
             onPress={() => {
               setIsPasswordSecure(!isPasswordSecure);
             }}
@@ -43,21 +41,21 @@ const PasswordChecker: React.FC<PasswordCheckerProps> = ({
         }}
       />
       {password.length > 0 && (
-        <View style={{ flex: 0 }}>
-          <Text style={{ color: "white" }}>Requirements:</Text>
-          <Text style={{ color: "white" }}>
+        <View style={{ flex: 0, marginLeft: "5%" }}>
+          <Text style={{ color: "black" }}>Requirements:</Text>
+          <Text style={{ color: "black" }}>
             {hasLowerCase ? "✅" : "❌"} Lowercase letter
           </Text>
-          <Text style={{ color: "white" }}>
+          <Text style={{ color: "black" }}>
             {hasUpperCase ? "✅" : "❌"} Uppercase letter
           </Text>
-          <Text style={{ color: "white" }}>
+          <Text style={{ color: "black" }}>
             {hasNumbers ? "✅" : "❌"} Number
           </Text>
-          <Text style={{ color: "white" }}>
+          <Text style={{ color: "black" }}>
             {hasSpecialChars ? "✅" : "❌"} Special character
           </Text>
-          <Text style={{ color: "white" }}>
+          <Text style={{ color: "black" }}>
             {password.length >= 8 ? "✅" : "❌"} Minimum of 8 characters
           </Text>
         </View>
@@ -68,16 +66,13 @@ const PasswordChecker: React.FC<PasswordCheckerProps> = ({
 
 const styles = StyleSheet.create({
   inputStyle: {
-    width: 350,
+    width: "90%",
     height: 30,
     paddingTop: 5,
-    paddingBottom: 5,
-    marginLeft: 10,
-  },
-  txtStyle: {
-    color: "white",
-    marginLeft: 10,
-    paddingTop: 10,
+    fontSize: 20,
+    marginLeft: "5%",
+    backgroundColor: "transparent",
+    marginBottom: "5%",
   },
 });
 
