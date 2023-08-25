@@ -8,6 +8,7 @@ import { CreateAccount } from "./src/screens/CreateAccount";
 import { ProfileScreen } from "./src/screens/ProfileScreen";
 import { ConfirmEmail } from "./src/screens/ConfirmEmail";
 import { ForgotPassword } from "./src/screens/ForgotPassword";
+import { SettingsScreen } from "./src/screens/SettingsScreen";
 export type StackParams = {
   Landing: object;
   Home: object;
@@ -16,6 +17,7 @@ export type StackParams = {
   Profile: object;
   ConfirmEmail: object;
   ForgotPassword: object;
+  Settings: object;
 };
 
 const Stack = createStackNavigator<StackParams>();
@@ -31,6 +33,7 @@ export default function App() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="ConfirmEmail" component={ConfirmEmail} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

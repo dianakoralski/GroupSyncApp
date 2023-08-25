@@ -54,7 +54,7 @@ export const HomeScreen = () => {
 
     // Perform your data fetching here, e.g. call axios.get(...)
     axios
-      .get("http://localhost:3001/posts")
+      .get("http://10.0.2.2:3001/posts")
       .then((res) => {
         setListOfPosts(res.data);
         setRefreshing(false);
@@ -67,7 +67,7 @@ export const HomeScreen = () => {
 
   const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
   useEffect(() => {
-    axios.get("http://localhost:3001/posts").then((res) => {
+    axios.get("http://10.0.2.2:3001/posts").then((res) => {
       setListOfPosts(res.data);
     });
   }, []);
