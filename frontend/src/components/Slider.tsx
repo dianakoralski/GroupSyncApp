@@ -33,7 +33,7 @@ interface Post {
 const FirstRoute = () => {
   const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
   useEffect(() => {
-    axios.get("http://10.0.2.2:3001/posts").then((res) => {
+    axios.get("http://localhost:3001/posts").then((res) => {
       setListOfPosts(res.data);
     });
   }, []);
