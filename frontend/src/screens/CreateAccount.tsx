@@ -19,6 +19,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import BackButton from "../components/BackButton";
 import RoundButton from "../components/RoundButton";
 import PasswordChecker from "../components/PasswordChecker";
+import { useAuth } from "../../context/AuthContext";
 
 export const CreateAccount = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
@@ -28,6 +29,17 @@ export const CreateAccount = () => {
   const [dateOfBirth, setDateofBirth] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { onRegister } = useAuth();
+
+  const register = async () => {
+    const result = await onRegister!(email, password);
+    if (result && result.error) {
+      alert(result.message);
+    } else {
+      console.log("Account Created!");
+    }
+  };
 
   //Calendar Component - can move to own file later
   const today = new Date();
@@ -58,7 +70,7 @@ export const CreateAccount = () => {
     setDateofBirth(date.toDateString());
     toggleDatePicker();
   };
-
+  //TODO:
   const onTermsOfUsePressed = () => {
     console.log("Terms of Use");
   };
@@ -145,10 +157,7 @@ export const CreateAccount = () => {
               />
               <Text style={styles.label}>Password:</Text>
               <PasswordChecker setPasswordCallback={setPassword} />
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate("ConfirmEmail")}
-              >
+              <TouchableOpacity style={styles.button} onPress={register}>
                 <Text style={styles.buttonText}>Create Account</Text>
               </TouchableOpacity>
               <Text style={styles.text}>

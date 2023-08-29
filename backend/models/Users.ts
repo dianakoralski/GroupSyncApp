@@ -4,11 +4,11 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
   const Users = sequelize.define("Users", {
     firstName: {
       type: dataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     lastName: {
       type: dataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: dataTypes.STRING,
@@ -20,6 +20,7 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
     },
     profilePicture: {
       type: dataTypes.STRING,
+      allowNull: true,
     },
   });
   return Users;
