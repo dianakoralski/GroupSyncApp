@@ -15,8 +15,26 @@ import TaskBar from "../components/TaskBar";
 //import QRCodeScanner from "../components/QRCodeScanner";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
+import { StackParams } from "../../App";
+import { useAuth } from "../../context/AuthContext";
 
 export const HomeScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<StackParams>>();
+
+  const { onLogout } = useAuth();
+  const logout = async () => {
+    const result = await onLogout!();
+    if (result && result.error) {
+      alert(result.msg);
+      console.log("error: ", result.msg);
+    } else {
+      navigation.navigate("Landing");
+    }
+  };
+
+  useEffect(() => {}, []);
   //Taskbar tabs
   const [activeTab, setActiveTab] = useState("tab1");
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
@@ -79,6 +97,9 @@ export const HomeScreen = () => {
         </View>
         <TouchableOpacity style={styles.qrCodeIcon}>
           <Icon name="qr-code-outline" size={38} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={logout}>
+          <Text>Log out</Text>
         </TouchableOpacity>
       </View>
       <ScrollView

@@ -14,9 +14,14 @@ import SearchBar from "../components/SearchBar";
 import TaskBar from "../components/TaskBar";
 //import QRCodeScanner from "../components/QRCodeScanner";
 import Icon from "react-native-vector-icons/Ionicons";
-import axios from "axios";
+import Slider from "../components/Slider";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
+import { StackParams } from "../../App";
+import { SettingsScreen } from "./SettingsScreen";
 
 export const ProfileScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<StackParams>>();
   //Taskbar tabs
   const [activeTab, setActiveTab] = useState("tab3");
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
@@ -29,12 +34,21 @@ export const ProfileScreen = () => {
         <View style={styles.searchBarContainer}>
           <SearchBar placeholder="Search..." />
         </View>
-        <TouchableOpacity style={styles.qrCodeIcon}>
+        <TouchableOpacity
+          style={styles.qrCodeIcon}
+          onPress={() => navigation.navigate("Settings")}
+        >
           <Icon name="cog-outline" size={42} color="black" />
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.middleSection}>
-        <Text>Profile Page</Text>
+        <View style={{ alignItems: "center" }}>
+          <Icon name="person-circle-outline" size={128} color="black" />
+          <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
+          <View style={{ flex: 0 }}>
+            <Slider />
+          </View>
+        </View>
       </ScrollView>
       <View style={styles.bottomSection}>
         <TaskBar activeTab={"tab3"} onTabPress={handleTabPress} />
@@ -57,12 +71,13 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   middleSection: {
-    flex: 1,
+    flexDirection: "row",
+    alignSelf: "center",
     backgroundColor: "rgba(245,245,245,1)",
     marginTop: 20,
   },
   bottomSection: {
-    flex: 0.15,
+    //flex: 0.15,
     backgroundColor: "rgba(255,179,90,1)",
   },
   searchBarContainer: {
