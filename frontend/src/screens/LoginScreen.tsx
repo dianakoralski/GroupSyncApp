@@ -8,6 +8,8 @@ import { StackParams } from "../../App";
 import { TextInput } from "react-native-gesture-handler";
 import BackButton from "../components/BackButton";
 import { IconButton } from "react-native-paper";
+import { API_URL, useAuth } from "../../context/AuthContext";
+import axios from "axios";
 
 export const LoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
@@ -16,6 +18,17 @@ export const LoginScreen = () => {
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const togglePasswordVisibility = () => {
     setIsPasswordSecure(!isPasswordSecure);
+  };
+
+  const { onLogin } = useAuth();
+  const login = async () => {
+    const result = await onLogin!(email, password);
+    if (result && result.error) {
+      alert(result.msg);
+      console.log("error: ", result.msg);
+    } else {
+      navigation.navigate("Home");
+    }
   };
 
   useEffect(() => {}, []);
@@ -39,6 +52,7 @@ export const LoginScreen = () => {
               <Text style={styles.label}>Email:</Text>
               <TextInput
                 style={styles.input}
+                autoCapitalize="none"
                 //placeholder="enter email here"
                 value={email}
                 onChangeText={(text) => setEmail(text)}
@@ -48,6 +62,7 @@ export const LoginScreen = () => {
               <Text style={styles.label}>Password:</Text>
               <View style={styles.inputContainer}>
                 <TextInput
+                  autoCapitalize="none"
                   style={styles.input}
                   //placeholder="enter password here"
                   value={password}
@@ -70,10 +85,7 @@ export const LoginScreen = () => {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate("Home")}
-              >
+              <TouchableOpacity style={styles.button} onPress={login}>
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
             </View>
