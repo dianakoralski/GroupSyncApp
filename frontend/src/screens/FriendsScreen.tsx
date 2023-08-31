@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
-import { StackParams } from "../../App";
+
 import {
   View,
   FlatList,
@@ -9,35 +8,28 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import the navigation hook
 import BackButton from "../components/BackButton";
 
-interface SettingsOption {
+interface FriendsList {
   icon: string;
   title: string;
 }
 
-const initialSettings: SettingsOption[] = [
-  { icon: "pencil-outline", title: "Edit Profile" },
-  { icon: "notifications-outline", title: "Notifications" },
-  { icon: "help-outline", title: "Help & Support" },
+const initialFriends: FriendsList[] = [
+  { icon: "person-add-outline", title: "Friend Requests" },
+  { icon: "person-circle-outline", title: "Jack" },
+  { icon: "person-circle-outline", title: "Maria M" },
+  { icon: "person-circle-outline", title: "Noah" },
+  { icon: "person-circle-outline", title: "Bak" },
   // Add more options here
 ];
 
-export const SettingsScreen: React.FC = () => {
-  const navigation = useNavigation<StackNavigationProp<StackParams>>();
-  const [settings, setSettings] = useState<SettingsOption[]>(initialSettings);
+export const FriendsScreen: React.FC = () => {
+  const [settings, setSettings] = useState<FriendsList[]>(initialFriends);
 
-  const renderItem = ({ item }: { item: SettingsOption }) => (
+  const renderItem = ({ item }: { item: FriendsList }) => (
     <TouchableOpacity
       style={{ flexDirection: "row", borderWidth: 1, width: "100%" }}
-      onPress={() => {
-        if (item.title === "Edit Profile") {
-          navigation.navigate("EditProfile"); // Navigate to "EditProfile" screen
-        } else if (item.title === "Notifications") {
-          navigation.navigate("Notifications"); // Navigate to "Notifications" screen
-        }
-      }}
     >
       <Icon size={32} name={item.icon} />
       <Text style={{ fontSize: 20, textAlignVertical: "center" }}>
@@ -60,7 +52,7 @@ export const SettingsScreen: React.FC = () => {
             paddingLeft: "20%",
           }}
         >
-          Settings
+          Friends
         </Text>
       </View>
       <View style={styles.container}>
@@ -82,10 +74,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     width: "100%",
   },
+  button: {
+    marginTop: 40,
+    alignItems: "center",
+    backgroundColor: "rgba(250,160,77,1)",
+    padding: 10,
+    borderRadius: 40,
+    width: 250,
+    alignSelf: "center",
+    marginBottom: "5%",
+  },
+  buttonText: {
+    color: "black",
+    fontSize: 32,
+    textAlign: "center",
+    paddingHorizontal: 50,
+  },
   list: {
     width: "109%",
     paddingHorizontal: 16,
   },
 });
 
-export default SettingsScreen;
+export default FriendsScreen;

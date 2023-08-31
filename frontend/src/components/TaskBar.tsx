@@ -83,13 +83,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(255,179,90,1)",
     paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: "black",
   },
   tab: {
     padding: 10,
     borderRadius: 50,
   },
   activeTab: {
-    //backgroundColor: "lightblue",
+    backgroundColor: "darkorange", //lightblue
+    borderWidth: 1,
+    borderColor: "black",
   },
   customTabContainer: {
     alignItems: "center",

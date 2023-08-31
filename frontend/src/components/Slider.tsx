@@ -9,6 +9,9 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
+import { StackParams } from "../../App";
 
 type TabRoute = {
   key: string;
@@ -42,17 +45,6 @@ const FirstRoute = () => {
       <ScrollView style={{ width: "100%", marginTop: "5%" }}>
         {listOfPosts.map((value, key) => (
           <View key={key}>
-            {/* Host name and photo (links to thier profile) */}
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "baseline",
-                marginBottom: "2%",
-              }}
-            >
-              <Icon name="person-circle-outline" size={38} color="black" />
-              <Text style={{ paddingBottom: "1%" }}> {value.host}</Text>
-            </TouchableOpacity>
             {/* event link */}
             <TouchableOpacity style={styles.postBox}>
               <View style={styles.postText}>
@@ -70,6 +62,8 @@ const FirstRoute = () => {
 };
 
 const SecondRoute = () => {
+  const navigation = useNavigation<StackNavigationProp<StackParams>>();
+
   const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
   useEffect(() => {
     axios.get("http://10.0.2.2:3001/posts").then((res) => {
@@ -78,7 +72,13 @@ const SecondRoute = () => {
   }, []);
   return (
     <View style={[styles.scene]}>
+      <View></View>
       <ScrollView style={{ width: "100%", marginTop: "5%" }}>
+        <TouchableOpacity onPress={() => navigation.navigate("EventInvites")}>
+          <Text style={{ textDecorationLine: "underline", marginBottom: "5%" }}>
+            2 Pending invites to Event
+          </Text>
+        </TouchableOpacity>
         {listOfPosts.map((value, key) => (
           <View key={key}>
             {/* Host name and photo (links to thier profile) */}
@@ -137,7 +137,6 @@ const Slider: React.FC = () => {
           />
         )}
       />
-      <Text>Inside</Text>
     </>
   );
 };
@@ -159,9 +158,11 @@ const styles = StyleSheet.create({
     height: "20%",
     width: "45%", // 130
     borderRadius: 30,
-    paddingBottom: 40,
+    paddingBottom: 37,
     marginLeft: 10,
     marginBottom: 5,
+    borderWidth: 1,
+    borderColor: "black",
   },
   tabLabel: {
     color: "blue", // Customize the text color here
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     textTransform: "capitalize", // If you want to capitalize the text
   },
   postBox: {
-    width: "100%",
+    width: "80%",
     backgroundColor: "rgba(236,236,236,1)",
     borderRadius: 10,
     borderWidth: 1,
