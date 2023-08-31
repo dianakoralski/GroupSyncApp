@@ -14,6 +14,7 @@ import { FriendsScreen } from "./src/screens/FriendsScreen";
 import { EditProfile } from "./src/screens/EditProfile";
 import NotificationsScreen from "./src/screens/NotificationsScreen";
 import { EventInvitesScreen } from "./src/screens/EventInvitesScreen";
+import { CreateEvent } from "./src/screens/CreateEvent";
 
 import { Button } from "react-native";
 export type StackParams = {
@@ -29,6 +30,7 @@ export type StackParams = {
   EditProfile: object;
   Notifications: object;
   EventInvites: object;
+  CreateEvent: object;
 };
 
 const Stack = createStackNavigator<StackParams>();
@@ -67,6 +69,7 @@ export const Layout = () => {
               component={NotificationsScreen}
             />
             <Stack.Screen name="EventInvites" component={EventInvitesScreen} />
+            <Stack.Screen name="CreateEvent" component={CreateEvent} />
           </>
         ) : (
           <>

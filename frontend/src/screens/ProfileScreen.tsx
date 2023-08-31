@@ -43,7 +43,13 @@ export const ProfileScreen = () => {
       <ScrollView style={styles.middleSection}>
         <View style={{ alignItems: "center" }}>
           <Icon name="person-circle-outline" size={128} color="black" />
-          <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Friends");
+            }}
+          >
+            <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
+          </TouchableOpacity>
           <View style={{ flex: 0 }}>
             <Slider />
           </View>

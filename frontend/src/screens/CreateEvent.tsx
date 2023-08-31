@@ -18,7 +18,7 @@ import axios from "axios";
 import BackButton from "../components/BackButton";
 import { API_URL } from "../../context/AuthContext";
 
-export const EventInvitesScreen = () => {
+export const CreateEvent = () => {
   //Taskbar tabs
   const [activeTab, setActiveTab] = useState("tab1");
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
@@ -78,14 +78,19 @@ export const EventInvitesScreen = () => {
       <View style={styles.topSection}>
         <View style={{ flexDirection: "row" }}>
           <BackButton color="black" />
-        </View>
-        <View style={styles.searchBarContainer}>
-          <SearchBar placeholder="Search..." />
+          <Text
+            style={{
+              alignSelf: "center",
+              fontWeight: "bold",
+              fontSize: 32,
+              marginLeft: "30%",
+            }}
+          >
+            Invites
+          </Text>
         </View>
       </View>
-      <Text style={{ alignSelf: "center", fontWeight: "bold", fontSize: 32 }}>
-        Invites
-      </Text>
+
       <ScrollView
         style={styles.middleSection}
         refreshControl={

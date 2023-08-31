@@ -18,7 +18,7 @@ const TaskBar: React.FC<TaskBarProps> = ({ activeTab, onTabPress }) => {
     if (tab === "tab1") {
       navigation.navigate("Home");
     } else if (tab === "tab2") {
-      navigation.navigate("Tab2Screen");
+      navigation.navigate("CreateEvent");
     } else if (tab === "tab3") {
       navigation.navigate("Profile");
     }

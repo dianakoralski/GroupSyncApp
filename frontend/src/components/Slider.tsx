@@ -12,6 +12,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
+import { API_URL } from "../../context/AuthContext";
 
 type TabRoute = {
   key: string;
@@ -36,7 +37,7 @@ interface Post {
 const FirstRoute = () => {
   const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
   useEffect(() => {
-    axios.get("http://localhost:3001/posts").then((res) => {
+    axios.get(`${API_URL}/posts`).then((res) => {
       setListOfPosts(res.data);
     });
   }, []);
@@ -66,7 +67,7 @@ const SecondRoute = () => {
 
   const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
   useEffect(() => {
-    axios.get("http://10.0.2.2:3001/posts").then((res) => {
+    axios.get(`${API_URL}/posts`).then((res) => {
       setListOfPosts(res.data);
     });
   }, []);
