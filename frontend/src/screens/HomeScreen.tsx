@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   bottomSection: {
-    flex: 0.15,
+    //flex: 0.15,
     backgroundColor: "rgba(255,179,90,1)",
   },
   searchBarContainer: {

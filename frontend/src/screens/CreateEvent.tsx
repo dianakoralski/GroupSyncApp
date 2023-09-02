@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Switch,
 } from "react-native";
 import BackButton from "../components/BackButton";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -14,10 +15,11 @@ export const CreateEvent = () => {
   const [eventLocation, setEventLocation] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventTime, setEventTime] = useState("");
+  const [isPublic, setIsPublic] = useState(false); // Track event visibility
 
   const handleCreateEvent = () => {
     // Handle the event creation logic here
-    // You can send the event details to your backend or perform any other actions.
+    // You can send the event details and isPublic to your backend or perform any other actions.
   };
 
   const handleInviteFriends = () => {
@@ -73,6 +75,17 @@ export const CreateEvent = () => {
           value={eventTime}
           onChangeText={(text) => setEventTime(text)}
         />
+        <Text style={{ width: "70%", textAlign: "center" }}>
+          Do you want your event to be public or private to all your friends?
+        </Text>
+        <View style={styles.switchContainer}>
+          <Text style={{ marginRight: 10 }}>Public</Text>
+          <Switch
+            value={isPublic}
+            onValueChange={(value) => setIsPublic(value)}
+          />
+          <Text style={{ marginLeft: 10 }}>Private</Text>
+        </View>
         <TouchableOpacity
           style={styles.inviteButton}
           onPress={handleInviteFriends}
@@ -105,7 +118,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    justifyContent: "flex-start", // "center"
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   input: {
@@ -119,7 +132,7 @@ const styles = StyleSheet.create({
   },
   createButton: {
     width: "80%",
-    backgroundColor: "darkorange", // Change to your preferred button color
+    backgroundColor: "darkorange",
     borderRadius: 45,
     alignItems: "center",
     padding: 10,
@@ -132,7 +145,7 @@ const styles = StyleSheet.create({
   },
   inviteButton: {
     width: "80%",
-    backgroundColor: "orange", // Change to your preferred button color
+    backgroundColor: "orange",
     borderRadius: 45,
     alignItems: "center",
     padding: 10,
@@ -142,5 +155,10 @@ const styles = StyleSheet.create({
   inviteButtonText: {
     color: "white",
     fontWeight: "bold",
+  },
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
   },
 });

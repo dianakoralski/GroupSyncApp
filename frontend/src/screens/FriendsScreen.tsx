@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
+import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
+import { StackParams } from "../../App";
 
 import {
   View,
@@ -9,6 +11,7 @@ import {
   Text,
 } from "react-native";
 import BackButton from "../components/BackButton";
+import { useNavigation } from "@react-navigation/native"; // Import the navigation hook
 
 interface FriendsList {
   icon: string;
@@ -25,11 +28,17 @@ const initialFriends: FriendsList[] = [
 ];
 
 export const FriendsScreen: React.FC = () => {
-  const [settings, setSettings] = useState<FriendsList[]>(initialFriends);
+  const [settings] = useState<FriendsList[]>(initialFriends);
+  const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
   const renderItem = ({ item }: { item: FriendsList }) => (
     <TouchableOpacity
       style={{ flexDirection: "row", borderWidth: 1, width: "100%" }}
+      onPress={() => {
+        if (item.title === "Friend Requests") {
+          navigation.navigate("FriendRequests");
+        }
+      }}
     >
       <Icon size={32} name={item.icon} />
       <Text style={{ fontSize: 20, textAlignVertical: "center" }}>
