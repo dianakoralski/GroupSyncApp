@@ -18,7 +18,6 @@ import Slider from "../components/Slider";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
-import { SettingsScreen } from "./SettingsScreen";
 
 export const ProfileScreen = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
@@ -44,7 +43,13 @@ export const ProfileScreen = () => {
       <ScrollView style={styles.middleSection}>
         <View style={{ alignItems: "center" }}>
           <Icon name="person-circle-outline" size={128} color="black" />
-          <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Friends");
+            }}
+          >
+            <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
+          </TouchableOpacity>
           <View style={{ flex: 0 }}>
             <Slider />
           </View>
@@ -74,10 +79,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     backgroundColor: "rgba(245,245,245,1)",
-    marginTop: 20,
   },
   bottomSection: {
-    //flex: 0.15,
+    //flex: 0,
     backgroundColor: "rgba(255,179,90,1)",
   },
   searchBarContainer: {
