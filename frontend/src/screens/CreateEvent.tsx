@@ -1,78 +1,29 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
-  Dimensions,
-  ScrollView,
+  TextInput,
   TouchableOpacity,
-  RefreshControl,
 } from "react-native";
-import SearchBar from "../components/SearchBar";
-import TaskBar from "../components/TaskBar";
-//import QRCodeScanner from "../components/QRCodeScanner";
-import Icon from "react-native-vector-icons/Ionicons";
-import axios from "axios";
 import BackButton from "../components/BackButton";
-import { API_URL } from "../../context/AuthContext";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export const CreateEvent = () => {
-  //Taskbar tabs
-  const [activeTab, setActiveTab] = useState("tab1");
-  const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
-    setActiveTab(tab);
+  const [eventName, setEventName] = useState("");
+  const [eventLocation, setEventLocation] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [eventTime, setEventTime] = useState("");
+
+  const handleCreateEvent = () => {
+    // Handle the event creation logic here
+    // You can send the event details to your backend or perform any other actions.
   };
 
-  //QR Scanner
-  const [showScanner, setShowScanner] = useState(false);
-  // const handleQRCodeIconPress = () => {
-  //   setShowScanner(true);
-  // };
-
-  // const handleScannerClose = () => {
-  //   setShowScanner(false);
-  // };
-
-  //Posts data
-  interface Post {
-    createdAt: string;
-    id: number;
-    title: string;
-    location: string;
-    date: string;
-    time: string;
-    description: string;
-    host: string;
-    participants: string;
-    updatedAt: string;
-    username: string;
-  }
-  const [refreshing, setRefreshing] = useState(false);
-
-  const handleRefresh = () => {
-    setRefreshing(true);
-
-    // Perform your data fetching here, e.g. call axios.get(...)
-    axios
-      .get(`${API_URL}/posts`)
-      .then((res) => {
-        setListOfPosts(res.data);
-        setRefreshing(false);
-      })
-      .catch((error) => {
-        console.error("Error refreshing data:", error);
-        setRefreshing(false);
-      });
+  const handleInviteFriends = () => {
+    // Implement the logic to invite friends to the event
   };
 
-  const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
-  useEffect(() => {
-    axios.get(`${API_URL}/posts`).then((res) => {
-      setListOfPosts(res.data);
-    });
-  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -83,46 +34,58 @@ export const CreateEvent = () => {
               alignSelf: "center",
               fontWeight: "bold",
               fontSize: 32,
-              marginLeft: "30%",
+              marginLeft: "5%",
             }}
           >
-            Invites
+            Create New Event
           </Text>
         </View>
       </View>
 
-      <ScrollView
-        style={styles.middleSection}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-        }
-      >
-        {listOfPosts.map((value, key) => (
-          <View key={key}>
-            {/* Host name and photo (links to thier profile) */}
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "baseline",
-                marginLeft: "10%",
-                marginBottom: "2%",
-              }}
-            >
-              <Icon name="person-circle-outline" size={38} color="black" />
-              <Text style={{ paddingBottom: "1%" }}> {value.host}</Text>
-            </TouchableOpacity>
-            {/* event link */}
-            <TouchableOpacity style={styles.postBox}>
-              <View style={styles.postText}>
-                <Text style={{ fontSize: 25 }}>{value.title}</Text>
-                <Text style={{ fontSize: 18 }}>{value.location}</Text>
-                <Text style={{ fontSize: 18 }}>{value.date}</Text>
-                <Text style={{ fontSize: 18 }}>{value.time}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </ScrollView>
+      <View style={styles.formContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="*Event Name"
+          value={eventName}
+          onChangeText={(text) => setEventName(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="*Location"
+          value={eventLocation}
+          onChangeText={(text) => setEventLocation(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Date"
+          value={eventDate}
+          onChangeText={(text) => setEventDate(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Time"
+          value={eventTime}
+          onChangeText={(text) => setEventTime(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Description"
+          value={eventTime}
+          onChangeText={(text) => setEventTime(text)}
+        />
+        <TouchableOpacity
+          style={styles.inviteButton}
+          onPress={handleInviteFriends}
+        >
+          <Text style={styles.inviteButtonText}>Invite Friends</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.createButton}
+          onPress={handleCreateEvent}
+        >
+          <Text style={styles.createButtonText}>Create Event</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -140,31 +103,44 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 10,
   },
-  middleSection: {
+  formContainer: {
     flex: 1,
-    backgroundColor: "rgba(245,245,245,1)",
-    marginTop: 20,
+    justifyContent: "flex-start", // "center"
+    alignItems: "center",
   },
-  bottomSection: {
-    flex: 0.15,
-    backgroundColor: "rgba(255,179,90,1)",
-  },
-  searchBarContainer: {
-    flex: 1,
-    paddingRight: 10, // Add some spacing between search bar and QR icon
-  },
-  searchBar: {
-    width: "100%", // Adjust the width as needed
-  },
-  postBox: {
+  input: {
     width: "80%",
+    height: 40,
     backgroundColor: "rgba(236,236,236,1)",
     borderRadius: 10,
     borderWidth: 1,
-    marginBottom: 10,
-    alignSelf: "center",
-  },
-  postText: {
+    marginBottom: 20,
     padding: 10,
+  },
+  createButton: {
+    width: "80%",
+    backgroundColor: "darkorange", // Change to your preferred button color
+    borderRadius: 45,
+    alignItems: "center",
+    padding: 10,
+    marginBottom: 10,
+    borderWidth: 1,
+  },
+  createButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  inviteButton: {
+    width: "80%",
+    backgroundColor: "orange", // Change to your preferred button color
+    borderRadius: 45,
+    alignItems: "center",
+    padding: 10,
+    marginBottom: 20,
+    borderWidth: 1,
+  },
+  inviteButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
