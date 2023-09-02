@@ -34,10 +34,12 @@ export const CreateAccount = () => {
 
   const register = async () => {
     const result = await onRegister!(email, password);
+    console.log("message:", result.message);
     if (result && result.error) {
       alert(result.message);
     } else {
       console.log("Account Created!");
+      navigation.navigate("ConfirmEmail");
     }
   };
 

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError, isAxiosError } from "axios";
 import * as SecureStore from "expo-secure-store";
 
 interface AuthProps {
@@ -39,7 +39,10 @@ export const AuthProvider = ({ children }: any) => {
     try {
       return await axios.post(`${API_URL}/users`, { email, password });
     } catch (e) {
-      return { error: true, msg: (e as any).response.data.message };
+      console.log("error:", JSON.stringify(e));
+      // if (axios.isAxiosError(e))
+      //   console.log("E:", e);
+      return { error: true, msg: JSON.stringify(e) };
     }
   };
 
