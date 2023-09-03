@@ -44,7 +44,9 @@ const FirstRoute = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
   return (
     <View style={[styles.scene]}>
-      <ScrollView style={{ width: "100%", marginTop: "5%" }}>
+      <ScrollView
+        style={{ width: "100%", marginTop: "5%", marginBottom: "10%" }}
+      >
         <View style={{ alignSelf: "center" }}>
           <Icon name="person-circle-outline" size={128} color="black" />
           <TouchableOpacity
@@ -92,7 +94,14 @@ const SecondRoute = () => {
   }, []);
   return (
     <View style={[styles.scene]}>
-      <ScrollView style={{ width: "100%", marginTop: "5%", marginLeft: "5%" }}>
+      <ScrollView
+        style={{
+          width: "100%",
+          marginTop: "5%",
+          marginLeft: "5%",
+          marginBottom: "10%",
+        }}
+      >
         <TouchableOpacity onPress={() => navigation.navigate("EventInvites")}>
           <Text style={{ textDecorationLine: "underline", marginBottom: "5%" }}>
             2 Pending invites to Event

@@ -30,7 +30,7 @@ export const ProfileScreen = () => {
           <SearchBar placeholder="Search..." />
         </View>
         <TouchableOpacity
-          style={styles.qrCodeIcon}
+          style={styles.settingsIcon}
           onPress={() => navigation.navigate("Settings")}
         >
           <Icon name="cog-outline" size={42} color="black" />
@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(236, 255, 250, 1)",
   },
   bottomSection: {
-    flex: 0,
     backgroundColor: "rgba(255,179,90,1)",
   },
   searchBarContainer: {
@@ -83,9 +82,8 @@ const styles = StyleSheet.create({
   searchBar: {
     width: "100%", // Adjust the width as needed
   },
-  qrCodeIcon: {
+  settingsIcon: {
     paddingRight: 20,
-    paddingTop: 10,
   },
   postBox: {
     width: "80%",

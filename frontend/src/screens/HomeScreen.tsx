@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
   },
   qrCodeIcon: {
     paddingRight: 20,
-    paddingTop: 10,
   },
   postBox: {
     width: "80%",

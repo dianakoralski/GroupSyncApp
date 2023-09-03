@@ -36,7 +36,7 @@ export const CreateEvent = () => {
           <BackButton color="black" />
           <Text
             style={{
-              alignSelf: "center",
+              alignSelf: "flex-end",
               fontWeight: "bold",
               fontSize: 32,
               marginLeft: "5%",
@@ -114,7 +114,7 @@ export const CreateEvent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(245,245,245,1)",
+    backgroundColor: "rgba(236, 255, 250, 1)",
     marginTop: "10%",
   },
   topSection: {
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
+    paddingTop: "10%",
   },
   input: {
     width: "80%",
