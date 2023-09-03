@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     textTransform: "capitalize", // If you want to capitalize the text
   },
   postBox: {
-    width: "80%",
+    width: "90%",
     backgroundColor: "rgba(236,236,236,1)",
     borderRadius: 10,
     borderWidth: 1,

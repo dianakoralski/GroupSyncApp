@@ -143,11 +143,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 10,
+    backgroundColor: "rgba(236, 255, 250, 1)",
   },
   middleSection: {
     flex: 1,
-    backgroundColor: "rgba(245,245,245,1)",
-    marginTop: 20,
+    backgroundColor: "rgba(236, 255, 250, 1)",
+    paddingTop: 20,
   },
   bottomSection: {
     backgroundColor: "rgba(255,179,90,1)",

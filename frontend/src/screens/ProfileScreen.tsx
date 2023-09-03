@@ -38,14 +38,6 @@ export const ProfileScreen = () => {
       </View>
       <ScrollView style={styles.middleSection}>
         <View style={{ alignItems: "center" }}>
-          {/* <Icon name="person-circle-outline" size={128} color="black" />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Friends");
-            }}
-          >
-            <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
-          </TouchableOpacity> */}
           <View style={styles.notificationContainer}>
             <NotificationButton />
           </View>
@@ -73,11 +65,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 10,
+    backgroundColor: "rgba(236, 255, 250, 1)",
   },
   middleSection: {
     flexDirection: "row",
     alignSelf: "center",
-    backgroundColor: "rgba(245,245,245,1)",
+    backgroundColor: "rgba(236, 255, 250, 1)",
   },
   bottomSection: {
     flex: 0,
