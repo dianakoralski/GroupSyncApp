@@ -1,0 +1,7 @@
+#Ask admin for access to database
+DEV_USERNAME=example
+DEV_PASSWORD=example
+DATABASE=example
+DB_HOST=example
+DIALECT=mysql
+
