@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import SearchBar from "../components/SearchBar";
 import TaskBar from "../components/TaskBar";
+import NotificationButton from "../components/NotificationsButton";
 //import QRCodeScanner from "../components/QRCodeScanner";
 import Icon from "react-native-vector-icons/Ionicons";
 import Slider from "../components/Slider";
@@ -50,6 +51,9 @@ export const ProfileScreen = () => {
           >
             <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
           </TouchableOpacity>
+          <View style={styles.notificationContainer}>
+            <NotificationButton />
+          </View>
           <View style={{ flex: 0 }}>
             <Slider />
           </View>
@@ -105,5 +109,10 @@ const styles = StyleSheet.create({
   },
   postText: {
     padding: 10,
+  },
+  notificationContainer: {
+    marginLeft: 80,
+    marginTop: -20,
+    marginBottom: 30,
   },
 });

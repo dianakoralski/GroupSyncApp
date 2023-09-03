@@ -8,7 +8,9 @@ import {
   Switch,
 } from "react-native";
 import BackButton from "../components/BackButton";
-import Icon from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
+import { StackParams } from "../../App";
 
 export const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
@@ -16,6 +18,7 @@ export const CreateEvent = () => {
   const [eventDate, setEventDate] = useState("");
   const [eventTime, setEventTime] = useState("");
   const [isPublic, setIsPublic] = useState(false); // Track event visibility
+  const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
   const handleCreateEvent = () => {
     // Handle the event creation logic here
@@ -96,7 +99,12 @@ export const CreateEvent = () => {
           style={styles.createButton}
           onPress={handleCreateEvent}
         >
-          <Text style={styles.createButtonText}>Create Event</Text>
+          <Text
+            style={styles.createButtonText}
+            onPress={() => navigation.navigate("Profile")}
+          >
+            Create Event
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
