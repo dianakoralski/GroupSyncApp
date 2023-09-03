@@ -35,7 +35,7 @@ export const CreateEvent = () => {
       date,
       time,
       description,
-      //isPublic,
+      isPublic,
       host,
     });
     navigation.navigate("Home");

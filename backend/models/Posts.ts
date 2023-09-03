@@ -23,10 +23,10 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
         "There is no description for this event, please contact the host for further information",
     },
 
-    // isPublic: {
-    //   type: dataTypes.BOOLEAN,
-    //   defaultValue: true,
-    // },
+    isPublic: {
+      type: dataTypes.BOOLEAN,
+      defaultValue: true,
+    },
 
     participants: {
       type: dataTypes.STRING,
