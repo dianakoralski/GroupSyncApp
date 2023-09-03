@@ -1,20 +1,37 @@
 import { express } from "../index";
 import Users from "../models";
+import bcrypt from "bcrypt";
+
 const router = express.Router();
 
 router.post("/", async (req: any, res: any) => {
   const { email, password } = req.body;
-  //TODO: encrypt password
   try {
+    console.log("in the try");
     const usersWithMatchingEmail = await Users["Users"].findAll({
       where: {
         email: email,
-        password: password,
+        // password: password,
       },
     });
+    console.log("users with matching emails: ", usersWithMatchingEmail);
+    console.log("password: ", password);
+    console.log(
+      "hash password: ",
+      usersWithMatchingEmail[0].dataValues.password
+    );
+
     if (usersWithMatchingEmail.length == 1) {
       // TODO: Add method to generate token
-      res.status(200).json({ token: "generatedToken123" });
+      const isValid = await bcrypt.compare(
+        password,
+        usersWithMatchingEmail[0].dataValues.password
+      );
+      if (isValid) {
+        res.status(200).json({ token: "generatedToken123" });
+      } else {
+        res.status(400).json({ error: "Password does not match" });
+      }
     } else {
       res.status(400).json({ error: "email not found" });
     }

@@ -1,4 +1,6 @@
 import { express } from "../index";
+import bcrypt from "bcrypt";
+
 const { Users } = require("../models");
 const router = express.Router();
 
@@ -9,6 +11,7 @@ router.get("/", async (req: any, res: any) => {
 
 router.post("/", async (req: any, res: any) => {
   const user = req.body;
+  console.log("User: ", req.body);
 
   if (!passwordChecker(user["password"])) {
     const errorMessage = "Password does not meet the requirements";
@@ -16,6 +19,10 @@ router.post("/", async (req: any, res: any) => {
   }
 
   try {
+    const hashedPassword = await bcrypt.hash(user["password"], 10);
+    console.log("Hashed: ", hashedPassword);
+    user["password"] = hashedPassword;
+    console.log(user);
     await Users.create(user);
     return res.json(user);
   } catch (error) {
