@@ -22,10 +22,12 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
       defaultValue:
         "There is no description for this event, please contact the host for further information",
     },
-    host: {
-      type: dataTypes.STRING,
-      allowNull: false,
-    },
+
+    // isPublic: {
+    //   type: dataTypes.BOOLEAN,
+    //   defaultValue: true,
+    // },
+
     participants: {
       type: dataTypes.STRING,
     },

@@ -11,15 +11,8 @@ router.post("/", async (req: any, res: any) => {
     const usersWithMatchingEmail = await Users["Users"].findAll({
       where: {
         email: email,
-        // password: password,
       },
     });
-    console.log("users with matching emails: ", usersWithMatchingEmail);
-    console.log("password: ", password);
-    console.log(
-      "hash password: ",
-      usersWithMatchingEmail[0].dataValues.password
-    );
 
     if (usersWithMatchingEmail.length == 1) {
       // TODO: Add method to generate token

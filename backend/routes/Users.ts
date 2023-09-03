@@ -11,7 +11,6 @@ router.get("/", async (req: any, res: any) => {
 
 router.post("/", async (req: any, res: any) => {
   const user = req.body;
-  console.log("User: ", req.body);
 
   if (!passwordChecker(user["password"])) {
     const errorMessage = "Password does not meet the requirements";
@@ -20,12 +19,17 @@ router.post("/", async (req: any, res: any) => {
 
   try {
     const hashedPassword = await bcrypt.hash(user["password"], 10);
-    console.log("Hashed: ", hashedPassword);
     user["password"] = hashedPassword;
-    console.log(user);
     await Users.create(user);
     return res.json(user);
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error);
+    if (error.code === "ER_DUP_ENTRY") {
+      // Send a custom error response for duplicate entry
+      return res
+        .status(400)
+        .json({ error: true, msg: "Email address already exists." });
+    }
     console.error("Error creating user:", error);
     return res.status(500).json({ error: "Failed to create user" });
   }
