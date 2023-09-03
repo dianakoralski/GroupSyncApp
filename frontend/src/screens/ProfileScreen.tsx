@@ -38,14 +38,14 @@ export const ProfileScreen = () => {
       </View>
       <ScrollView style={styles.middleSection}>
         <View style={{ alignItems: "center" }}>
-          <Icon name="person-circle-outline" size={128} color="black" />
+          {/* <Icon name="person-circle-outline" size={128} color="black" />
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Friends");
             }}
           >
             <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View style={styles.notificationContainer}>
             <NotificationButton />
           </View>

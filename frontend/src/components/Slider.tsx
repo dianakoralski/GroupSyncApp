@@ -41,9 +41,28 @@ const FirstRoute = () => {
       setListOfPosts(res.data);
     });
   }, []);
+  const navigation = useNavigation<StackNavigationProp<StackParams>>();
   return (
     <View style={[styles.scene]}>
       <ScrollView style={{ width: "100%", marginTop: "5%" }}>
+        <View style={{ alignSelf: "center" }}>
+          <Icon name="person-circle-outline" size={128} color="black" />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Friends");
+            }}
+          >
+            <Text
+              style={{
+                textDecorationLine: "underline",
+                alignSelf: "center",
+                marginBottom: "5%",
+              }}
+            >
+              321 Friends
+            </Text>
+          </TouchableOpacity>
+        </View>
         {listOfPosts.map((value, key) => (
           <View key={key}>
             {/* event link */}
