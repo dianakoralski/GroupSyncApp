@@ -1,11 +1,8 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
-  Dimensions,
   ScrollView,
   TouchableOpacity,
   RefreshControl,
@@ -13,7 +10,6 @@ import {
 import SearchBar from "../components/SearchBar";
 import TaskBar from "../components/TaskBar";
 import NotificationButton from "../components/NotificationsButton";
-//import QRCodeScanner from "../components/QRCodeScanner";
 import Icon from "react-native-vector-icons/Ionicons";
 import Slider from "../components/Slider";
 import { useNavigation } from "@react-navigation/native";
@@ -22,7 +18,6 @@ import { StackParams } from "../../App";
 
 export const ProfileScreen = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
-  //Taskbar tabs
   const [activeTab, setActiveTab] = useState("tab3");
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
     setActiveTab(tab);
@@ -85,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(245,245,245,1)",
   },
   bottomSection: {
-    //flex: 0,
+    flex: 0,
     backgroundColor: "rgba(255,179,90,1)",
   },
   searchBarContainer: {
