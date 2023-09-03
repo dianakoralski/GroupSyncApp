@@ -92,8 +92,7 @@ const SecondRoute = () => {
   }, []);
   return (
     <View style={[styles.scene]}>
-      <View></View>
-      <ScrollView style={{ width: "100%", marginTop: "5%" }}>
+      <ScrollView style={{ width: "100%", marginTop: "5%", marginLeft: "5%" }}>
         <TouchableOpacity onPress={() => navigation.navigate("EventInvites")}>
           <Text style={{ textDecorationLine: "underline", marginBottom: "5%" }}>
             2 Pending invites to Event
@@ -172,6 +171,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 300,
     borderRadius: 30,
+    marginLeft: 50,
+    marginRight: 50,
   },
   indicator: {
     backgroundColor: "orange",
@@ -190,11 +191,12 @@ const styles = StyleSheet.create({
     textTransform: "capitalize", // If you want to capitalize the text
   },
   postBox: {
-    width: "90%",
+    width: "80%",
     backgroundColor: "rgba(236,236,236,1)",
     borderRadius: 10,
     borderWidth: 1,
     marginBottom: 10,
+    alignSelf: "center",
   },
   postText: {
     padding: 10,
