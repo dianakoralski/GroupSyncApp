@@ -33,7 +33,14 @@ export const CreateAccount = () => {
   const { onRegister } = useAuth();
 
   const register = async () => {
-    const result = await onRegister!(email, password);
+    const result = await onRegister!(
+      firstName,
+      lastName,
+      dateOfBirth,
+      email,
+      password,
+      profilePicture
+    );
     console.log("message:", result.message);
     if (result && result.error) {
       alert(result.message);

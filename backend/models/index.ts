@@ -8,7 +8,6 @@ import process from "process";
 const basename = path.basename(__filename);
 const env: string = process.env.NODE_ENV || "development";
 const config = require("dotenv").config();
-//console.log(config);
 const db: Record<string, any> = {};
 
 let sequelize: Sequelize;

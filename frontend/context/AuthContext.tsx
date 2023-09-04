@@ -4,7 +4,14 @@ import * as SecureStore from "expo-secure-store";
 
 interface AuthProps {
   authState?: { token: string | null; authenticated: boolean | null };
-  onRegister?: (email: string, password: string) => Promise<any>;
+  onRegister?: (
+    firstName: string,
+    lastName: string,
+    dateOfBirth: string,
+    email: string,
+    password: string,
+    profilePicture: string
+  ) => Promise<any>;
   onLogin?: (email: string, password: string) => Promise<any>;
   onLogout?: () => Promise<any>;
 }
@@ -35,9 +42,23 @@ export const AuthProvider = ({ children }: any) => {
     loadToken();
   }, []);
 
-  const register = async (email: string, password: string) => {
+  const register = async (
+    firstName: string,
+    lastName: string,
+    dateOfBirth: string,
+    email: string,
+    password: string,
+    profilePicture: string
+  ) => {
     try {
-      return await axios.post(`${API_URL}/users`, { email, password });
+      return await axios.post(`${API_URL}/users`, {
+        firstName,
+        lastName,
+        dateOfBirth,
+        email,
+        password,
+        profilePicture,
+      });
     } catch (e) {
       console.log("error:", JSON.stringify(e));
       // if (axios.isAxiosError(e))

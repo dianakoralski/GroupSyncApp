@@ -7,7 +7,6 @@ const router = express.Router();
 router.post("/", async (req: any, res: any) => {
   const { email, password } = req.body;
   try {
-    console.log("in the try");
     const usersWithMatchingEmail = await Users["Users"].findAll({
       where: {
         email: email,
