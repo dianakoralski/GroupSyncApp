@@ -27,8 +27,10 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
       type: dataTypes.BOOLEAN,
       defaultValue: true,
     },
-
     participants: {
+      type: dataTypes.STRING,
+    },
+    host: {
       type: dataTypes.STRING,
     },
   });

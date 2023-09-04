@@ -28,7 +28,7 @@ export const CreateEvent = () => {
   const handleCreateEvent = async () => {
     // Handle the event creation logic here
     // You can send the event details and isPublic to your backend or perform any other actions.
-    const host = "self";
+    const host = "Self";
     await axios.post(`${API_URL}/posts`, {
       title,
       location,
