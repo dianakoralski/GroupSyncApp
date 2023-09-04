@@ -98,7 +98,9 @@ export const CreateAccount = () => {
           <BackButton />
 
           <View style={styles.body}>
-            <RoundButton></RoundButton>
+            <RoundButton
+              onImageSelected={(image_URI) => setProfilePicture(image_URI)}
+            ></RoundButton>
             <Text style={{ marginTop: "2%", marginBottom: "5%" }}>
               Profile Picture
             </Text>

@@ -76,7 +76,6 @@ export const HomeScreen = () => {
   useEffect(() => {
     axios.get(`${API_URL}/posts`).then((res) => {
       setListOfPosts(res.data);
-      console.log(res.data);
     });
   }, []);
   return (
