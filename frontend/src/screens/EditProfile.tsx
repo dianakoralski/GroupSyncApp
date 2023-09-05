@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Icon from "react-native-vector-icons/Ionicons";
+import React, { useState, useEffect } from "react";
 import RoundButton from "../components/RoundButton";
-
+import axios from "axios";
+import { API_URL } from "../../context/AuthContext";
 import {
   View,
   StyleSheet,
@@ -19,33 +19,20 @@ interface EditProfile {
 interface EditProfileProps {
   navigation: any; // Replace 'any' with the appropriate navigation type
 }
-
-const initialSettings: EditProfile[] = [
-  { icon: "person-add-outline", title: "Friend Requests" },
-  { icon: "person-circle-outline", title: "Jack" },
-  { icon: "person-circle-outline", title: "Maria M" },
-  { icon: "person-circle-outline", title: "Noah" },
-  // Add more options here
-];
 export const EditProfile: React.FC<EditProfileProps> = ({ navigation }) => {
-  const [settings, setSettings] = useState<EditProfile[]>(initialSettings);
+  const [userData, setUserData] = useState({});
+  useEffect(() => {
+    axios.get(`${API_URL}/users/user`).then((res) => {
+      setUserData(res.data.userInfo);
+      console.log("User Data:", res.data.userInfo);
+    });
+  }, []);
+
   const [profilePicture, setProfilePicture] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const renderItem = ({ item }: { item: EditProfile }) => (
-    <TouchableOpacity
-      style={{ flexDirection: "row", borderWidth: 1, width: "100%" }}
-    >
-      <Icon size={32} name={item.icon} />
-      <Text style={{ fontSize: 20, textAlignVertical: "center" }}>
-        {"  "}
-        {item.title}
-      </Text>
-    </TouchableOpacity>
-  );
 
   return (
     <>
@@ -63,13 +50,10 @@ export const EditProfile: React.FC<EditProfileProps> = ({ navigation }) => {
           Edit Profile
         </Text>
       </View>
-      {/* <Icon
-        name="person-circle-outline"
-        size={128}
-        color="black"
-        style={{ alignSelf: "center" }}
-      /> */}
-      <RoundButton></RoundButton>
+
+      <RoundButton
+        onImageSelected={(image_URI) => setProfilePicture(image_URI)}
+      ></RoundButton>
       <View>
         <Text style={styles.label}>First Name:</Text>
         <TextInput

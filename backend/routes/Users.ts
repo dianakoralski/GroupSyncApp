@@ -1,6 +1,6 @@
 import { express } from "../index";
 import bcrypt from "bcrypt";
-
+const verifyToken = require("../config/verifyToken");
 const { Users } = require("../models");
 const router = express.Router();
 
@@ -59,5 +59,27 @@ function passwordChecker(password: string): boolean {
   // If all the conditions are satisfied, the password is valid
   return true;
 }
+
+router.get("/user", verifyToken, async (req: any, res: any) => {
+  try {
+    const userInfo = req.user.userInfo;
+
+    //keep in case we want to change logic to auth by just email and then fetch rest of user data
+    // // Retrieve the user data from your database
+    // const user = await Users["Users"].findOne({ where: { email: email } });
+
+    // if (!user) {
+    //   return res.status(404).json({ error: "User not found" });
+    // }
+
+    console.log("SUCCESS");
+    res.status(200).json({ userInfo });
+  } catch (error) {
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching user data" });
+  }
+});
 
 module.exports = router;

@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
-  Dimensions,
   ScrollView,
   TouchableOpacity,
   RefreshControl,

@@ -1,6 +1,10 @@
 import { express } from "../index";
 import Users from "../models";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const router = express.Router();
 
@@ -14,18 +18,24 @@ router.post("/", async (req: any, res: any) => {
     });
 
     if (usersWithMatchingEmail.length == 1) {
-      // TODO: Add method to generate token
       const isValid = await bcrypt.compare(
         password,
         usersWithMatchingEmail[0].dataValues.password
       );
       if (isValid) {
-        res.status(200).json({ token: "generatedToken123" });
+        console.log(process.env.SECRET_KEY);
+        // Generate a JWT token to encode userInfo
+        const token = jwt.sign(
+          { userInfo: usersWithMatchingEmail[0].dataValues },
+          `${process.env.SECRET_KEY}`
+        );
+        //return userwithmatching emails below too?
+        res.status(200).json({ token });
       } else {
         res.status(400).json({ error: "Password does not match" });
       }
     } else {
-      res.status(400).json({ error: "email not found" });
+      res.status(400).json({ error: "Email not found" });
     }
   } catch (error) {
     console.error("Error:", error);

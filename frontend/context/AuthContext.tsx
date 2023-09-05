@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios, { AxiosError, isAxiosError } from "axios";
+import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
 interface AuthProps {
@@ -35,7 +35,8 @@ export const AuthProvider = ({ children }: any) => {
       const token = await SecureStore.getItemAsync(TOKEN_KEY);
 
       if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        //Removed Bearer
+        axios.defaults.headers.common["Authorization"] = `${token}`;
         setAuthState({ token: token, authenticated: true });
       }
     };
@@ -73,12 +74,12 @@ export const AuthProvider = ({ children }: any) => {
       if (result.status != 200 || result.data == null) {
         return { error: true, msg: "Login failed" };
       }
+      //console.log("result: ", result);
 
       setAuthState({ token: result.data.token, authenticated: true });
-
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${result.data.token}`;
+      //Removed Bearer
+      axios.defaults.headers.common["Authorization"] = `${result.data.token}`;
+      //console.log(axios.defaults.headers.common);
 
       await SecureStore.setItemAsync(TOKEN_KEY, result.data.token);
       return result;
