@@ -8,8 +8,7 @@ import { StackParams } from "../../App";
 import { TextInput } from "react-native-gesture-handler";
 import BackButton from "../components/BackButton";
 import { IconButton } from "react-native-paper";
-import { API_URL, useAuth } from "../../context/AuthContext";
-import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 export const LoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();

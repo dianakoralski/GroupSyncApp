@@ -3,7 +3,9 @@ import { useState, useEffect } from "react";
 import {
   View,
   Text,
+  Image,
   StyleSheet,
+  Dimensions,
   ScrollView,
   TouchableOpacity,
   RefreshControl,
@@ -13,15 +15,10 @@ import TaskBar from "../components/TaskBar";
 //import QRCodeScanner from "../components/QRCodeScanner";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
-import { StackParams } from "../../App";
+import BackButton from "../components/BackButton";
 import { API_URL } from "../../context/AuthContext";
 
-export const HomeScreen = () => {
-  const navigation = useNavigation<StackNavigationProp<StackParams>>();
-
-  useEffect(() => {}, []);
+export const EventInvitesScreen = () => {
   //Taskbar tabs
   const [activeTab, setActiveTab] = useState("tab1");
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
@@ -79,13 +76,16 @@ export const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
+        <View style={{ flexDirection: "row" }}>
+          <BackButton color="black" />
+        </View>
         <View style={styles.searchBarContainer}>
           <SearchBar placeholder="Search..." />
         </View>
-        <TouchableOpacity style={styles.qrCodeIcon}>
-          <Icon name="qr-code-outline" size={38} color="black" />
-        </TouchableOpacity>
       </View>
+      <Text style={{ alignSelf: "center", fontWeight: "bold", fontSize: 32 }}>
+        Invites
+      </Text>
       <ScrollView
         style={styles.middleSection}
         refreshControl={
@@ -118,9 +118,6 @@ export const HomeScreen = () => {
           </View>
         ))}
       </ScrollView>
-      <View style={styles.bottomSection}>
-        <TaskBar activeTab={"tab1"} onTabPress={handleTabPress} />
-      </View>
     </View>
   );
 };
@@ -144,7 +141,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   bottomSection: {
-    //flex: 0.15,
+    flex: 0.15,
     backgroundColor: "rgba(255,179,90,1)",
   },
   searchBarContainer: {
@@ -153,10 +150,6 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     width: "100%", // Adjust the width as needed
-  },
-  qrCodeIcon: {
-    paddingRight: 20,
-    paddingTop: 10,
   },
   postBox: {
     width: "80%",

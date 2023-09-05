@@ -7,16 +7,19 @@ import process from "process";
 
 const basename = path.basename(__filename);
 const env: string = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+const config = require("dotenv").config();
 const db: Record<string, any> = {};
 
 let sequelize: Sequelize;
 
 sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  config
+  config.parsed.DATABASE,
+  config.parsed.DEV_USERNAME,
+  config.parsed.DEV_PASSWORD,
+  {
+    host: config.parsed.DB_HOST,
+    dialect: "mysql",
+  }
 );
 
 fs.readdirSync(__dirname)
@@ -25,7 +28,7 @@ fs.readdirSync(__dirname)
       file.indexOf(".") !== 0 &&
       file !== basename &&
       file.slice(-3) === ".ts" &&
-      file.indexOf(".test.js") === -1
+      file.indexOf(".test.ts") === -1
     );
   })
   .forEach((file) => {

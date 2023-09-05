@@ -4,13 +4,20 @@ import * as SecureStore from "expo-secure-store";
 
 interface AuthProps {
   authState?: { token: string | null; authenticated: boolean | null };
-  onRegister?: (email: string, password: string) => Promise<any>;
+  onRegister?: (
+    firstName: string,
+    lastName: string,
+    dateOfBirth: string,
+    email: string,
+    password: string,
+    profilePicture: string
+  ) => Promise<any>;
   onLogin?: (email: string, password: string) => Promise<any>;
   onLogout?: () => Promise<any>;
 }
 
 const TOKEN_KEY = "my-jwt";
-export const API_URL = "http://localhost:3001";
+export const API_URL = `http://localhost:3001`;
 const AuthContext = createContext<AuthProps>({});
 
 export const useAuth = () => {
@@ -28,18 +35,36 @@ export const AuthProvider = ({ children }: any) => {
       const token = await SecureStore.getItemAsync(TOKEN_KEY);
 
       if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        //Removed Bearer
+        axios.defaults.headers.common["Authorization"] = `${token}`;
         setAuthState({ token: token, authenticated: true });
       }
     };
     loadToken();
   }, []);
 
-  const register = async (email: string, password: string) => {
+  const register = async (
+    firstName: string,
+    lastName: string,
+    dateOfBirth: string,
+    email: string,
+    password: string,
+    profilePicture: string
+  ) => {
     try {
-      return await axios.post(`${API_URL}/users`, { email, password });
+      return await axios.post(`${API_URL}/users`, {
+        firstName,
+        lastName,
+        dateOfBirth,
+        email,
+        password,
+        profilePicture,
+      });
     } catch (e) {
-      return { error: true, msg: (e as any).response.data.message };
+      console.log("error:", JSON.stringify(e));
+      // if (axios.isAxiosError(e))
+      //   console.log("E:", e);
+      return { error: true, msg: JSON.stringify(e) };
     }
   };
 
@@ -51,10 +76,9 @@ export const AuthProvider = ({ children }: any) => {
       }
 
       setAuthState({ token: result.data.token, authenticated: true });
-
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${result.data.token}`;
+      //Removed Bearer
+      axios.defaults.headers.common["Authorization"] = `${result.data.token}`;
+      //console.log(axios.defaults.headers.common);
 
       await SecureStore.setItemAsync(TOKEN_KEY, result.data.token);
       return result;

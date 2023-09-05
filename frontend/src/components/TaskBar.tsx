@@ -18,7 +18,7 @@ const TaskBar: React.FC<TaskBarProps> = ({ activeTab, onTabPress }) => {
     if (tab === "tab1") {
       navigation.navigate("Home");
     } else if (tab === "tab2") {
-      navigation.navigate("Tab2Screen");
+      navigation.navigate("CreateEvent");
     } else if (tab === "tab3") {
       navigation.navigate("Profile");
     }
@@ -83,13 +83,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(255,179,90,1)",
     paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: "black",
   },
   tab: {
     padding: 10,
     borderRadius: 50,
   },
   activeTab: {
-    //backgroundColor: "lightblue",
+    backgroundColor: "darkorange", //lightblue
+    borderWidth: 1,
+    borderColor: "black",
   },
   customTabContainer: {
     alignItems: "center",

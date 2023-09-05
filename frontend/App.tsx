@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { useAuth, AuthProvider } from "./context/AuthContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { LandingScreen } from "./src/screens/LandingScreen";
@@ -10,6 +9,13 @@ import { ProfileScreen } from "./src/screens/ProfileScreen";
 import { ConfirmEmail } from "./src/screens/ConfirmEmail";
 import { ForgotPassword } from "./src/screens/ForgotPassword";
 import { SettingsScreen } from "./src/screens/SettingsScreen";
+import { FriendsScreen } from "./src/screens/FriendsScreen";
+import { EditProfile } from "./src/screens/EditProfile";
+import NotificationsScreen from "./src/screens/NotificationsScreen";
+import { EventInvitesScreen } from "./src/screens/EventInvitesScreen";
+import { CreateEvent } from "./src/screens/CreateEvent";
+import { FriendRequestsScreen } from "./src/screens/FriendRequestsScreen";
+
 import { Button } from "react-native";
 export type StackParams = {
   Landing: object;
@@ -20,6 +26,12 @@ export type StackParams = {
   ConfirmEmail: object;
   ForgotPassword: object;
   Settings: object;
+  Friends: object;
+  EditProfile: object;
+  Notifications: object;
+  EventInvites: object;
+  CreateEvent: object;
+  FriendRequests: object;
 };
 
 const Stack = createStackNavigator<StackParams>();
@@ -51,6 +63,18 @@ export const Layout = () => {
             />
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="Friends" component={FriendsScreen} />
+            <Stack.Screen name="EditProfile" component={EditProfile} />
+            <Stack.Screen
+              name="Notifications"
+              component={NotificationsScreen}
+            />
+            <Stack.Screen name="EventInvites" component={EventInvitesScreen} />
+            <Stack.Screen name="CreateEvent" component={CreateEvent} />
+            <Stack.Screen
+              name="FriendRequests"
+              component={FriendRequestsScreen}
+            />
           </>
         ) : (
           <>
