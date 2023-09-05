@@ -3,16 +3,12 @@ import { useState, useEffect } from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
-  Dimensions,
   ScrollView,
   TouchableOpacity,
-  RefreshControl,
 } from "react-native";
 import SearchBar from "../components/SearchBar";
 import TaskBar from "../components/TaskBar";
-//import QRCodeScanner from "../components/QRCodeScanner";
 import Icon from "react-native-vector-icons/Ionicons";
 import Slider from "../components/Slider";
 import { useNavigation } from "@react-navigation/native";
@@ -50,7 +46,7 @@ export const ProfileScreen = () => {
           >
             <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
           </TouchableOpacity>
-          <View style={{ flex: 0 }}>
+          <View style={{ flex: 0, height: "130%" }}>
             <Slider />
           </View>
         </View>
@@ -76,9 +72,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   middleSection: {
-    flexDirection: "row",
     alignSelf: "center",
     backgroundColor: "rgba(245,245,245,1)",
+    height: 5000,
   },
   bottomSection: {
     //flex: 0,

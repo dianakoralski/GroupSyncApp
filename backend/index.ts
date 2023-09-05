@@ -13,6 +13,8 @@ app.use("/users", userRouter);
 
 const userDataRoute = require("./routes/Users"); //get data for logged in user
 app.use("/users/user", userDataRoute);
+const updateUserRoute = require("./routes/Users"); //get data for logged in user
+app.use("/users/updateProfile", updateUserRoute);
 
 const authRouter = require("./routes/Auth");
 app.use("/auth", authRouter);

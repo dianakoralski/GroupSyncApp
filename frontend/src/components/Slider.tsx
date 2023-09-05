@@ -156,9 +156,11 @@ const Slider: React.FC = () => {
 
 const styles = StyleSheet.create({
   scene: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100%",
+    alignSelf: "center",
+    // flex: 1,
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   tabBar: {
     backgroundColor: "white",
@@ -183,7 +185,7 @@ const styles = StyleSheet.create({
     textTransform: "capitalize", // If you want to capitalize the text
   },
   postBox: {
-    width: "80%",
+    width: "100%",
     backgroundColor: "rgba(236,236,236,1)",
     borderRadius: 10,
     borderWidth: 1,

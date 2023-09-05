@@ -21,18 +21,48 @@ interface EditProfileProps {
 }
 export const EditProfile: React.FC<EditProfileProps> = ({ navigation }) => {
   const [userData, setUserData] = useState({});
-  useEffect(() => {
-    axios.get(`${API_URL}/users/user`).then((res) => {
-      setUserData(res.data.userInfo);
-      console.log("User Data:", res.data.userInfo);
-    });
-  }, []);
-
+  const [id, setId] = useState(0);
   const [profilePicture, setProfilePicture] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const updateProfile = async (
+    id: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    profilePicture: string
+  ) => {
+    try {
+      return await axios.post(`${API_URL}/users/updateProfile`, {
+        id,
+        firstName,
+        lastName,
+        email,
+        password,
+        profilePicture,
+      });
+    } catch (e) {
+      console.log("error:", JSON.stringify(e));
+      return { error: true, msg: JSON.stringify(e) };
+    }
+  };
+
+  useEffect(() => {
+    axios.get(`${API_URL}/users/user`).then((res) => {
+      setUserData(res.data.userInfo);
+      const userInfo = res.data.userInfo;
+      console.log("User Data:", res.data.userInfo);
+      setId(userInfo.id || "");
+      setProfilePicture(userInfo.profilePicture || ""); // Use an empty string as a default if profilePicture is not available
+      setFirstName(userInfo.firstName || "");
+      setLastName(userInfo.lastName || "");
+      setEmail(userInfo.email || "");
+    });
+  }, []);
 
   return (
     <>
@@ -58,34 +88,37 @@ export const EditProfile: React.FC<EditProfileProps> = ({ navigation }) => {
         <Text style={styles.label}>First Name:</Text>
         <TextInput
           style={styles.input}
-          placeholder="enter first name here"
           value={firstName}
           onChangeText={setFirstName}
         />
         <Text style={styles.label}>Last Name:</Text>
         <TextInput
           style={styles.input}
-          placeholder="enter last name here"
           value={lastName}
           onChangeText={setLastName}
         />
         <Text style={styles.label}>Email:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="enter email here"
-          value={email}
-          onChangeText={setEmail}
-        />
+        <TextInput style={styles.input} value={email} onChangeText={setEmail} />
         <Text style={styles.label}>Password:</Text>
         <TextInput
           style={styles.input}
-          placeholder="enter password here"
+          placeholder="enter new password here"
           value={password}
           onChangeText={setPassword}
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("Settings")}
+          onPress={() => {
+            // updateProfile(
+            //   id,
+            //   firstName,
+            //   lastName,
+            //   email,
+            //   password,
+            //   profilePicture
+            // );
+            navigation.navigate("Settings");
+          }}
         >
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>

@@ -74,7 +74,6 @@ export const AuthProvider = ({ children }: any) => {
       if (result.status != 200 || result.data == null) {
         return { error: true, msg: "Login failed" };
       }
-      //console.log("result: ", result);
 
       setAuthState({ token: result.data.token, authenticated: true });
       //Removed Bearer

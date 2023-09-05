@@ -72,13 +72,28 @@ router.get("/user", verifyToken, async (req: any, res: any) => {
     //   return res.status(404).json({ error: "User not found" });
     // }
 
-    console.log("SUCCESS");
+    console.log("SUCCESSFULLY FETCHED USER INFO FROM GET");
     res.status(200).json({ userInfo });
   } catch (error) {
     console.error("Error:", error);
     res
       .status(500)
       .json({ error: "An error occurred while fetching user data" });
+  }
+});
+
+router.post("/updateProfile", async (req: any, res: any) => {
+  const user = req.body;
+  console.log("new data: ", user);
+  try {
+    await Users.update(
+      { firstName: user.firstName },
+      { where: { id: user.id } }
+    );
+    return res.json(user);
+  } catch (error: any) {
+    console.error("Error creating user:", error);
+    return res.status(500).json({ error: "Failed to update user" });
   }
 });
 
