@@ -41,10 +41,22 @@ const FirstRoute = () => {
       setListOfPosts(res.data);
     });
   }, []);
+
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    axios.get(`${API_URL}/users/user`).then((res) => {
+      const userInfo = res.data.userInfo;
+      console.log("User Data:", res.data.userInfo);
+      setEmail(userInfo.email);
+    });
+  }, []);
+
+  const selfHostedPosts = listOfPosts.filter((value) => value.host === email);
+
   return (
     <View style={[styles.scene]}>
       <ScrollView style={{ width: "100%", marginTop: "5%" }}>
-        {listOfPosts.map((value, key) => (
+        {selfHostedPosts.map((value, key) => (
           <View key={key}>
             {/* event link */}
             <TouchableOpacity style={styles.postBox}>

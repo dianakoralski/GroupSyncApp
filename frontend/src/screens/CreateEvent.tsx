@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -25,10 +25,19 @@ export const CreateEvent = () => {
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false); // Track event visibility
 
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    axios.get(`${API_URL}/users/user`).then((res) => {
+      const userInfo = res.data.userInfo;
+      console.log("User Data:", res.data.userInfo);
+      setEmail(userInfo.email);
+    });
+  }, []);
+
   const handleCreateEvent = async () => {
     // Handle the event creation logic here
     // You can send the event details and isPublic to your backend or perform any other actions.
-    const host = "Self";
+    const host = email;
     await axios.post(`${API_URL}/posts`, {
       title,
       location,
