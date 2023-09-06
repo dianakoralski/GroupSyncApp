@@ -86,18 +86,33 @@ export const HomeScreen = () => {
         }
       >
         {listOfPosts.map((value, key) => (
-          <TouchableOpacity
-            key={key}
-            style={styles.postBox}
-            onPress={() => showEventDetails(value)}
-          >
-            <View style={styles.postText}>
-              <Text style={{ fontSize: 25 }}>{value.title}</Text>
-              <Text style={{ fontSize: 18 }}>{value.location}</Text>
-              <Text style={{ fontSize: 18 }}>{value.date}</Text>
-              <Text style={{ fontSize: 18 }}>{value.time}</Text>
-            </View>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginLeft: "5%",
+                marginBottom: "2%",
+              }}
+            >
+              <Icon name="person-circle-outline" size={48} color="black" />
+              <Text style={{ fontSize: 18, paddingLeft: "2%" }}>
+                {value.host}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              key={key}
+              style={styles.postBox}
+              onPress={() => showEventDetails(value)}
+            >
+              <View style={styles.postText}>
+                <Text style={{ fontSize: 25 }}>{value.title}</Text>
+                <Text style={{ fontSize: 18 }}>{value.location}</Text>
+                <Text style={{ fontSize: 18 }}>{value.date}</Text>
+                <Text style={{ fontSize: 18 }}>{value.time}</Text>
+              </View>
+            </TouchableOpacity>
+          </>
         ))}
       </ScrollView>
 
