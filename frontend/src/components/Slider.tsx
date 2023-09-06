@@ -56,9 +56,7 @@ const FirstRoute = () => {
   const selfHostedPosts = listOfPosts.filter((value) => value.host === email);
   return (
     <View style={[styles.scene]}>
-      <ScrollView
-        style={{ width: "100%", marginTop: "5%", marginBottom: "10%" }}
-      >
+      <ScrollView style={{ width: "100%", marginTop: "5%" }}>
         <View style={{ alignSelf: "center" }}>
           <Icon name="person-circle-outline" size={128} color="black" />
           <TouchableOpacity
@@ -112,29 +110,41 @@ const SecondRoute = () => {
         style={{
           width: "100%",
           marginTop: "5%",
-          marginLeft: "5%",
-          marginBottom: "10%",
         }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("EventInvites")}>
-          <Text style={{ textDecorationLine: "underline", marginBottom: "5%" }}>
+          <Text
+            style={{
+              textDecorationLine: "underline",
+              marginBottom: "5%",
+              marginLeft: "5%",
+            }}
+          >
             2 Pending invites to Event
           </Text>
         </TouchableOpacity>
         {listOfPosts.map((value, key) => (
-          <View key={key}>
-            {/* Host name and photo (links to thier profile) */}
+          <View
+            key={key}
+            style={{
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <TouchableOpacity
               style={{
                 flexDirection: "row",
-                alignItems: "baseline",
+                alignItems: "center",
+                alignSelf: "flex-start",
                 marginBottom: "2%",
+                marginLeft: "5%",
               }}
             >
-              <Icon name="person-circle-outline" size={38} color="black" />
-              <Text style={{ paddingBottom: "1%" }}> {value.host}</Text>
+              <Icon name="person-circle-outline" size={48} color="black" />
+              <Text style={{ fontSize: 18, paddingLeft: "2%" }}>
+                {value.host}
+              </Text>
             </TouchableOpacity>
-            {/* event link */}
             <TouchableOpacity style={styles.postBox}>
               <View style={styles.postText}>
                 <Text style={{ fontSize: 25 }}>{value.title}</Text>
@@ -187,9 +197,6 @@ const styles = StyleSheet.create({
   scene: {
     width: "100%",
     alignSelf: "center",
-    // flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   tabBar: {
     backgroundColor: "white",

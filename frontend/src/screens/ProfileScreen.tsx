@@ -35,9 +35,7 @@ export const ProfileScreen = () => {
         </TouchableOpacity>
       </View>
       <View style={{ alignItems: "center", height: "76%" }}>
-        <View style={{ flex: 0 }}>
-          <Slider />
-        </View>
+        <Slider />
       </View>
       <View style={styles.bottomSection}>
         <TaskBar activeTab={"tab3"} onTabPress={handleTabPress} />
