@@ -24,7 +24,6 @@ export const CreateEvent = () => {
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false); // Track event visibility
-  const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
   const [email, setEmail] = useState("");
   useEffect(() => {

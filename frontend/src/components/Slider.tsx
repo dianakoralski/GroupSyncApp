@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
 import { API_URL } from "../../context/AuthContext";
+import NotificationButton from "../components/NotificationsButton";
 
 type TabRoute = {
   key: string;
@@ -61,6 +62,7 @@ const FirstRoute = () => {
         <View style={{ alignSelf: "center" }}>
           <Icon name="person-circle-outline" size={128} color="black" />
           <TouchableOpacity
+            style={{ flexDirection: "row", alignSelf: "center" }}
             onPress={() => {
               navigation.navigate("Friends");
             }}
@@ -74,9 +76,10 @@ const FirstRoute = () => {
             >
               321 Friends
             </Text>
+            <NotificationButton />
           </TouchableOpacity>
         </View>
-        {selfHostedPosts.map((value, key) => ( 
+        {selfHostedPosts.map((value, key) => (
           <View key={key}>
             {/* event link */}
             <TouchableOpacity style={styles.postBox}>
@@ -213,7 +216,7 @@ const styles = StyleSheet.create({
     textTransform: "capitalize", // If you want to capitalize the text
   },
   postBox: {
-    width: "100%",
+    width: "80%",
     backgroundColor: "rgba(236,236,236,1)",
     borderRadius: 10,
     borderWidth: 1,
