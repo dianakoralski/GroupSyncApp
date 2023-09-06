@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  RefreshControl,
 } from "react-native";
 import SearchBar from "../components/SearchBar";
 import TaskBar from "../components/TaskBar";
@@ -68,7 +67,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(236, 255, 250, 1)",
   },
   middleSection: {
-    flexDirection: "row",
     alignSelf: "center",
     backgroundColor: "rgba(236, 255, 250, 1)",
   },

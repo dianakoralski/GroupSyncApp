@@ -3,7 +3,11 @@ import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
-const RoundButton: React.FC = () => {
+interface RoundButtonProps {
+  onImageSelected: (imageUri: string) => void;
+}
+
+const RoundButton: React.FC<RoundButtonProps> = ({ onImageSelected }) => {
   const [image, setImage] = useState<string | null>(null);
 
   const pickImage = async () => {
@@ -17,6 +21,9 @@ const RoundButton: React.FC = () => {
     if (!result.canceled) {
       const { uri } = result.assets![0];
       setImage(uri);
+
+      // Call the callback function with the selected image URI
+      onImageSelected(uri);
     }
   };
 

@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { useAuth, AuthProvider } from "./context/AuthContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { LandingScreen } from "./src/screens/LandingScreen";

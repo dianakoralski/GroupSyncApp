@@ -33,11 +33,20 @@ export const CreateAccount = () => {
   const { onRegister } = useAuth();
 
   const register = async () => {
-    const result = await onRegister!(email, password);
+    const result = await onRegister!(
+      firstName,
+      lastName,
+      dateOfBirth,
+      email,
+      password,
+      profilePicture
+    );
+    console.log("message:", result.message);
     if (result && result.error) {
       alert(result.message);
     } else {
       console.log("Account Created!");
+      navigation.navigate("ConfirmEmail");
     }
   };
 
@@ -89,7 +98,9 @@ export const CreateAccount = () => {
           <BackButton />
 
           <View style={styles.body}>
-            <RoundButton></RoundButton>
+            <RoundButton
+              onImageSelected={(image_URI) => setProfilePicture(image_URI)}
+            ></RoundButton>
             <Text style={{ marginTop: "2%", marginBottom: "5%" }}>
               Profile Picture
             </Text>

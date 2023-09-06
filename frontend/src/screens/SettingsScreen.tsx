@@ -95,7 +95,7 @@ export const SettingsScreen: React.FC = () => {
 
   return (
     <>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", marginTop: "5%" }}>
         <BackButton color="black" />
         <Text
           style={{
@@ -104,6 +104,7 @@ export const SettingsScreen: React.FC = () => {
             verticalAlign: "bottom",
             paddingBottom: "0.7%",
             paddingLeft: "20%",
+            marginTop: 45,
           }}
         >
           Settings

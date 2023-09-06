@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Icon from "react-native-vector-icons/Ionicons";
+import React, { useState, useEffect } from "react";
 import RoundButton from "../components/RoundButton";
-
+import axios from "axios";
+import { API_URL } from "../../context/AuthContext";
 import {
   View,
   StyleSheet,
@@ -19,33 +19,50 @@ interface EditProfile {
 interface EditProfileProps {
   navigation: any; // Replace 'any' with the appropriate navigation type
 }
-
-const initialSettings: EditProfile[] = [
-  { icon: "person-add-outline", title: "Friend Requests" },
-  { icon: "person-circle-outline", title: "Jack" },
-  { icon: "person-circle-outline", title: "Maria M" },
-  { icon: "person-circle-outline", title: "Noah" },
-  // Add more options here
-];
 export const EditProfile: React.FC<EditProfileProps> = ({ navigation }) => {
-  const [settings, setSettings] = useState<EditProfile[]>(initialSettings);
+  const [userData, setUserData] = useState({});
+  const [id, setId] = useState(0);
   const [profilePicture, setProfilePicture] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const renderItem = ({ item }: { item: EditProfile }) => (
-    <TouchableOpacity
-      style={{ flexDirection: "row", borderWidth: 1, width: "100%" }}
-    >
-      <Icon size={32} name={item.icon} />
-      <Text style={{ fontSize: 20, textAlignVertical: "center" }}>
-        {"  "}
-        {item.title}
-      </Text>
-    </TouchableOpacity>
-  );
+  const updateProfile = async (
+    id: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    profilePicture: string
+  ) => {
+    try {
+      return await axios.post(`${API_URL}/users/updateProfile`, {
+        id,
+        firstName,
+        lastName,
+        email,
+        password,
+        profilePicture,
+      });
+    } catch (e) {
+      console.log("error:", JSON.stringify(e));
+      return { error: true, msg: JSON.stringify(e) };
+    }
+  };
+
+  useEffect(() => {
+    axios.get(`${API_URL}/users/user`).then((res) => {
+      setUserData(res.data.userInfo);
+      const userInfo = res.data.userInfo;
+      console.log("User Data:", res.data.userInfo);
+      setId(userInfo.id || "");
+      setProfilePicture(userInfo.profilePicture || ""); // Use an empty string as a default if profilePicture is not available
+      setFirstName(userInfo.firstName || "");
+      setLastName(userInfo.lastName || "");
+      setEmail(userInfo.email || "");
+    });
+  }, []);
 
   return (
     <>
@@ -63,45 +80,45 @@ export const EditProfile: React.FC<EditProfileProps> = ({ navigation }) => {
           Edit Profile
         </Text>
       </View>
-      {/* <Icon
-        name="person-circle-outline"
-        size={128}
-        color="black"
-        style={{ alignSelf: "center" }}
-      /> */}
-      <RoundButton></RoundButton>
+
+      <RoundButton
+        onImageSelected={(image_URI) => setProfilePicture(image_URI)}
+      ></RoundButton>
       <View>
         <Text style={styles.label}>First Name:</Text>
         <TextInput
           style={styles.input}
-          placeholder="enter first name here"
           value={firstName}
           onChangeText={setFirstName}
         />
         <Text style={styles.label}>Last Name:</Text>
         <TextInput
           style={styles.input}
-          placeholder="enter last name here"
           value={lastName}
           onChangeText={setLastName}
         />
         <Text style={styles.label}>Email:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="enter email here"
-          value={email}
-          onChangeText={setEmail}
-        />
+        <TextInput style={styles.input} value={email} onChangeText={setEmail} />
         <Text style={styles.label}>Password:</Text>
         <TextInput
           style={styles.input}
-          placeholder="enter password here"
+          placeholder="enter new password here"
           value={password}
           onChangeText={setPassword}
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("Settings")}
+          onPress={() => {
+            // updateProfile(
+            //   id,
+            //   firstName,
+            //   lastName,
+            //   email,
+            //   password,
+            //   profilePicture
+            // );
+            navigation.navigate("Settings");
+          }}
         >
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>

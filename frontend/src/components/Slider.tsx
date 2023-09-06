@@ -41,7 +41,18 @@ const FirstRoute = () => {
       setListOfPosts(res.data);
     });
   }, []);
+
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    axios.get(`${API_URL}/users/user`).then((res) => {
+      const userInfo = res.data.userInfo;
+      console.log("User Data:", res.data.userInfo);
+      setEmail(userInfo.email);
+    });
+  }, []);
+
+  const selfHostedPosts = listOfPosts.filter((value) => value.host === email);
   return (
     <View style={[styles.scene]}>
       <ScrollView
@@ -65,7 +76,7 @@ const FirstRoute = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        {listOfPosts.map((value, key) => (
+        {selfHostedPosts.map((value, key) => ( 
           <View key={key}>
             {/* event link */}
             <TouchableOpacity style={styles.postBox}>
@@ -171,9 +182,11 @@ const Slider: React.FC = () => {
 
 const styles = StyleSheet.create({
   scene: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100%",
+    alignSelf: "center",
+    // flex: 1,
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   tabBar: {
     backgroundColor: "white",
@@ -200,7 +213,7 @@ const styles = StyleSheet.create({
     textTransform: "capitalize", // If you want to capitalize the text
   },
   postBox: {
-    width: "80%",
+    width: "100%",
     backgroundColor: "rgba(236,236,236,1)",
     borderRadius: 10,
     borderWidth: 1,
