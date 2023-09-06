@@ -24,6 +24,7 @@ export const CreateEvent = () => {
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false); // Track event visibility
+  const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
   const [email, setEmail] = useState("");
   useEffect(() => {
@@ -137,6 +138,23 @@ export const CreateEvent = () => {
             <Text style={styles.createButtonText}>Create Event</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={styles.inviteButton}
+          onPress={handleInviteFriends}
+        >
+          <Text style={styles.inviteButtonText}>Invite Friends</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.createButton}
+          onPress={handleCreateEvent}
+        >
+          <Text
+            style={styles.createButtonText}
+            onPress={() => navigation.navigate("Profile")}
+          >
+            Create Event
+          </Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -145,7 +163,7 @@ export const CreateEvent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(245,245,245,1)",
+    backgroundColor: "rgba(236, 255, 250, 1)",
     marginTop: "10%",
   },
   topSection: {
@@ -159,6 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
+    paddingTop: "10%",
   },
   input: {
     width: "80%",

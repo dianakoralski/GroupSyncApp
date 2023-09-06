@@ -42,6 +42,7 @@ const FirstRoute = () => {
     });
   }, []);
 
+  const navigation = useNavigation<StackNavigationProp<StackParams>>();
   const [email, setEmail] = useState("");
   useEffect(() => {
     axios.get(`${API_URL}/users/user`).then((res) => {
@@ -52,11 +53,30 @@ const FirstRoute = () => {
   }, []);
 
   const selfHostedPosts = listOfPosts.filter((value) => value.host === email);
-
   return (
     <View style={[styles.scene]}>
-      <ScrollView style={{ width: "100%", marginTop: "5%" }}>
-        {selfHostedPosts.map((value, key) => (
+      <ScrollView
+        style={{ width: "100%", marginTop: "5%", marginBottom: "10%" }}
+      >
+        <View style={{ alignSelf: "center" }}>
+          <Icon name="person-circle-outline" size={128} color="black" />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Friends");
+            }}
+          >
+            <Text
+              style={{
+                textDecorationLine: "underline",
+                alignSelf: "center",
+                marginBottom: "5%",
+              }}
+            >
+              321 Friends
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {selfHostedPosts.map((value, key) => ( 
           <View key={key}>
             {/* event link */}
             <TouchableOpacity style={styles.postBox}>
@@ -85,8 +105,14 @@ const SecondRoute = () => {
   }, []);
   return (
     <View style={[styles.scene]}>
-      <View></View>
-      <ScrollView style={{ width: "100%", marginTop: "5%" }}>
+      <ScrollView
+        style={{
+          width: "100%",
+          marginTop: "5%",
+          marginLeft: "5%",
+          marginBottom: "10%",
+        }}
+      >
         <TouchableOpacity onPress={() => navigation.navigate("EventInvites")}>
           <Text style={{ textDecorationLine: "underline", marginBottom: "5%" }}>
             2 Pending invites to Event
@@ -167,6 +193,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 300,
     borderRadius: 30,
+    marginLeft: 50,
+    marginRight: 50,
   },
   indicator: {
     backgroundColor: "orange",
@@ -190,6 +218,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     marginBottom: 10,
+    alignSelf: "center",
   },
   postText: {
     padding: 10,

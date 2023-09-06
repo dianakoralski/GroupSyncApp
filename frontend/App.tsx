@@ -15,6 +15,7 @@ import NotificationsScreen from "./src/screens/NotificationsScreen";
 import { EventInvitesScreen } from "./src/screens/EventInvitesScreen";
 import { CreateEvent } from "./src/screens/CreateEvent";
 import { FriendRequestsScreen } from "./src/screens/FriendRequestsScreen";
+import { EventDetailScreen } from "./src/screens/EventDetailScreen";
 
 import { Button } from "react-native";
 export type StackParams = {
@@ -32,6 +33,7 @@ export type StackParams = {
   EventInvites: object;
   CreateEvent: object;
   FriendRequests: object;
+  EventDetails: object;
 };
 
 const Stack = createStackNavigator<StackParams>();
