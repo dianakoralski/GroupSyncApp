@@ -4,6 +4,7 @@ import * as SecureStore from "expo-secure-store";
 
 interface AuthProps {
   userState?: {
+    id: number;
     firstName: string | null;
     lastName: string | null;
     dateOfBirth: string | null;
@@ -39,6 +40,7 @@ export const AuthProvider = ({ children }: any) => {
   }>({ token: null, authenticated: null });
 
   const [userState, setUserState] = useState<{
+    id: number;
     firstName: string | null;
     lastName: string | null;
     dateOfBirth: string | null;
@@ -46,6 +48,7 @@ export const AuthProvider = ({ children }: any) => {
     password: string | null;
     profilePicture: string | null;
   }>({
+    id: 0,
     firstName: null,
     lastName: null,
     dateOfBirth: null,
@@ -102,6 +105,7 @@ export const AuthProvider = ({ children }: any) => {
       setAuthState({ token: result.data.token, authenticated: true });
       //make this into an object?
       setUserState({
+        id: result.data.userInfo.id,
         firstName: result.data.userInfo.firstName,
         lastName: result.data.userInfo.lastName,
         dateOfBirth: result.data.userInfo.dateOfBirth,

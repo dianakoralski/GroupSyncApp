@@ -23,7 +23,6 @@ router.post("/", async (req: any, res: any) => {
         usersWithMatchingEmail[0].dataValues.password
       );
       if (isValid) {
-        console.log(process.env.SECRET_KEY);
         // Generate a JWT token to encode userInfo
         const token = jwt.sign(
           { userInfo: usersWithMatchingEmail[0].dataValues },

@@ -131,10 +131,20 @@ const SecondRoute = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
   const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
+
+  const { userState } = useAuth();
+  console.log("userState: ", userState);
   useEffect(() => {
-    axios.get(`${API_URL}/posts`).then((res) => {
-      setListOfPosts(res.data);
-    });
+    axios
+      .post(`${API_URL}/eventParticipants/eventsByUser`, {
+        userId: userState?.id,
+      })
+      .then((res: any) => {
+        setListOfPosts(res.data);
+      })
+      .catch((error) => {
+        console.error("couldn't display RSVPd events:", error);
+      });
   }, []);
 
   const [isEventDetailsVisible, setIsEventDetailsVisible] = useState(false);
@@ -189,7 +199,6 @@ const SecondRoute = () => {
             <>
               {/* event link */}
               <TouchableOpacity
-                key={key}
                 style={styles.postBox}
                 onPress={() => showEventDetails(value)} // Use showEventDetails instead of showPostDetails
               >

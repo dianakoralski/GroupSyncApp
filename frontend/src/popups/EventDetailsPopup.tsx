@@ -5,11 +5,14 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
 import { ScrollView } from "react-native-gesture-handler";
+import { API_URL, useAuth } from "../../context/AuthContext";
+import axios from "axios";
 
 interface EventDetail {
   isVisible: boolean;
   onClose: () => void;
   eventData: {
+    id: number;
     title: string;
     host: string;
     location: string;
@@ -25,6 +28,26 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
   eventData,
 }) => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
+
+  const { userState } = useAuth();
+  console.log("event id: ", eventData.id);
+  console.log("user id: ", userState?.id);
+
+  const handleOnPressJoin = async () => {
+    await axios
+      .post(`${API_URL}/eventParticipants`, {
+        userId: userState?.id,
+        eventId: eventData.id,
+      })
+      .then((res) => {
+        //do something with result - say event successfully joined or something
+        console.log("in then statement");
+      })
+      .catch((error) => {
+        console.error("couldn't join event:", error);
+      });
+    onClose();
+  };
   return (
     <Modal
       animationType="slide"
@@ -59,7 +82,7 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              onClose();
+              handleOnPressJoin();
             }}
           >
             <Text style={styles.buttonText}>Join Event</Text>

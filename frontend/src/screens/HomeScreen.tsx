@@ -17,7 +17,6 @@ import { StackParams } from "../../App";
 import EventDetailScreen from "../popups/EventDetailsPopup";
 import { API_URL, useAuth } from "../../context/AuthContext";
 
-
 export const HomeScreen = () => {
   const { userState } = useAuth();
   console.log("user data in home screen: ", userState);
@@ -125,6 +124,7 @@ export const HomeScreen = () => {
         eventData={
           selectedEvent
             ? {
+                id: selectedEvent.id,
                 title: selectedEvent.title,
                 location: selectedEvent.location,
                 date: selectedEvent.date,
@@ -133,6 +133,7 @@ export const HomeScreen = () => {
                 host: selectedEvent.host,
               }
             : {
+                id: 0,
                 title: "",
                 location: "",
                 date: "",
