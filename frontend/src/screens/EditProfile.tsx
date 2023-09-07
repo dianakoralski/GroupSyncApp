@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RoundButton from "../components/RoundButton";
 import axios from "axios";
-import { API_URL } from "../../context/AuthContext";
+import { API_URL, useAuth } from "../../context/AuthContext";
 import {
   View,
   StyleSheet,
@@ -20,12 +20,12 @@ interface EditProfileProps {
   navigation: any; // Replace 'any' with the appropriate navigation type
 }
 export const EditProfile: React.FC<EditProfileProps> = ({ navigation }) => {
-  const [userData, setUserData] = useState({});
+  const { userState } = useAuth();
   const [id, setId] = useState(0);
   const [profilePicture, setProfilePicture] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(userState?.email);
   const [password, setPassword] = useState("");
 
   const updateProfile = async (
@@ -51,18 +51,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-    axios.get(`${API_URL}/users/user`).then((res) => {
-      setUserData(res.data.userInfo);
-      const userInfo = res.data.userInfo;
-      console.log("User Data:", res.data.userInfo);
-      setId(userInfo.id || "");
-      setProfilePicture(userInfo.profilePicture || ""); // Use an empty string as a default if profilePicture is not available
-      setFirstName(userInfo.firstName || "");
-      setLastName(userInfo.lastName || "");
-      setEmail(userInfo.email || "");
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>

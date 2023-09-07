@@ -13,8 +13,13 @@ app.use("/users", userRouter);
 
 const userDataRoute = require("./routes/Users"); //get data for logged in user
 app.use("/users/user", userDataRoute);
-const updateUserRoute = require("./routes/Users"); //get data for logged in user
+const updateUserRoute = require("./routes/Users"); //update data for logged in user
 app.use("/users/updateProfile", updateUserRoute);
+
+const eventJoinRouter = require("./routes/EventParticipants");
+app.use("/eventParticipants", eventJoinRouter);
+const RSVPdRouter = require("./routes/EventParticipants");
+app.use("/eventParticipants/eventsByUser", RSVPdRouter);
 
 const authRouter = require("./routes/Auth");
 app.use("/auth", authRouter);
