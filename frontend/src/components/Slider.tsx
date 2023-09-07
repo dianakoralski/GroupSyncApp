@@ -14,6 +14,8 @@ import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/v
 import { StackParams } from "../../App";
 import { API_URL } from "../../context/AuthContext";
 import NotificationButton from "../components/NotificationsButton";
+import RouteOneEventPopup from "../popups/RouteOneEventPopup";
+import RouteTwoEventPopup from "../popups/RouteTwoEventPopup";
 
 type TabRoute = {
   key: string;
@@ -53,6 +55,13 @@ const FirstRoute = () => {
     });
   }, []);
 
+  const [isEventDetailsVisible, setIsEventDetailsVisible] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Post | null>(null);
+
+  const showEventDetails = (post: Post) => {
+    setSelectedEvent(post);
+    setIsEventDetailsVisible(true);
+  };
   const selfHostedPosts = listOfPosts.filter((value) => value.host === email);
   return (
     <View style={[styles.scene]}>
@@ -78,9 +87,13 @@ const FirstRoute = () => {
           </TouchableOpacity>
         </View>
         {selfHostedPosts.map((value, key) => (
-          <View key={key}>
+          <>
             {/* event link */}
-            <TouchableOpacity style={styles.postBox}>
+            <TouchableOpacity
+              key={key}
+              style={styles.postBox}
+              onPress={() => showEventDetails(value)} // Use showEventDetails instead of showPostDetails
+            >
               <View style={styles.postText}>
                 <Text style={{ fontSize: 25 }}>{value.title}</Text>
                 <Text style={{ fontSize: 18 }}>{value.location}</Text>
@@ -88,9 +101,32 @@ const FirstRoute = () => {
                 <Text style={{ fontSize: 18 }}>{value.time}</Text>
               </View>
             </TouchableOpacity>
-          </View>
+          </>
         ))}
       </ScrollView>
+      <RouteOneEventPopup
+        isVisible={isEventDetailsVisible}
+        onClose={() => setIsEventDetailsVisible(false)}
+        eventData={
+          selectedEvent
+            ? {
+                title: selectedEvent.title,
+                location: selectedEvent.location,
+                date: selectedEvent.date,
+                time: selectedEvent.time,
+                description: selectedEvent.description,
+                host: selectedEvent.host,
+              }
+            : {
+                title: "",
+                location: "",
+                date: "",
+                time: "",
+                description: "",
+                host: "",
+              }
+        }
+      />
     </View>
   );
 };
@@ -104,6 +140,14 @@ const SecondRoute = () => {
       setListOfPosts(res.data);
     });
   }, []);
+
+  const [isEventDetailsVisible, setIsEventDetailsVisible] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Post | null>(null);
+
+  const showEventDetails = (post: Post) => {
+    setSelectedEvent(post);
+    setIsEventDetailsVisible(true);
+  };
   return (
     <View style={[styles.scene]}>
       <ScrollView
@@ -145,17 +189,48 @@ const SecondRoute = () => {
                 {value.host}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.postBox}>
-              <View style={styles.postText}>
-                <Text style={{ fontSize: 25 }}>{value.title}</Text>
-                <Text style={{ fontSize: 18 }}>{value.location}</Text>
-                <Text style={{ fontSize: 18 }}>{value.date}</Text>
-                <Text style={{ fontSize: 18 }}>{value.time}</Text>
-              </View>
-            </TouchableOpacity>
+
+            <>
+              {/* event link */}
+              <TouchableOpacity
+                key={key}
+                style={styles.postBox}
+                onPress={() => showEventDetails(value)} // Use showEventDetails instead of showPostDetails
+              >
+                <View style={styles.postText}>
+                  <Text style={{ fontSize: 25 }}>{value.title}</Text>
+                  <Text style={{ fontSize: 18 }}>{value.location}</Text>
+                  <Text style={{ fontSize: 18 }}>{value.date}</Text>
+                  <Text style={{ fontSize: 18 }}>{value.time}</Text>
+                </View>
+              </TouchableOpacity>
+            </>
           </View>
         ))}
       </ScrollView>
+      <RouteTwoEventPopup
+        isVisible={isEventDetailsVisible}
+        onClose={() => setIsEventDetailsVisible(false)}
+        eventData={
+          selectedEvent
+            ? {
+                title: selectedEvent.title,
+                location: selectedEvent.location,
+                date: selectedEvent.date,
+                time: selectedEvent.time,
+                description: selectedEvent.description,
+                host: selectedEvent.host,
+              }
+            : {
+                title: "",
+                location: "",
+                date: "",
+                time: "",
+                description: "",
+                host: "",
+              }
+        }
+      />
     </View>
   );
 };

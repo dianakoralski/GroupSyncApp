@@ -14,7 +14,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
-import EventDetailScreen from "./EventDetailsPopup";
+import EventDetailScreen from "../popups/EventDetailsPopup";
 import { API_URL } from "../../context/AuthContext";
 
 export const HomeScreen = () => {
