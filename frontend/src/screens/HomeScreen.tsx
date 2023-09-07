@@ -15,9 +15,12 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
 import EventDetailScreen from "./EventDetailScreen";
-import { API_URL } from "../../context/AuthContext";
+import { API_URL, useAuth } from "../../context/AuthContext";
 
 export const HomeScreen = () => {
+  const { userState } = useAuth();
+  console.log("user data in home screen: ", userState);
+  //use nav for QR code - do not delete
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
   const [activeTab, setActiveTab] = useState("tab1");
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
@@ -86,7 +89,7 @@ export const HomeScreen = () => {
         }
       >
         {listOfPosts.map((value, key) => (
-          <>
+          <View key={key}>
             <TouchableOpacity
               style={{
                 flexDirection: "row",
@@ -101,7 +104,6 @@ export const HomeScreen = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              key={key}
               style={styles.postBox}
               onPress={() => showEventDetails(value)}
             >
@@ -112,7 +114,7 @@ export const HomeScreen = () => {
                 <Text style={{ fontSize: 18 }}>{value.time}</Text>
               </View>
             </TouchableOpacity>
-          </>
+          </View>
         ))}
       </ScrollView>
 

@@ -47,22 +47,14 @@ export default function App() {
 }
 
 export const Layout = () => {
-  const { authState, onLogout } = useAuth();
+  const { authState } = useAuth();
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {authState?.authenticated ? (
           <>
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{
-                headerRight: () => (
-                  <Button onPress={onLogout} title="Sign Out" />
-                ),
-              }}
-            />
+            <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="Friends" component={FriendsScreen} />

@@ -3,6 +3,14 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
 interface AuthProps {
+  userState?: {
+    firstName: string | null;
+    lastName: string | null;
+    dateOfBirth: string | null;
+    email: string | null;
+    password: string | null;
+    profilePicture: string | null;
+  };
   authState?: { token: string | null; authenticated: boolean | null };
   onRegister?: (
     firstName: string,
@@ -17,7 +25,7 @@ interface AuthProps {
 }
 
 const TOKEN_KEY = "my-jwt";
-export const API_URL = `http://10.0.2.2:3001`;
+export const API_URL = `http://localhost:3001`;
 const AuthContext = createContext<AuthProps>({});
 
 export const useAuth = () => {
@@ -29,6 +37,22 @@ export const AuthProvider = ({ children }: any) => {
     token: string | null;
     authenticated: boolean | null;
   }>({ token: null, authenticated: null });
+
+  const [userState, setUserState] = useState<{
+    firstName: string | null;
+    lastName: string | null;
+    dateOfBirth: string | null;
+    email: string | null;
+    password: string | null;
+    profilePicture: string | null;
+  }>({
+    firstName: null,
+    lastName: null,
+    dateOfBirth: null,
+    email: null,
+    password: null,
+    profilePicture: null,
+  });
 
   useEffect(() => {
     const loadToken = async () => {
@@ -76,6 +100,15 @@ export const AuthProvider = ({ children }: any) => {
       }
 
       setAuthState({ token: result.data.token, authenticated: true });
+      //make this into an object?
+      setUserState({
+        firstName: result.data.userInfo.firstName,
+        lastName: result.data.userInfo.lastName,
+        dateOfBirth: result.data.userInfo.dateOfBirth,
+        email: result.data.userInfo.email,
+        password: null, // You might want to clear the password here for security reasons
+        profilePicture: result.data.userInfo.profilePicture,
+      });
       //Removed Bearer
       axios.defaults.headers.common["Authorization"] = `${result.data.token}`;
       //console.log(axios.defaults.headers.common);
@@ -104,6 +137,7 @@ export const AuthProvider = ({ children }: any) => {
     onLogin: login,
     onLogout: logout,
     authState,
+    userState,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

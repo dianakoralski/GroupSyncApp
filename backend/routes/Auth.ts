@@ -29,8 +29,9 @@ router.post("/", async (req: any, res: any) => {
           { userInfo: usersWithMatchingEmail[0].dataValues },
           `${process.env.SECRET_KEY}`
         );
+        const userInfo = usersWithMatchingEmail[0].dataValues;
         //return userwithmatching emails below too?
-        res.status(200).json({ token });
+        res.status(200).json({ token, userInfo });
       } else {
         res.status(400).json({ error: "Password does not match" });
       }
