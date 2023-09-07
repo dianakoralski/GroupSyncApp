@@ -25,16 +25,34 @@ const initialFriendRequests: FriendRequest[] = [
 export const FriendRequestsScreen: React.FC = () => {
   const [friendRequests] = useState<FriendRequest[]>(initialFriendRequests);
 
+  const handleAccept = (friendRequest: FriendRequest) => {
+    // Handle the logic for accepting the friend request here
+    // You can remove the friendRequest from the friendRequests state or update it as per your requirement
+  };
+  const handleDecline = (friendRequest: FriendRequest) => {
+    // Handle the logic for declining the friend request here
+    // You can remove the friendRequest from the friendRequests state or update it as per your requirement
+  };
   const renderItem = ({ item }: { item: FriendRequest }) => (
-    <TouchableOpacity
-      style={{ flexDirection: "row", borderWidth: 1, width: "100%" }}
-    >
+    <View style={{ flexDirection: "row", borderWidth: 1, width: "100%" }}>
       <Icon size={32} name={item.icon} />
       <Text style={{ fontSize: 20, textAlignVertical: "center" }}>
         {"  "}
         {item.title}
       </Text>
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleAccept(item)}
+      >
+        <Text style={styles.buttonText}>Accept</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleDecline(item)}
+      >
+        <Text style={styles.buttonText}>Decline</Text>
+      </TouchableOpacity>
+    </View>
   );
 
   return (
@@ -75,6 +93,16 @@ const styles = StyleSheet.create({
   list: {
     width: "109%",
     paddingHorizontal: 16,
+  },
+  button: {
+    backgroundColor: "orange", // Change the button background color as needed
+    padding: 8,
+    borderRadius: 5,
+    marginLeft: 40, // Add some margin between buttons and the name
+  },
+  buttonText: {
+    color: "white", // Change the text color as needed
+    fontSize: 16,
   },
 });
 

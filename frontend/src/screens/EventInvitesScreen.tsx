@@ -98,13 +98,18 @@ export const EventInvitesScreen = () => {
             <TouchableOpacity
               style={{
                 flexDirection: "row",
-                alignItems: "baseline",
-                marginLeft: "10%",
+                alignItems: "center",
+                marginLeft: "5%",
                 marginBottom: "2%",
               }}
             >
-              <Icon name="person-circle-outline" size={38} color="black" />
-              <Text style={{ paddingBottom: "1%" }}> {value.host}</Text>
+              <Icon name="person-circle-outline" size={48} color="black" />
+              <Text
+                style={{ fontSize: 18, paddingBottom: "1%", paddingLeft: "2%" }}
+              >
+                {" "}
+                {value.host}
+              </Text>
             </TouchableOpacity>
             {/* event link */}
             <TouchableOpacity style={styles.postBox}>

@@ -137,23 +137,6 @@ export const CreateEvent = () => {
             <Text style={styles.createButtonText}>Create Event</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.inviteButton}
-          onPress={handleInviteFriends}
-        >
-          <Text style={styles.inviteButtonText}>Invite Friends</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.createButton}
-          onPress={handleCreateEvent}
-        >
-          <Text
-            style={styles.createButtonText}
-            onPress={() => navigation.navigate("Profile")}
-          >
-            Create Event
-          </Text>
-        </TouchableOpacity>
       </View>
     </ScrollView>
   );

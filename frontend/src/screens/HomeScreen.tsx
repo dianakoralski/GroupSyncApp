@@ -14,8 +14,9 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
-import EventDetailScreen from "./EventDetailScreen";
+import EventDetailScreen from "../popups/EventDetailsPopup";
 import { API_URL, useAuth } from "../../context/AuthContext";
+
 
 export const HomeScreen = () => {
   const { userState } = useAuth();
