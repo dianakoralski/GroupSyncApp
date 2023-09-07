@@ -63,10 +63,11 @@ function passwordChecker(password: string): boolean {
 router.get("/user", verifyToken, async (req: any, res: any) => {
   try {
     const userInfo = req.user.userInfo;
+    console.log("user info form users/user: ", userInfo);
 
     //keep in case we want to change logic to auth by just email and then fetch rest of user data
     // // Retrieve the user data from your database
-    // const user = await Users["Users"].findOne({ where: { email: email } });
+    //const user = await Users["Users"].findOne({ where: { id: userInfo.id } });
 
     // if (!user) {
     //   return res.status(404).json({ error: "User not found" });
