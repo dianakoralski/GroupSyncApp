@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import BackButton from "../components/BackButton";
 import axios from "axios";
-import { API_URL } from "../../context/AuthContext";
+import { API_URL, useAuth } from "../../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
@@ -24,15 +24,9 @@ export const CreateEvent = () => {
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false); // Track event visibility
-
-  const [email, setEmail] = useState("");
-  useEffect(() => {
-    axios.get(`${API_URL}/users/user`).then((res) => {
-      const userInfo = res.data.userInfo;
-      console.log("User Data:", res.data.userInfo);
-      setEmail(userInfo.email);
-    });
-  }, []);
+  const { userState } = useAuth();
+  const [email, setEmail] = useState(userState?.email);
+  useEffect(() => {}, []);
 
   const handleCreateEvent = async () => {
     // Handle the event creation logic here

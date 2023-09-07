@@ -7,7 +7,7 @@ interface AuthProps {
     firstName: string | null;
     lastName: string | null;
     dateOfBirth: string | null;
-    email: string | null;
+    email: string;
     password: string | null;
     profilePicture: string | null;
   };
@@ -42,14 +42,14 @@ export const AuthProvider = ({ children }: any) => {
     firstName: string | null;
     lastName: string | null;
     dateOfBirth: string | null;
-    email: string | null;
+    email: string;
     password: string | null;
     profilePicture: string | null;
   }>({
     firstName: null,
     lastName: null,
     dateOfBirth: null,
-    email: null,
+    email: "",
     password: null,
     profilePicture: null,
   });
