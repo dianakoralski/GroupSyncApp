@@ -21,7 +21,8 @@ interface RouteTwoEvent {
   eventData: {
     id: number;
     title: string;
-    host: string;
+    hostId: number;
+    hostName: string;
     location: string;
     date: string;
     time: string;
@@ -97,7 +98,7 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
             <Icon name="close-circle-outline" size={30} />
           </TouchableOpacity>
           <Text style={styles.modalText}>{eventData.title}</Text>
-          <Text>Host: {eventData.host}</Text>
+          <Text>Host: {eventData.hostName}</Text>
           <Text>{eventData.location}</Text>
           <Text>{eventData.date}</Text>
           <Text>{eventData.time}</Text>

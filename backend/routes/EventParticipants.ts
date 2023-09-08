@@ -53,7 +53,33 @@ router.post("/eventsByUser/", async (req: any, res: any) => {
 
     const extractedEvents = events.map((event: any) => event.dataValues);
 
-    res.json(extractedEvents);
+    const formattedPosts = await Promise.all(
+      extractedEvents.map(async (post: any) => {
+        const userInfo = await Users.findOne({
+          where: { id: post.hostId },
+        });
+        if (!userInfo) {
+          // Handle the case where user information is not found
+          return null;
+        }
+        const firstName = userInfo.firstName;
+        const lastName = userInfo.lastName;
+        const fullName = firstName + " " + lastName;
+        return {
+          title: post.title,
+          location: post.location,
+          date: post.date,
+          time: post.time,
+          hostName: fullName,
+          hostId: post.hostId,
+        };
+      })
+    );
+
+    // Filter out any null values that occurred when user information wasn't found
+    const filteredPosts = formattedPosts.filter((post) => post !== null);
+
+    res.json(filteredPosts);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });

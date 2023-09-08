@@ -11,7 +11,8 @@ interface RouteOneEvent {
   onClose: () => void;
   eventData: {
     title: string;
-    host: string;
+    hostId: number;
+    hostName: string;
     location: string;
     date: string;
     time: string;
@@ -46,7 +47,7 @@ export const RouteOneEventPopup: React.FC<RouteOneEvent> = ({
           </TouchableOpacity>
 
           <Text style={styles.modalText}>{eventData.title}</Text>
-          <Text>Host: {eventData.host}</Text>
+          <Text>Host: {eventData.hostName}</Text>
           <Text>{eventData.location}</Text>
           <Text>{eventData.date}</Text>
           <Text>{eventData.time}</Text>

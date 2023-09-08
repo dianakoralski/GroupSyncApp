@@ -24,6 +24,7 @@ router.get("/", async (req: any, res: any) => {
           date: post.date,
           time: post.time,
           hostName: fullName,
+          hostId: post.hostId,
         };
       })
     );
