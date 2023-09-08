@@ -5,11 +5,15 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
 import { ScrollView } from "react-native-gesture-handler";
+import axios from "axios";
+import { API_URL, useAuth } from "../../context/AuthContext";
+import { useState, useEffect } from "react";
 
 interface RouteTwoEvent {
   isVisible: boolean;
   onClose: () => void;
   eventData: {
+    id: number;
     title: string;
     host: string;
     location: string;
@@ -25,6 +29,23 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
   eventData,
 }) => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
+
+  const { userState } = useAuth();
+  const handleLeaveEvent = async () => {
+    await axios
+      .post(`${API_URL}/eventParticipants/leave`, {
+        userId: userState?.id,
+        eventId: eventData.id,
+      })
+      .then((res) => {
+        //do something with result - say event successfully joined or something
+        console.log("left event");
+      })
+      .catch((error) => {
+        console.error("couldn't leave event:", error);
+      });
+    onClose();
+  };
   return (
     <Modal
       animationType="slide"
@@ -66,7 +87,10 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
           >
             <Text style={styles.buttonText}>Event Chat</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ marginTop: "10%" }}>
+          <TouchableOpacity
+            style={{ marginTop: "10%" }}
+            onPress={handleLeaveEvent}
+          >
             <Text
               style={{
                 fontSize: 12,

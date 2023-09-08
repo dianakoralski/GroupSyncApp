@@ -219,6 +219,7 @@ const SecondRoute = () => {
         eventData={
           selectedEvent
             ? {
+                id: selectedEvent.id,
                 title: selectedEvent.title,
                 location: selectedEvent.location,
                 date: selectedEvent.date,
@@ -227,6 +228,7 @@ const SecondRoute = () => {
                 host: selectedEvent.host,
               }
             : {
+                id: 0,
                 title: "",
                 location: "",
                 date: "",

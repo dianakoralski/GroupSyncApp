@@ -20,6 +20,8 @@ const eventJoinRouter = require("./routes/EventParticipants");
 app.use("/eventParticipants", eventJoinRouter);
 const RSVPdRouter = require("./routes/EventParticipants");
 app.use("/eventParticipants/eventsByUser", RSVPdRouter);
+const leaveEventRouter = require("./routes/EventParticipants");
+app.use("/eventParticipants/leave", leaveEventRouter);
 
 const authRouter = require("./routes/Auth");
 app.use("/auth", authRouter);
