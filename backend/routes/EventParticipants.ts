@@ -72,6 +72,7 @@ router.post("/eventsByUser/", async (req: any, res: any) => {
           time: post.time,
           hostName: fullName,
           hostId: post.hostId,
+          id: post.id,
         };
       })
     );

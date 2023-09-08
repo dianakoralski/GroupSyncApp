@@ -51,6 +51,7 @@ export const HomeScreen = () => {
     date: string;
     time: string;
     description: string;
+    hostId: number;
     hostName: string;
     participants: string;
     updatedAt: string;
@@ -71,7 +72,6 @@ export const HomeScreen = () => {
     setSelectedEvent(event);
     setIsEventDetailsVisible(true);
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -131,7 +131,8 @@ export const HomeScreen = () => {
                 date: selectedEvent.date,
                 time: selectedEvent.time,
                 description: selectedEvent.description,
-                host: selectedEvent.hostName,
+                hostName: selectedEvent.hostName,
+                hostId: selectedEvent.hostId,
               }
             : {
                 id: 0,
@@ -140,7 +141,8 @@ export const HomeScreen = () => {
                 date: "",
                 time: "",
                 description: "",
-                host: "",
+                hostName: "",
+                hostId: 0,
               }
         }
       />

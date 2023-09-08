@@ -14,7 +14,8 @@ interface EventDetail {
   eventData: {
     id: number;
     title: string;
-    host: string;
+    hostName: string;
+    hostId: number;
     location: string;
     date: string;
     time: string;
@@ -69,7 +70,7 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
           </TouchableOpacity>
 
           <Text style={styles.modalText}>{eventData.title}</Text>
-          <Text>Host: {eventData.host}</Text>
+          <Text>Host: {eventData.hostName}</Text>
           <Text>{eventData.location}</Text>
           <Text>{eventData.date}</Text>
           <Text>{eventData.time}</Text>
