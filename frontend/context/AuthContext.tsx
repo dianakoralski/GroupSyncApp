@@ -26,6 +26,7 @@ interface AuthProps {
 }
 
 const TOKEN_KEY = "my-jwt";
+const USER_DATA = ""; // can i set user data and stire in secure store with token?
 export const API_URL = `http://localhost:3001`;
 const AuthContext = createContext<AuthProps>({});
 
@@ -118,6 +119,7 @@ export const AuthProvider = ({ children }: any) => {
       //console.log(axios.defaults.headers.common);
 
       await SecureStore.setItemAsync(TOKEN_KEY, result.data.token);
+      //await SecureStore.setItemAsync(USER_DATA, userState);
       return result;
     } catch (e) {
       return { error: true, msg: "Invalid login" };

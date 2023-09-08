@@ -1,5 +1,12 @@
-import React from "react";
-import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Modal,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
@@ -7,7 +14,6 @@ import { StackParams } from "../../App";
 import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
 import { API_URL, useAuth } from "../../context/AuthContext";
-import { useState, useEffect } from "react";
 
 interface RouteTwoEvent {
   isVisible: boolean;
@@ -29,23 +35,48 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
   eventData,
 }) => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
-
   const { userState } = useAuth();
+  const [leftEvent, setLeftEvent] = useState(false); // Track if the user has left the event
+
   const handleLeaveEvent = async () => {
-    await axios
-      .post(`${API_URL}/eventParticipants/leave`, {
+    try {
+      await axios.post(`${API_URL}/eventParticipants/leave`, {
         userId: userState?.id,
         eventId: eventData.id,
-      })
-      .then((res) => {
-        //do something with result - say event successfully joined or something
-        console.log("left event");
-      })
-      .catch((error) => {
-        console.error("couldn't leave event:", error);
       });
-    onClose();
+      setLeftEvent(true); // Set the state to indicate that the user has left the event
+      onClose();
+    } catch (error) {
+      console.error("Couldn't leave event:", error);
+    }
   };
+
+  // Display an alert when the user successfully leaves the event
+  const showLeaveEventAlert = () => {
+    Alert.alert("Success", "You have successfully left the event.", [
+      {
+        text: "OK",
+        onPress: () => {
+          setLeftEvent(false); // Reset the state
+        },
+      },
+    ]);
+  };
+
+  // Render the alert message when the user leaves the event
+  const renderLeaveEventAlert = () => {
+    if (leftEvent) {
+      return (
+        <View style={styles.alertContainer}>
+          <Text style={styles.alertText}>
+            You have successfully left the event.
+          </Text>
+        </View>
+      );
+    }
+    return null;
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -65,7 +96,6 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
           >
             <Icon name="close-circle-outline" size={30} />
           </TouchableOpacity>
-
           <Text style={styles.modalText}>{eventData.title}</Text>
           <Text>Host: {eventData.host}</Text>
           <Text>{eventData.location}</Text>
@@ -89,7 +119,10 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
           </TouchableOpacity>
           <TouchableOpacity
             style={{ marginTop: "10%" }}
-            onPress={handleLeaveEvent}
+            onPress={() => {
+              handleLeaveEvent();
+              showLeaveEventAlert();
+            }}
           >
             <Text
               style={{
@@ -101,6 +134,7 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
               Leave Event
             </Text>
           </TouchableOpacity>
+          {renderLeaveEventAlert()} {/* Render the alert message */}
         </View>
       </ScrollView>
     </Modal>
@@ -147,6 +181,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     paddingHorizontal: 20,
+  },
+  alertContainer: {
+    backgroundColor: "rgba(0, 255, 0, 0.7)",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  alertText: {
+    color: "green",
+    textAlign: "center",
   },
 });
 

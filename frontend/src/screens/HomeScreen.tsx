@@ -51,7 +51,7 @@ export const HomeScreen = () => {
     date: string;
     time: string;
     description: string;
-    host: string;
+    hostName: string;
     participants: string;
     updatedAt: string;
     username: string;
@@ -100,7 +100,8 @@ export const HomeScreen = () => {
             >
               <Icon name="person-circle-outline" size={48} color="black" />
               <Text style={{ fontSize: 18, paddingLeft: "2%" }}>
-                {value.host}
+                {/* need to get first and last name instead of id for host */}
+                {value.hostName}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -130,7 +131,7 @@ export const HomeScreen = () => {
                 date: selectedEvent.date,
                 time: selectedEvent.time,
                 description: selectedEvent.description,
-                host: selectedEvent.host,
+                host: selectedEvent.hostName,
               }
             : {
                 id: 0,
