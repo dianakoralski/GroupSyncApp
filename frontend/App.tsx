@@ -15,7 +15,9 @@ import NotificationsScreen from "./src/screens/NotificationsScreen";
 import { EventInvitesScreen } from "./src/screens/EventInvitesScreen";
 import { CreateEvent } from "./src/screens/CreateEvent";
 import { FriendRequestsScreen } from "./src/screens/FriendRequestsScreen";
+import LoadingIndicator from "./src/components/LoadingIndicator";
 import { EventChatScreen } from "./src/screens/EventChatScreen";
+
 
 import { Button } from "react-native";
 export type StackParams = {
@@ -49,6 +51,9 @@ export default function App() {
 
 export const Layout = () => {
   const { authState } = useAuth();
+  if (authState?.authenticated === null) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <NavigationContainer>

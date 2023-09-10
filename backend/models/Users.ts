@@ -1,4 +1,5 @@
 import { Sequelize, DataTypes } from "sequelize";
+const { Posts } = require("../models");
 
 module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
   const Users = sequelize.define("Users", {

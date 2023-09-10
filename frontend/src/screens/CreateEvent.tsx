@@ -25,13 +25,11 @@ export const CreateEvent = () => {
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false); // Track event visibility
   const { userState } = useAuth();
-  const [email, setEmail] = useState(userState?.email);
-  useEffect(() => {}, []);
 
   const handleCreateEvent = async () => {
     // Handle the event creation logic here
     // You can send the event details and isPublic to your backend or perform any other actions.
-    const host = email;
+    const hostId = userState?.id;
     await axios.post(`${API_URL}/posts`, {
       title,
       location,
@@ -39,7 +37,7 @@ export const CreateEvent = () => {
       time,
       description,
       isPublic,
-      host,
+      hostId,
     });
     navigation.navigate("Home");
   };

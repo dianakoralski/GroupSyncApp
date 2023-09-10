@@ -31,7 +31,8 @@ interface Post {
   date: string;
   time: string;
   description: string;
-  host: string;
+  hostName: string;
+  hostId: number;
   participants: string;
   updatedAt: string;
   username: string;
@@ -47,8 +48,6 @@ const FirstRoute = () => {
 
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
   const { userState } = useAuth();
-  const [email, setEmail] = useState(userState?.email);
-
   useEffect(() => {}, []);
 
   const [isEventDetailsVisible, setIsEventDetailsVisible] = useState(false);
@@ -58,7 +57,9 @@ const FirstRoute = () => {
     setSelectedEvent(post);
     setIsEventDetailsVisible(true);
   };
-  const selfHostedPosts = listOfPosts.filter((value) => value.host === email);
+  const selfHostedPosts = listOfPosts.filter(
+    (value) => value.hostId === userState?.id
+  );
   return (
     <View style={[styles.scene]}>
       <ScrollView style={{ width: "100%", marginTop: "5%" }}>
@@ -83,7 +84,7 @@ const FirstRoute = () => {
           </TouchableOpacity>
         </View>
         {selfHostedPosts.map((value, key) => (
-          <View key={key}>
+          <View key={key} style={{ marginBottom: "5%" }}>
             {/* event link */}
             <TouchableOpacity
               key={key}
@@ -111,7 +112,8 @@ const FirstRoute = () => {
                 date: selectedEvent.date,
                 time: selectedEvent.time,
                 description: selectedEvent.description,
-                host: selectedEvent.host,
+                hostId: selectedEvent.hostId,
+                hostName: selectedEvent.hostName,
               }
             : {
                 title: "",
@@ -119,7 +121,8 @@ const FirstRoute = () => {
                 date: "",
                 time: "",
                 description: "",
-                host: "",
+                hostId: 0,
+                hostName: "",
               }
         }
       />
@@ -133,7 +136,6 @@ const SecondRoute = () => {
   const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
 
   const { userState } = useAuth();
-  console.log("userState: ", userState);
   useEffect(() => {
     axios
       .post(`${API_URL}/eventParticipants/eventsByUser`, {
@@ -192,7 +194,7 @@ const SecondRoute = () => {
             >
               <Icon name="person-circle-outline" size={48} color="black" />
               <Text style={{ fontSize: 18, paddingLeft: "2%" }}>
-                {value.host}
+                {value.hostName}
               </Text>
             </TouchableOpacity>
 
@@ -219,20 +221,24 @@ const SecondRoute = () => {
         eventData={
           selectedEvent
             ? {
+                id: selectedEvent.id,
                 title: selectedEvent.title,
                 location: selectedEvent.location,
                 date: selectedEvent.date,
                 time: selectedEvent.time,
                 description: selectedEvent.description,
-                host: selectedEvent.host,
+                hostId: selectedEvent.hostId,
+                hostName: selectedEvent.hostName,
               }
             : {
+                id: 0,
                 title: "",
                 location: "",
                 date: "",
                 time: "",
                 description: "",
-                host: "",
+                hostId: 0,
+                hostName: "",
               }
         }
       />
