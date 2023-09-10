@@ -49,6 +49,11 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
       });
     onClose();
   };
+
+  const handleOverlayPress = () => {
+    onClose();
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -56,18 +61,23 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <ScrollView style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <TouchableOpacity
-            onPress={onClose}
-            style={{
-              alignSelf: "flex-end",
-              marginTop: "-5%",
-              marginEnd: "-5%",
-            }}
-          >
-            <Icon name="close-circle-outline" size={30} />
-          </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.overlay} // Add this overlay
+        activeOpacity={1} // Prevents the overlay from passing the touch event to underlying components
+        onPress={handleOverlayPress}
+      >
+        <ScrollView style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              onPress={onClose}
+              style={{
+                alignSelf: "flex-end",
+                marginTop: "-5%",
+                marginEnd: "-5%",
+              }}
+            >
+              <Icon name="close-circle-outline" size={30} />
+            </TouchableOpacity>
 
           <Text style={styles.modalText}>{eventData.title}</Text>
           <Text>Host: {eventData.hostName}</Text>
@@ -134,6 +144,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     paddingHorizontal: 40,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black color
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
