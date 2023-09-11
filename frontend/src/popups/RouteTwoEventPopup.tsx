@@ -135,7 +135,6 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
               Leave Event
             </Text>
           </TouchableOpacity>
-          {renderLeaveEventAlert()} {/* Render the alert message */}
         </View>
       </ScrollView>
     </Modal>
