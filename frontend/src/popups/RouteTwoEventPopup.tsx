@@ -126,58 +126,17 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
             }}
           >
             <Text
-      <TouchableOpacity
-        style={styles.overlay} // Add this overlay
-        activeOpacity={1} // Prevents the overlay from passing the touch event to underlying components
-        onPress={handleOverlayPress}
-      >
-        <ScrollView style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TouchableOpacity
-              onPress={onClose}
               style={{
-                alignSelf: "flex-end",
-                marginTop: "-5%",
-                marginEnd: "-5%",
+                fontSize: 12,
+                alignSelf: "center",
+                textDecorationLine: "underline",
               }}
             >
-              <Icon name="close-circle-outline" size={30} />
-            </TouchableOpacity>
-
-            <Text style={styles.modalText}>{eventData.title}</Text>
-            <Text>Host: {eventData.host}</Text>
-            <Text>{eventData.location}</Text>
-            <Text>{eventData.date}</Text>
-            <Text>{eventData.time}</Text>
-            <Text>{eventData.description}</Text>
-            <TouchableOpacity style={{ marginBottom: "5%" }}>
-              <Text style={{ color: "gray", textDecorationLine: "underline" }}>
-                See participants
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                navigation.navigate("EventChat", eventData);
-                onClose();
-              }}
-            >
-              <Text style={styles.buttonText}>Event Chat</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ marginTop: "10%" }}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  alignSelf: "center",
-                  textDecorationLine: "underline",
-                }}
-              >
-                Leave Event
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </TouchableOpacity>
+              Leave Event
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </Modal>
   );
 };
@@ -232,11 +191,12 @@ const styles = StyleSheet.create({
   alertText: {
     color: "green",
     textAlign: "center",
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black color
-    justifyContent: "center",
-    alignItems: "center",
+    overlay: {
+      flex: 1,
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black color
+      justifyContent: "center",
+      alignItems: "center",
+    },
   },
 });
 

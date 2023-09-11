@@ -22,9 +22,17 @@ router.post("/", async (req: any, res: any) => {
     });
 
     return res.status(200).json({ message: "Joined the event successfully" });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
+  } catch (error: any) {
+    if (error.name === "SequelizeUniqueConstraintError") {
+      // Handle the duplicate entry error here
+      console.error("You have already joined this event.");
+      return res
+        .status(400)
+        .json({ message: "You have already joined this event" });
+    } else {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
   }
 });
 
@@ -110,6 +118,49 @@ router.post("/leave", async (req: any, res: any) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.post("/seeAll", async (req: any, res: any) => {
+  try {
+    // Extract the eventId from the request body
+    const { eventId } = req.body;
+
+    // Find all rows with the specified eventId
+    const participantsWithEventId = await EventParticipants.findAll({
+      where: {
+        eventId: eventId,
+      },
+    });
+
+    // Extract the participantId from each row
+    const participantIds = participantsWithEventId.map((participant: any) => {
+      return participant.participantId;
+    });
+
+    // Find the names of participants based on their userIds
+    const participantNames = await Promise.all(
+      participantIds.map(async (userId: any) => {
+        const user = await Users.findByPk(userId, {
+          attributes: ["id", "firstName", "lastName", "profilePicture"],
+        });
+        return user
+          ? {
+              userId: user.id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              profilePicture: user.profilePicture,
+            }
+          : "User not found";
+      })
+    );
+
+    // Send the extracted participant names as the response
+    console.log("participants: ", participantNames);
+    res.json(participantNames);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

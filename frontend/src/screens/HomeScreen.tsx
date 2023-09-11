@@ -26,6 +26,7 @@ export const HomeScreen = () => {
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
     setActiveTab(tab);
   };
+  const [visibleParticipants, setVisibleParticipants] = useState(false);
 
   const [refreshing, setRefreshing] = useState(false);
   const handleRefresh = () => {
