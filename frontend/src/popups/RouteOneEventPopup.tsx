@@ -49,34 +49,35 @@ export const RouteOneEventPopup: React.FC<RouteOneEvent> = ({
               onPress={onClose}
               style={{
                 alignSelf: "flex-end",
-                marginTop: "-5%",
-                marginEnd: "-5%",
+                marginTop: -5,
+                marginEnd: -5,
               }}
             >
               <Icon name="close-circle-outline" size={30} />
             </TouchableOpacity>
 
-          <Text style={styles.modalText}>{eventData.title}</Text>
-          <Text>Host: {eventData.hostName}</Text>
-          <Text>{eventData.location}</Text>
-          <Text>{eventData.date}</Text>
-          <Text>{eventData.time}</Text>
-          <Text>{eventData.description}</Text>
-          <TouchableOpacity>
-            <Text style={{ color: "gray", textDecorationLine: "underline" }}>
-              See participants
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              onClose();
-            }}
-          >
-            <Text style={styles.buttonText}>Invite Friends</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            <Text style={styles.modalText}>{eventData.title}</Text>
+            <Text>Host: {eventData.hostName}</Text>
+            <Text>{eventData.location}</Text>
+            <Text>{eventData.date}</Text>
+            <Text>{eventData.time}</Text>
+            <Text>{eventData.description}</Text>
+            <TouchableOpacity>
+              <Text style={{ color: "gray", textDecorationLine: "underline" }}>
+                See participants
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                onClose();
+              }}
+            >
+              <Text style={styles.buttonText}>Invite Friends</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </TouchableOpacity>
     </Modal>
   );
 };
