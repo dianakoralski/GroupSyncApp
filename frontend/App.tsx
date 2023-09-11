@@ -16,6 +16,8 @@ import { EventInvitesScreen } from "./src/screens/EventInvitesScreen";
 import { CreateEvent } from "./src/screens/CreateEvent";
 import { FriendRequestsScreen } from "./src/screens/FriendRequestsScreen";
 import LoadingIndicator from "./src/components/LoadingIndicator";
+import { EventChatScreen } from "./src/screens/EventChatScreen";
+
 
 import { Button } from "react-native";
 export type StackParams = {
@@ -34,6 +36,7 @@ export type StackParams = {
   CreateEvent: object;
   FriendRequests: object;
   EventDetails: object;
+  EventChat: object;
 };
 
 const Stack = createStackNavigator<StackParams>();
@@ -72,6 +75,7 @@ export const Layout = () => {
               name="FriendRequests"
               component={FriendRequestsScreen}
             />
+            <Stack.Screen name="EventChat" component={EventChatScreen} />
           </>
         ) : (
           <>

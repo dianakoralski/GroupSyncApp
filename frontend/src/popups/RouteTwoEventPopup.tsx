@@ -191,6 +191,11 @@ const styles = StyleSheet.create({
   alertText: {
     color: "green",
     textAlign: "center",
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black color
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

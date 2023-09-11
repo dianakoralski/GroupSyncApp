@@ -134,6 +134,10 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
     );
   };
 
+  const handleOverlayPress = () => {
+    onClose();
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -247,6 +251,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     paddingHorizontal: 40,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black color
+    justifyContent: "center",
+    alignItems: "center",
   },
   participantItem: {
     flexDirection: "row",
