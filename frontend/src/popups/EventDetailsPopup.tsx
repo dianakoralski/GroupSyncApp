@@ -46,7 +46,6 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
   const [participantsData, setParticipantsData] = useState<Participant[]>([]);
   const [visibleParticipants, setVisibleParticipants] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const { userState } = useAuth();
   console.log("event id: ", eventData.id);
@@ -110,6 +109,7 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
         {
           text: "OK",
           onPress: () => {
+            setVisibleParticipants(false);
             onClose();
           },
         },
@@ -126,6 +126,7 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
         {
           text: "OK",
           onPress: () => {
+            setVisibleParticipants(false);
             onClose();
           },
         },
@@ -135,6 +136,7 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
   };
 
   const handleOverlayPress = () => {
+    setVisibleParticipants(false);
     onClose();
   };
 
@@ -148,7 +150,10 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
       <ScrollView style={styles.centeredView}>
         <View style={styles.modalView}>
           <TouchableOpacity
-            onPress={onClose}
+            onPress={() => {
+              onClose();
+              setVisibleParticipants(false);
+            }}
             style={{
               alignSelf: "flex-end",
               marginTop: "-5%",
@@ -167,30 +172,53 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
             <>
               <TouchableOpacity>
                 <Text
-                  style={{ color: "gray", textDecorationLine: "underline" }}
+                  style={{
+                    color: "gray",
+                    textDecorationLine: "underline",
+                    marginBottom: "5%",
+                  }}
                   onPress={() => handleOnPressParticipants()}
                 >
-                  Hide participants
+                  Hide participants ({participantsData.length})
                 </Text>
               </TouchableOpacity>
               <View>
-                {participantsData.map((item) => (
-                  <View style={styles.participantItem} key={item.userId}>
-                    <Image
-                      source={{ uri: item.profilePicture }}
-                      style={styles.profilePicture}
-                    />
-                    <Text>
-                      {item.firstName} {item.lastName}
-                    </Text>
-                  </View>
-                ))}
+                {participantsData.slice(0, 10).map(
+                  (
+                    item // Slice the array to get the first 10 participants
+                  ) => (
+                    <View style={styles.participantItem} key={item.userId}>
+                      {item.profilePicture ? (
+                        <Image
+                          source={{ uri: item.profilePicture }}
+                          style={styles.profilePicture}
+                        />
+                      ) : (
+                        <Icon name="person-circle" size={40} />
+                      )}
+                      <Text style={{ marginLeft: "2%" }}>
+                        {item.firstName} {item.lastName}
+                      </Text>
+                    </View>
+                  )
+                )}
+                {participantsData.length > 10 && ( // Check if there are more than 10 participants
+                  <TouchableOpacity
+                    onPress={() => console.log("load other participants")}
+                  >
+                    <Text>Show more...</Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </>
           ) : (
             <TouchableOpacity>
               <Text
-                style={{ color: "gray", textDecorationLine: "underline" }}
+                style={{
+                  color: "gray",
+                  textDecorationLine: "underline",
+                  marginBottom: "5%",
+                }}
                 onPress={() => handleOnPressParticipants()}
               >
                 See participants
