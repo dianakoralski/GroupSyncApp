@@ -17,7 +17,7 @@ import { CreateEvent } from "./src/screens/CreateEvent";
 import { FriendRequestsScreen } from "./src/screens/FriendRequestsScreen";
 import LoadingIndicator from "./src/components/LoadingIndicator";
 import { EventChatScreen } from "./src/screens/EventChatScreen";
-
+import { EditEventScreen } from "./src/screens/EditEventScreen";
 
 import { Button } from "react-native";
 export type StackParams = {
@@ -37,6 +37,7 @@ export type StackParams = {
   FriendRequests: object;
   EventDetails: object;
   EventChat: object;
+  EditEvent: object;
 };
 
 const Stack = createStackNavigator<StackParams>();
@@ -51,9 +52,9 @@ export default function App() {
 
 export const Layout = () => {
   const { authState } = useAuth();
-  if (authState?.authenticated === null) {
-    return <LoadingIndicator />;
-  }
+  // if (authState?.authenticated === null) {
+  //   return <LoadingIndicator />;
+  // }
 
   return (
     <NavigationContainer>
@@ -76,6 +77,7 @@ export const Layout = () => {
               component={FriendRequestsScreen}
             />
             <Stack.Screen name="EventChat" component={EventChatScreen} />
+            <Stack.Screen name="EditEvent" component={EditEventScreen} />
           </>
         ) : (
           <>

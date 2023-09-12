@@ -75,6 +75,24 @@ export const RouteOneEventPopup: React.FC<RouteOneEvent> = ({
             >
               <Text style={styles.buttonText}>Invite Friends</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("EditEvent");
+              }}
+              style={{ marginTop: "10%", flexDirection: "row" }}
+            >
+              <Icon name="pencil-outline"></Icon>
+              <Text
+                style={{
+                  fontSize: 12,
+                  alignSelf: "center",
+                  textDecorationLine: "underline",
+                  marginLeft: "3%",
+                }}
+              >
+                Edit Event
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </TouchableOpacity>
