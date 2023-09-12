@@ -73,6 +73,7 @@ export const HomeScreen = () => {
     setSelectedEvent(event);
     setIsEventDetailsVisible(true);
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>

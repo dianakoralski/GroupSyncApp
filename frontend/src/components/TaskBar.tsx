@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
+import { useAuth } from "../../context/AuthContext";
 
 interface TaskBarProps {
   activeTab: "tab1" | "tab2" | "tab3";
@@ -12,6 +13,7 @@ interface TaskBarProps {
 
 const TaskBar: React.FC<TaskBarProps> = ({ activeTab, onTabPress }) => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
+  const { userState } = useAuth();
 
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
     // Navigate to the corresponding screen based on the tab pressed
@@ -60,17 +62,29 @@ const TaskBar: React.FC<TaskBarProps> = ({ activeTab, onTabPress }) => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.tab, activeTab === "tab3" && styles.activeTab]}
         onPress={() => {
           onTabPress("tab3");
           handleTabPress("tab3");
         }}
       >
-        <Icon
-          name="person-outline"
-          size={32}
-          color={activeTab === "tab3" ? "red" : "gray"}
-        />
+        {userState?.profilePicture ? (
+          <Image
+            source={{ uri: userState?.profilePicture }}
+            style={{
+              width: 58,
+              height: 58,
+              borderRadius: 29,
+              borderWidth: 1,
+              borderColor: "black",
+            }}
+          />
+        ) : (
+          <Icon
+            name="person-outline"
+            size={32}
+            color={activeTab === "tab3" ? "red" : "gray"}
+          />
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -122,6 +136,7 @@ const styles = StyleSheet.create({
     //resizeMode: "contain",
     borderRadius: 150,
     borderWidth: 1,
+    borderColor: "black",
   },
 });
 

@@ -70,6 +70,7 @@ export const RouteOneEventPopup: React.FC<RouteOneEvent> = ({
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
+                navigation.navigate("InviteFriends");
                 onClose();
               }}
             >

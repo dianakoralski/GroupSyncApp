@@ -42,10 +42,6 @@ export const CreateEvent = () => {
     navigation.navigate("Home");
   };
 
-  const handleInviteFriends = () => {
-    // Implement the logic to invite friends to the event
-  };
-
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -118,7 +114,7 @@ export const CreateEvent = () => {
           </View>
           <TouchableOpacity
             style={styles.inviteButton}
-            onPress={handleInviteFriends}
+            onPress={() => navigation.navigate("InviteFriends")}
           >
             <Text style={styles.inviteButtonText}>Invite Friends</Text>
           </TouchableOpacity>
