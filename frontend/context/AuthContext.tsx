@@ -28,7 +28,7 @@ interface AuthProps {
 const TOKEN_KEY = "my-jwt";
 const USER_DATA = "user_data_key"; // Valid key name
 
-export const API_URL = `http://10.0.2.2:3001`;
+export const API_URL = `http://localhost:3001`;
 
 const AuthContext = createContext<AuthProps>({});
 

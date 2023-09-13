@@ -14,6 +14,7 @@ import { StackParams } from "../../App";
 import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
 import { API_URL, useAuth } from "../../context/AuthContext";
+import ParticipantsList from "../components/ParticipantsList";
 
 interface RouteTwoEvent {
   isVisible: boolean;
@@ -108,11 +109,7 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
             <Text>{eventData.date}</Text>
             <Text>{eventData.time}</Text>
             <Text>{eventData.description}</Text>
-            <TouchableOpacity style={{ marginBottom: "5%" }}>
-              <Text style={{ color: "gray", textDecorationLine: "underline" }}>
-                See participants
-              </Text>
-            </TouchableOpacity>
+            <ParticipantsList eventId={eventData.id} />
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
