@@ -80,7 +80,10 @@ export const HomeScreen = () => {
         <View style={styles.searchBarContainer}>
           <SearchBar placeholder="Search..." />
         </View>
-        <TouchableOpacity style={styles.qrCodeIcon}>
+        <TouchableOpacity
+          style={styles.qrCodeIcon}
+          onPress={() => navigation.navigate("SearchScreen")}
+        >
           <Icon name="qr-code-outline" size={38} color="black" />
         </TouchableOpacity>
       </View>
@@ -90,35 +93,37 @@ export const HomeScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         }
       >
-        {listOfPosts.map((value, key) => (
-          <View key={key}>
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginLeft: "5%",
-                marginBottom: "2%",
-              }}
-            >
-              <Icon name="person-circle-outline" size={48} color="black" />
-              <Text style={{ fontSize: 18, paddingLeft: "2%" }}>
-                {/* need to get first and last name instead of id for host */}
-                {value.hostName}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.postBox}
-              onPress={() => showEventDetails(value)}
-            >
-              <View style={styles.postText}>
-                <Text style={{ fontSize: 25 }}>{value.title}</Text>
-                <Text style={{ fontSize: 18 }}>{value.location}</Text>
-                <Text style={{ fontSize: 18 }}>{value.date}</Text>
-                <Text style={{ fontSize: 18 }}>{value.time}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ))}
+        <View style={{ paddingBottom: 20 }}>
+          {listOfPosts.map((value, key) => (
+            <View key={key}>
+              <TouchableOpacity
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginLeft: "5%",
+                  marginBottom: "2%",
+                }}
+              >
+                <Icon name="person-circle-outline" size={48} color="black" />
+                <Text style={{ fontSize: 18, paddingLeft: "2%" }}>
+                  {/* need to get first and last name instead of id for host */}
+                  {value.hostName}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.postBox}
+                onPress={() => showEventDetails(value)}
+              >
+                <View style={styles.postText}>
+                  <Text style={{ fontSize: 25 }}>{value.title}</Text>
+                  <Text style={{ fontSize: 18 }}>{value.location}</Text>
+                  <Text style={{ fontSize: 18 }}>{value.date}</Text>
+                  <Text style={{ fontSize: 18 }}>{value.time}</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
       </ScrollView>
 
       <EventDetailScreen
