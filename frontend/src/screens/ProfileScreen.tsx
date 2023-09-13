@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -17,7 +16,6 @@ import { StackParams } from "../../App";
 
 export const ProfileScreen = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
-  //Taskbar tabs
   const [activeTab, setActiveTab] = useState("tab3");
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
     setActiveTab(tab);
@@ -30,27 +28,15 @@ export const ProfileScreen = () => {
           <SearchBar placeholder="Search..." />
         </View>
         <TouchableOpacity
-          style={styles.qrCodeIcon}
+          style={styles.settingsIcon}
           onPress={() => navigation.navigate("Settings")}
         >
           <Icon name="cog-outline" size={42} color="black" />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.middleSection}>
-        <View style={{ alignItems: "center" }}>
-          <Icon name="person-circle-outline" size={128} color="black" />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Friends");
-            }}
-          >
-            <Text style={{ textDecorationLine: "underline" }}>321 Friends</Text>
-          </TouchableOpacity>
-          <View style={{ flex: 0, height: "130%" }}>
-            <Slider />
-          </View>
-        </View>
-      </ScrollView>
+      <View style={{ alignItems: "center", height: "76%" }}>
+        <Slider />
+      </View>
       <View style={styles.bottomSection}>
         <TaskBar activeTab={"tab3"} onTabPress={handleTabPress} />
       </View>
@@ -70,14 +56,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 10,
+    backgroundColor: "rgba(236, 255, 250, 1)",
   },
   middleSection: {
     alignSelf: "center",
-    backgroundColor: "rgba(245,245,245,1)",
-    height: 5000,
+    backgroundColor: "rgba(236, 255, 250, 1)",
   },
   bottomSection: {
-    //flex: 0,
     backgroundColor: "rgba(255,179,90,1)",
   },
   searchBarContainer: {
@@ -87,9 +72,8 @@ const styles = StyleSheet.create({
   searchBar: {
     width: "100%", // Adjust the width as needed
   },
-  qrCodeIcon: {
+  settingsIcon: {
     paddingRight: 20,
-    paddingTop: 10,
   },
   postBox: {
     width: "80%",

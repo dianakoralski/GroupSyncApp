@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import BackButton from "../components/BackButton";
 import axios from "axios";
-import { API_URL } from "../../context/AuthContext";
+import { API_URL, useAuth } from "../../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
@@ -24,20 +24,12 @@ export const CreateEvent = () => {
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false); // Track event visibility
-
-  const [email, setEmail] = useState("");
-  useEffect(() => {
-    axios.get(`${API_URL}/users/user`).then((res) => {
-      const userInfo = res.data.userInfo;
-      console.log("User Data:", res.data.userInfo);
-      setEmail(userInfo.email);
-    });
-  }, []);
+  const { userState } = useAuth();
 
   const handleCreateEvent = async () => {
     // Handle the event creation logic here
     // You can send the event details and isPublic to your backend or perform any other actions.
-    const host = email;
+    const hostId = userState?.id;
     await axios.post(`${API_URL}/posts`, {
       title,
       location,
@@ -45,7 +37,7 @@ export const CreateEvent = () => {
       time,
       description,
       isPublic,
-      host,
+      hostId,
     });
     navigation.navigate("Home");
   };
@@ -145,7 +137,7 @@ export const CreateEvent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(245,245,245,1)",
+    backgroundColor: "rgba(236, 255, 250, 1)",
     marginTop: "10%",
   },
   topSection: {
@@ -159,6 +151,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
+    paddingTop: "10%",
   },
   input: {
     width: "80%",

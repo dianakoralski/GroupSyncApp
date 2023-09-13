@@ -27,11 +27,14 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
       type: dataTypes.BOOLEAN,
       defaultValue: true,
     },
-    participants: {
-      type: dataTypes.STRING,
-    },
-    host: {
-      type: dataTypes.STRING,
+    hostId: {
+      type: DataTypes.INTEGER,
+      //allowNull: false,
+      defaultValue: 0,
+      references: {
+        model: "Users", // Make sure this matches your Users model name
+        key: "id",
+      },
     },
   });
   return Posts;

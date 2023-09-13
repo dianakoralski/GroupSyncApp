@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,54 +9,29 @@ import {
 } from "react-native";
 import SearchBar from "../components/SearchBar";
 import TaskBar from "../components/TaskBar";
-//import QRCodeScanner from "../components/QRCodeScanner";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
-import { API_URL } from "../../context/AuthContext";
+import EventDetailScreen from "../popups/EventDetailsPopup";
+import { API_URL, useAuth } from "../../context/AuthContext";
 
 export const HomeScreen = () => {
+  const { userState } = useAuth();
+  console.log("user data in home screen: ", userState);
+  //use nav for QR code - do not delete
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
-
-  useEffect(() => {}, []);
-  //Taskbar tabs
   const [activeTab, setActiveTab] = useState("tab1");
   const handleTabPress = (tab: "tab1" | "tab2" | "tab3") => {
     setActiveTab(tab);
   };
+  const [visibleParticipants, setVisibleParticipants] = useState(false);
 
-  //QR Scanner
-  const [showScanner, setShowScanner] = useState(false);
-  // const handleQRCodeIconPress = () => {
-  //   setShowScanner(true);
-  // };
-
-  // const handleScannerClose = () => {
-  //   setShowScanner(false);
-  // };
-
-  //Posts data
-  interface Post {
-    createdAt: string;
-    id: number;
-    title: string;
-    location: string;
-    date: string;
-    time: string;
-    description: string;
-    host: string;
-    participants: string;
-    updatedAt: string;
-    username: string;
-  }
   const [refreshing, setRefreshing] = useState(false);
-
   const handleRefresh = () => {
     setRefreshing(true);
 
-    // Perform your data fetching here, e.g. call axios.get(...)
     axios
       .get(`${API_URL}/posts`)
       .then((res) => {
@@ -70,12 +44,35 @@ export const HomeScreen = () => {
       });
   };
 
+  interface Post {
+    createdAt: string;
+    id: number;
+    title: string;
+    location: string;
+    date: string;
+    time: string;
+    description: string;
+    hostId: number;
+    hostName: string;
+    participants: string;
+    updatedAt: string;
+    username: string;
+  }
+
   const [listOfPosts, setListOfPosts] = useState<Post[]>([]);
   useEffect(() => {
     axios.get(`${API_URL}/posts`).then((res) => {
       setListOfPosts(res.data);
     });
   }, []);
+
+  const [isEventDetailsVisible, setIsEventDetailsVisible] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Post | null>(null);
+
+  const showEventDetails = (event: Post) => {
+    setSelectedEvent(event);
+    setIsEventDetailsVisible(true);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -94,20 +91,24 @@ export const HomeScreen = () => {
       >
         {listOfPosts.map((value, key) => (
           <View key={key}>
-            {/* Host name and photo (links to thier profile) */}
             <TouchableOpacity
               style={{
                 flexDirection: "row",
-                alignItems: "baseline",
-                marginLeft: "10%",
+                alignItems: "center",
+                marginLeft: "5%",
                 marginBottom: "2%",
               }}
             >
-              <Icon name="person-circle-outline" size={38} color="black" />
-              <Text style={{ paddingBottom: "1%" }}> {value.host}</Text>
+              <Icon name="person-circle-outline" size={48} color="black" />
+              <Text style={{ fontSize: 18, paddingLeft: "2%" }}>
+                {/* need to get first and last name instead of id for host */}
+                {value.hostName}
+              </Text>
             </TouchableOpacity>
-            {/* event link */}
-            <TouchableOpacity style={styles.postBox}>
+            <TouchableOpacity
+              style={styles.postBox}
+              onPress={() => showEventDetails(value)}
+            >
               <View style={styles.postText}>
                 <Text style={{ fontSize: 25 }}>{value.title}</Text>
                 <Text style={{ fontSize: 18 }}>{value.location}</Text>
@@ -118,6 +119,34 @@ export const HomeScreen = () => {
           </View>
         ))}
       </ScrollView>
+
+      <EventDetailScreen
+        isVisible={isEventDetailsVisible}
+        onClose={() => setIsEventDetailsVisible(false)}
+        eventData={
+          selectedEvent
+            ? {
+                id: selectedEvent.id,
+                title: selectedEvent.title,
+                location: selectedEvent.location,
+                date: selectedEvent.date,
+                time: selectedEvent.time,
+                description: selectedEvent.description,
+                hostName: selectedEvent.hostName,
+                hostId: selectedEvent.hostId,
+              }
+            : {
+                id: 0,
+                title: "",
+                location: "",
+                date: "",
+                time: "",
+                description: "",
+                hostName: "",
+                hostId: 0,
+              }
+        }
+      />
       <View style={styles.bottomSection}>
         <TaskBar activeTab={"tab1"} onTabPress={handleTabPress} />
       </View>
@@ -137,26 +166,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 10,
+    backgroundColor: "rgba(236, 255, 250, 1)",
   },
   middleSection: {
     flex: 1,
-    backgroundColor: "rgba(245,245,245,1)",
-    marginTop: 20,
+    backgroundColor: "rgba(236, 255, 250, 1)",
+    paddingTop: 20,
   },
   bottomSection: {
-    //flex: 0.15,
     backgroundColor: "rgba(255,179,90,1)",
   },
   searchBarContainer: {
     flex: 1,
-    paddingRight: 10, // Add some spacing between search bar and QR icon
+    paddingRight: 10,
   },
   searchBar: {
-    width: "100%", // Adjust the width as needed
+    width: "100%",
   },
   qrCodeIcon: {
     paddingRight: 20,
-    paddingTop: 10,
   },
   postBox: {
     width: "80%",
