@@ -49,8 +49,8 @@ export const RouteOneEventPopup: React.FC<RouteOneEvent> = ({
               onPress={onClose}
               style={{
                 alignSelf: "flex-end",
-                marginTop: "-5%",
-                marginEnd: "-5%",
+                marginTop: -5,
+                marginEnd: -5,
               }}
             >
               <Icon name="close-circle-outline" size={30} />
@@ -70,10 +70,38 @@ export const RouteOneEventPopup: React.FC<RouteOneEvent> = ({
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
+                navigation.navigate("EventChat", eventData);
+                onClose();
+              }}
+            >
+              <Text style={styles.buttonText}>Event Chat</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                navigation.navigate("InviteFriends");
                 onClose();
               }}
             >
               <Text style={styles.buttonText}>Invite Friends</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("EditEvent");
+              }}
+              style={{ marginTop: "10%", flexDirection: "row" }}
+            >
+              <Icon name="pencil-outline"></Icon>
+              <Text
+                style={{
+                  fontSize: 12,
+                  alignSelf: "center",
+                  textDecorationLine: "underline",
+                  marginLeft: "3%",
+                }}
+              >
+                Edit Event
+              </Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -108,7 +136,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   button: {
-    marginTop: "2%",
+    marginTop: "5%",
     alignSelf: "center",
     backgroundColor: "rgba(239,160,79,1)",
     padding: 10,
