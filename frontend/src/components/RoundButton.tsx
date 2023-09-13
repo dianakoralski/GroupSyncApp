@@ -16,6 +16,7 @@ const RoundButton: React.FC<RoundButtonProps> = ({ onImageSelected }) => {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
+      base64: true,
     });
 
     if (!result.canceled) {

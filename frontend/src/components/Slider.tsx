@@ -107,6 +107,7 @@ const FirstRoute = () => {
         eventData={
           selectedEvent
             ? {
+                id: selectedEvent.id,
                 title: selectedEvent.title,
                 location: selectedEvent.location,
                 date: selectedEvent.date,
@@ -116,6 +117,7 @@ const FirstRoute = () => {
                 hostName: selectedEvent.hostName,
               }
             : {
+                id: 0,
                 title: "",
                 location: "",
                 date: "",

@@ -5,11 +5,13 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
 import { ScrollView } from "react-native-gesture-handler";
+import ParticipantsList from "../components/ParticipantsList";
 
 interface RouteOneEvent {
   isVisible: boolean;
   onClose: () => void;
   eventData: {
+    id: number;
     title: string;
     hostId: number;
     hostName: string;
@@ -62,11 +64,7 @@ export const RouteOneEventPopup: React.FC<RouteOneEvent> = ({
             <Text>{eventData.date}</Text>
             <Text>{eventData.time}</Text>
             <Text>{eventData.description}</Text>
-            <TouchableOpacity>
-              <Text style={{ color: "gray", textDecorationLine: "underline" }}>
-                See participants
-              </Text>
-            </TouchableOpacity>
+            <ParticipantsList eventId={eventData.id} />
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
