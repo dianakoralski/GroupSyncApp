@@ -50,7 +50,9 @@ const ParticipantsList: React.FC<EventIdProps> = ({ eventId }) => {
               <View style={styles.participantItem} key={item.userId}>
                 {item.profilePicture ? (
                   <Image
-                    source={{ uri: item.profilePicture }}
+                    source={{
+                      uri: item.profilePicture,
+                    }}
                     style={styles.profilePicture}
                   />
                 ) : (
