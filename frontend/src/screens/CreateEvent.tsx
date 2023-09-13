@@ -133,7 +133,7 @@ export const CreateEvent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(236, 255, 250, 1)",
+    backgroundColor: "#f5f5f5",
     marginTop: "10%",
   },
   topSection: {

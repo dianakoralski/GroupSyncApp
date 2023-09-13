@@ -9,6 +9,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  ScrollView,
 } from "react-native";
 import BackButton from "../components/BackButton";
 import { useNavigation } from "@react-navigation/native"; // Import the navigation hook
@@ -16,23 +17,40 @@ import { useNavigation } from "@react-navigation/native"; // Import the navigati
 interface FriendsList {
   icon: string;
   title: string;
+  selected: boolean; // Add a selected property
 }
 
 const initialFriends: FriendsList[] = [
-  { icon: "person-circle-outline", title: "Jack" },
-  { icon: "person-circle-outline", title: "Maria M" },
-  { icon: "person-circle-outline", title: "Noah" },
-  { icon: "person-circle-outline", title: "Bak" },
+  { icon: "person-circle-outline", title: "Jack", selected: false },
+  { icon: "person-circle-outline", title: "Maria M", selected: false },
+  { icon: "person-circle-outline", title: "Noah", selected: false },
+  { icon: "person-circle-outline", title: "Bak", selected: false },
   // Add more options here
 ];
 
 export const InviteFriendsScreen: React.FC = () => {
-  const [settings] = useState<FriendsList[]>(initialFriends);
+  const [settings, setSettings] = useState<FriendsList[]>(initialFriends);
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
-  const renderItem = ({ item }: { item: FriendsList }) => (
+  const toggleFriendSelection = (index: number) => {
+    const updatedSettings = [...settings];
+    updatedSettings[index].selected = !updatedSettings[index].selected;
+    setSettings(updatedSettings);
+  };
+
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: FriendsList;
+    index: number;
+  }) => (
     <TouchableOpacity
-      style={{ flexDirection: "row", borderWidth: 1, width: "100%" }}
+      style={[
+        styles.friendItem,
+        item.selected && styles.selectedFriend, // Apply a different style if selected
+      ]}
+      onPress={() => toggleFriendSelection(index)} // Toggle the friend's selected state
     >
       <Icon size={32} name={item.icon} />
       <Text style={{ fontSize: 20, textAlignVertical: "center" }}>
@@ -66,6 +84,16 @@ export const InviteFriendsScreen: React.FC = () => {
           style={styles.list}
         />
       </View>
+
+      {/* bottom section */}
+      <View style={styles.bottom}>
+        <TouchableOpacity
+          style={styles.sendInviteButton}
+          onPress={() => navigation.navigate("Profile")} // and send the invites to selected Friends
+        >
+          <Text style={styles.SendInviteButtonText}>Send Invite</Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
@@ -77,24 +105,36 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     width: "100%",
   },
-  button: {
-    marginTop: 40,
-    alignItems: "center",
-    backgroundColor: "rgba(250,160,77,1)",
-    padding: 10,
-    borderRadius: 40,
-    width: 250,
-    alignSelf: "center",
-    marginBottom: "5%",
-  },
-  buttonText: {
-    color: "black",
-    fontSize: 32,
-    textAlign: "center",
-    paddingHorizontal: 50,
-  },
   list: {
     width: "109%",
     paddingHorizontal: 16,
+  },
+  friendItem: {
+    flexDirection: "row",
+    borderWidth: 1,
+    width: "100%",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    alignItems: "center",
+  },
+  selectedFriend: {
+    backgroundColor: "green", // Change the background color to green when selected
+  },
+  bottom: {
+    alignItems: "center",
+    marginTop: "5%",
+  },
+  sendInviteButton: {
+    width: "50%",
+    backgroundColor: "orange",
+    borderRadius: 45,
+    alignItems: "center",
+    padding: 10,
+    marginBottom: 20,
+    borderWidth: 1,
+  },
+  SendInviteButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });

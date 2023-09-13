@@ -70,6 +70,15 @@ export const RouteOneEventPopup: React.FC<RouteOneEvent> = ({
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
+                navigation.navigate("EventChat", eventData);
+                onClose();
+              }}
+            >
+              <Text style={styles.buttonText}>Event Chat</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
                 navigation.navigate("InviteFriends");
                 onClose();
               }}
@@ -127,7 +136,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   button: {
-    marginTop: "2%",
+    marginTop: "5%",
     alignSelf: "center",
     backgroundColor: "rgba(239,160,79,1)",
     padding: 10,

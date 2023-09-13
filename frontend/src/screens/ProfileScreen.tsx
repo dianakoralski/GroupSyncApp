@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 10,
-    backgroundColor: "rgba(236, 255, 250, 1)",
+    backgroundColor: "#f5f5f5",
   },
   middleSection: {
     alignSelf: "center",
