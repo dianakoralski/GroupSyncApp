@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
 
-export const CreateEvent = () => {
+export const EditEventScreen = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
   const [title, setTitle] = useState("");
@@ -42,6 +42,10 @@ export const CreateEvent = () => {
     navigation.navigate("Home");
   };
 
+  const handleInviteFriends = () => {
+    // Implement the logic to invite friends to the event
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -53,10 +57,10 @@ export const CreateEvent = () => {
                 alignSelf: "center",
                 fontWeight: "bold",
                 fontSize: 32,
-                marginLeft: "5%",
+                marginLeft: "20%",
               }}
             >
-              Create New Event
+              Edit Event
             </Text>
           </View>
         </View>
@@ -114,7 +118,7 @@ export const CreateEvent = () => {
           </View>
           <TouchableOpacity
             style={styles.inviteButton}
-            onPress={() => navigation.navigate("InviteFriends")}
+            onPress={handleInviteFriends}
           >
             <Text style={styles.inviteButtonText}>Invite Friends</Text>
           </TouchableOpacity>
@@ -133,7 +137,7 @@ export const CreateEvent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "rgba(236, 255, 250, 1)",
     marginTop: "10%",
   },
   topSection: {

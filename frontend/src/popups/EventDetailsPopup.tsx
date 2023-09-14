@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import { StackParams } from "../../App";
 import { ScrollView } from "react-native-gesture-handler";
 import { API_URL, useAuth } from "../../context/AuthContext";
 import axios from "axios";
+import ParticipantsList from "../components/ParticipantsList";
 
 interface EventDetail {
   isVisible: boolean;
@@ -44,8 +45,6 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
   eventData,
 }) => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
-  const [participantsData, setParticipantsData] = useState<Participant[]>([]);
-  const [visibleParticipants, setVisibleParticipants] = useState(false);
 
   const { userState } = useAuth();
   console.log("event id: ", eventData.id);
@@ -85,22 +84,6 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
     }
   };
 
-  const handleOnPressParticipants = async () => {
-    console.log("pressed");
-    await axios
-      .post(`${API_URL}/eventParticipants/seeAll`, {
-        eventId: eventData.id,
-      })
-      .then((res) => {
-        console.log("res: ", res.data);
-        setParticipantsData(res.data); // Store the participant data in state
-        setVisibleParticipants(!visibleParticipants);
-      })
-      .catch((error) => {
-        console.error("couldn't display participants:", error);
-      });
-  };
-
   const showAlert = (message: string) => {
     Alert.alert(
       "Error",
@@ -109,7 +92,6 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
         {
           text: "OK",
           onPress: () => {
-            setVisibleParticipants(false);
             onClose();
           },
         },
@@ -126,7 +108,6 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
         {
           text: "OK",
           onPress: () => {
-            setVisibleParticipants(false);
             onClose();
           },
         },
@@ -136,7 +117,6 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
   };
 
   const handleOverlayPress = () => {
-    setVisibleParticipants(false);
     onClose();
   };
 
@@ -147,94 +127,44 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <ScrollView style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <TouchableOpacity
-            onPress={() => {
-              onClose();
-              setVisibleParticipants(false);
-            }}
-            style={{
-              alignSelf: "flex-end",
-              marginTop: "-5%",
-              marginEnd: "-5%",
-            }}
-          >
-            <Icon name="close-circle-outline" size={30} />
-          </TouchableOpacity>
-          <Text style={styles.modalText}>{eventData.title}</Text>
-          <Text>Host: {eventData.hostName}</Text>
-          <Text>{eventData.location}</Text>
-          <Text>{eventData.date}</Text>
-          <Text>{eventData.time}</Text>
-          <Text>{eventData.description}</Text>
-          {visibleParticipants ? (
-            <>
-              <TouchableOpacity>
-                <Text
-                  style={{
-                    color: "gray",
-                    textDecorationLine: "underline",
-                    marginBottom: "5%",
-                  }}
-                  onPress={() => handleOnPressParticipants()}
-                >
-                  Hide participants ({participantsData.length})
-                </Text>
-              </TouchableOpacity>
-              <View>
-                {participantsData.slice(0, 10).map(
-                  (
-                    item // Slice the array to get the first 10 participants
-                  ) => (
-                    <View style={styles.participantItem} key={item.userId}>
-                      {item.profilePicture ? (
-                        <Image
-                          source={{ uri: item.profilePicture }}
-                          style={styles.profilePicture}
-                        />
-                      ) : (
-                        <Icon name="person-circle" size={40} />
-                      )}
-                      <Text style={{ marginLeft: "2%" }}>
-                        {item.firstName} {item.lastName}
-                      </Text>
-                    </View>
-                  )
-                )}
-                {participantsData.length > 10 && ( // Check if there are more than 10 participants
-                  <TouchableOpacity
-                    onPress={() => console.log("load other participants")}
-                  >
-                    <Text>Show more...</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-            </>
-          ) : (
-            <TouchableOpacity>
-              <Text
-                style={{
-                  color: "gray",
-                  textDecorationLine: "underline",
-                  marginBottom: "5%",
-                }}
-                onPress={() => handleOnPressParticipants()}
-              >
-                See participants
-              </Text>
+      <TouchableOpacity
+        style={styles.overlay} // Add this overlay
+        activeOpacity={1} // Prevents the overlay from passing the touch event to underlying components
+        onPress={handleOverlayPress}
+      >
+        <ScrollView style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              onPress={() => {
+                onClose();
+              }}
+              style={{
+                alignSelf: "flex-end",
+                marginTop: "-5%",
+                marginEnd: "-5%",
+              }}
+            >
+              <Icon name="close-circle-outline" size={30} />
             </TouchableOpacity>
-          )}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              handleOnPressJoin();
-            }}
-          >
-            <Text style={styles.buttonText}>Join Event</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            <Text style={styles.modalText}>{eventData.title}</Text>
+            <Text>Host: {eventData.hostName}</Text>
+            <Text>{eventData.location}</Text>
+            <Text>{eventData.date}</Text>
+            <Text>{eventData.time}</Text>
+            <Text>{eventData.description}</Text>
+            <ParticipantsList eventId={eventData.id} />
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                handleOnPressJoin();
+              }}
+            >
+              <Text style={styles.buttonText}>Join Event</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </TouchableOpacity>
     </Modal>
   );
 };

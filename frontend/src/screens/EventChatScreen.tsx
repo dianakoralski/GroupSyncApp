@@ -26,7 +26,16 @@ export const EventChatScreen: React.FC = (navigation) => {
     <View style={styles.container}>
       <View style={{ flexDirection: "row", marginTop: "5%" }}>
         <BackButton color="black" />
-        {/* <Text>{eventData.title}</Text> */}
+        <Text
+          style={{
+            verticalAlign: "middle",
+            fontSize: 32,
+            marginLeft: "10%",
+            marginTop: "8%",
+          }}
+        >
+          Event Name
+        </Text>
       </View>
       <View style={styles.chatContainer}>
         <FlatList

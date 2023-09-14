@@ -20,6 +20,7 @@ import BackButton from "../components/BackButton";
 import RoundButton from "../components/RoundButton";
 import PasswordChecker from "../components/PasswordChecker";
 import { useAuth } from "../../context/AuthContext";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export const CreateAccount = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
@@ -188,6 +189,19 @@ export const CreateAccount = () => {
             >
               Login using social media
             </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: "5%",
+              }}
+            >
+              <TouchableOpacity>
+                <Icon name="logo-facebook" size={48} color="#3b5998"></Icon>
+              </TouchableOpacity>
+              <TouchableOpacity style={{ marginLeft: "10%" }}>
+                <Icon name="logo-twitter" size={48} color="#1DA1F2"></Icon>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </LinearGradient>

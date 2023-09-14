@@ -14,6 +14,7 @@ import { StackParams } from "../../App";
 import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
 import { API_URL, useAuth } from "../../context/AuthContext";
+import ParticipantsList from "../components/ParticipantsList";
 
 interface RouteTwoEvent {
   isVisible: boolean;
@@ -85,58 +86,58 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <ScrollView style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <TouchableOpacity
-            onPress={onClose}
-            style={{
-              alignSelf: "flex-end",
-              marginTop: "-5%",
-              marginEnd: "-5%",
-            }}
-          >
-            <Icon name="close-circle-outline" size={30} />
-          </TouchableOpacity>
-          <Text style={styles.modalText}>{eventData.title}</Text>
-          <Text>Host: {eventData.hostName}</Text>
-          <Text>{eventData.location}</Text>
-          <Text>{eventData.date}</Text>
-          <Text>{eventData.time}</Text>
-          <Text>{eventData.description}</Text>
-          <TouchableOpacity style={{ marginBottom: "5%" }}>
-            <Text style={{ color: "gray", textDecorationLine: "underline" }}>
-              See participants
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              navigation.navigate("Home");
-              console.log("Change nav to event chat");
-              onClose();
-            }}
-          >
-            <Text style={styles.buttonText}>Event Chat</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ marginTop: "10%" }}
-            onPress={() => {
-              handleLeaveEvent();
-              showLeaveEventAlert();
-            }}
-          >
-            <Text
+      <TouchableOpacity
+        style={styles.overlay} // Add this overlay
+        activeOpacity={1} // Prevents the overlay from passing the touch event to underlying components
+        onPress={onClose}
+      >
+        <ScrollView style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              onPress={onClose}
               style={{
-                fontSize: 12,
-                alignSelf: "center",
-                textDecorationLine: "underline",
+                alignSelf: "flex-end",
+                marginTop: -5,
+                marginEnd: -5,
               }}
             >
-              Leave Event
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+              <Icon name="close-circle-outline" size={30} />
+            </TouchableOpacity>
+            <Text style={styles.modalText}>{eventData.title}</Text>
+            <Text>Host: {eventData.hostName}</Text>
+            <Text>{eventData.location}</Text>
+            <Text>{eventData.date}</Text>
+            <Text>{eventData.time}</Text>
+            <Text>{eventData.description}</Text>
+            <ParticipantsList eventId={eventData.id} />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                navigation.navigate("EventChat", eventData);
+                onClose();
+              }}
+            >
+              <Text style={styles.buttonText}>Event Chat</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ marginTop: "10%" }}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  alignSelf: "center",
+                  textDecorationLine: "underline",
+                }}
+                onPress={() => {
+                  handleLeaveEvent();
+                  showLeaveEventAlert();
+                }}
+              >
+                Leave Event
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </TouchableOpacity>
+      {renderLeaveEventAlert()}
     </Modal>
   );
 };
@@ -191,12 +192,12 @@ const styles = StyleSheet.create({
   alertText: {
     color: "green",
     textAlign: "center",
-    overlay: {
-      flex: 1,
-      backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black color
-      justifyContent: "center",
-      alignItems: "center",
-    },
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black color
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
