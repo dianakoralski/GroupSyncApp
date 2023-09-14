@@ -10,6 +10,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Image,
 } from "react-native";
 import BackButton from "../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
@@ -22,14 +23,10 @@ interface FriendsList {
 interface User {
   firstName: string;
   lastName: string;
+  profilePicture: any;
 }
 const initialFriends: FriendsList[] = [
   { icon: "person-add-outline", title: "Friend Requests" },
-  { icon: "person-circle-outline", title: "Jack" },
-  { icon: "person-circle-outline", title: "Maria M" },
-  { icon: "person-circle-outline", title: "Noah" },
-  { icon: "person-circle-outline", title: "Bak" },
-  // Add more options here
 ];
 
 export const SearchScreen: React.FC = () => {
@@ -39,6 +36,7 @@ export const SearchScreen: React.FC = () => {
   const handleFoundUsers = (users: any) => {
     setFoundUsers(users);
   };
+  console.log(foundUsers);
   const renderItem = ({ item }: { item: FriendsList }) => (
     <TouchableOpacity
       style={{ flexDirection: "row", borderWidth: 1, width: "100%" }}
@@ -83,9 +81,22 @@ export const SearchScreen: React.FC = () => {
             <View key={key} style={{ marginBottom: "5%" }}>
               {/* event link */}
               <TouchableOpacity key={key}>
-                <View>
-                  <Text style={{ fontSize: 25 }}>{value.firstName}</Text>
-                  <Text style={{ fontSize: 18 }}>{value.lastName}</Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  {value?.profilePicture ? (
+                    <Image
+                      source={{
+                        uri: value.profilePicture,
+                      }}
+                      style={styles.profilePicture}
+                    />
+                  ) : (
+                    <Icon name="person-circle" size={40} />
+                  )}
+                  <Text style={{ fontSize: 25 }}>
+                    {value.firstName}
+                    {"  "}
+                  </Text>
+                  <Text style={{ fontSize: 25 }}>{value.lastName}</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -130,6 +141,12 @@ const styles = StyleSheet.create({
   searchBarContainer: {
     flex: 1,
     paddingRight: 10,
+  },
+  profilePicture: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
   },
 });
 
