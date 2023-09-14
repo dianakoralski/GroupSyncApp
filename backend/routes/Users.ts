@@ -108,11 +108,12 @@ router.post("/all", verifyToken, async (req: any, res: any) => {
     const matchingUsers = await Users.findAll({
       where: {
         [Op.or]: [
-          { firstName: { [Op.like]: `%${nameInput}%` } }, // Case-insensitive LIKE query
-          { lastName: { [Op.like]: `%${nameInput}%` } },
+          { firstName: { [Op.like]: `${nameInput}%` } }, // Case-insensitive LIKE query
+          { lastName: { [Op.like]: `${nameInput}%` } },
         ],
       },
     });
+
     console.log("matching users: ", matchingUsers);
     res.status(200).json({ matchingUsers });
   } catch (error) {

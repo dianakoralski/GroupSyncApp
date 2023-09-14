@@ -39,7 +39,6 @@ export const SearchScreen: React.FC = () => {
   const handleFoundUsers = (users: any) => {
     setFoundUsers(users);
   };
-  console.log("users from search: ", foundUsers);
   const renderItem = ({ item }: { item: FriendsList }) => (
     <TouchableOpacity
       style={{ flexDirection: "row", borderWidth: 1, width: "100%" }}
