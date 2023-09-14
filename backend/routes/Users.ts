@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 const verifyToken = require("../config/verifyToken");
 const { Users } = require("../models");
 const router = express.Router();
+const { Op } = require("sequelize");
 
 router.get("/", async (req: any, res: any) => {
   const listOfUsers = await Users.findAll();
@@ -95,6 +96,30 @@ router.post("/updateProfile", async (req: any, res: any) => {
   } catch (error: any) {
     console.error("Error creating user:", error);
     return res.status(500).json({ error: "Failed to update user" });
+  }
+});
+
+router.post("/all", verifyToken, async (req: any, res: any) => {
+  console.log("req: ", req.body);
+  try {
+    const nameInput = req.body.query;
+    console.log("name from users/all: ", nameInput);
+
+    const matchingUsers = await Users.findAll({
+      where: {
+        [Op.or]: [
+          { firstName: { [Op.like]: `%${nameInput}%` } }, // Case-insensitive LIKE query
+          { lastName: { [Op.like]: `%${nameInput}%` } },
+        ],
+      },
+    });
+    console.log("matching users: ", matchingUsers);
+    res.status(200).json({ matchingUsers });
+  } catch (error) {
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching user data" });
   }
 });
 

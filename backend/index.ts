@@ -15,6 +15,8 @@ const userDataRoute = require("./routes/Users"); //get data for logged in user
 app.use("/users/user", userDataRoute);
 const updateUserRoute = require("./routes/Users"); //update data for logged in user
 app.use("/users/updateProfile", updateUserRoute);
+const searchUserRoute = require("./routes/Users"); //get data for logged in user
+app.use("/users/all", searchUserRoute);
 
 const eventJoinRouter = require("./routes/EventParticipants");
 app.use("/eventParticipants", eventJoinRouter);

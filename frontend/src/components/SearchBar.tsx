@@ -1,17 +1,24 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Searchbar } from "react-native-paper";
+import { API_URL } from "../../context/AuthContext";
 
 interface SearchBarProps {
   placeholder: string;
+  onFoundUsers: any;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ placeholder }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onFoundUsers }) => {
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [foundUsers, setFoundUsers] = useState([]);
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    // Perform search or filtering logic here
+    axios.post(`${API_URL}/users/all`, { query }).then((res) => {
+      setFoundUsers(res.data.matchingUsers);
+      console.log("found: ", foundUsers);
+      onFoundUsers(foundUsers);
+    });
   };
 
   return (
