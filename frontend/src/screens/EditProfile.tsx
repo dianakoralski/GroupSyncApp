@@ -116,12 +116,6 @@ export const EditProfile: React.FC<EditProfileProps> = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
-    width: "100%",
-  },
   label: {
     fontSize: 28,
     marginTop: "5%",
@@ -137,10 +131,6 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     marginRight: 10,
     marginLeft: "3%",
-  },
-  list: {
-    width: "109%",
-    paddingHorizontal: 16,
   },
   button: {
     marginTop: "2%",

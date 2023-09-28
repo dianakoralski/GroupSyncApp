@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
@@ -60,11 +61,21 @@ const FirstRoute = () => {
   const selfHostedPosts = listOfPosts.filter(
     (value) => value.hostId === userState?.id
   );
+
   return (
     <View style={[styles.scene]}>
       <ScrollView style={{ width: "100%", marginTop: "5%" }}>
         <View style={{ alignSelf: "center" }}>
-          <Icon name="person-circle-outline" size={128} color="black" />
+          <TouchableOpacity>
+            {userState?.profilePicture ? (
+              <Image
+                source={{ uri: userState?.profilePicture }}
+                style={styles.profileButton}
+              />
+            ) : (
+              <Icon name="person-outline" size={32} />
+            )}
+          </TouchableOpacity>
           <TouchableOpacity
             style={{ flexDirection: "row", alignSelf: "center" }}
             onPress={() => {
@@ -166,6 +177,14 @@ const SecondRoute = () => {
           marginTop: "5%",
         }}
       >
+        <TouchableOpacity
+          style={{ alignSelf: "center", paddingBottom: "5%" }}
+          onPress={() => {
+            navigation.navigate("CalendarScreen");
+          }}
+        >
+          <Icon name="calendar-outline" size={64}></Icon>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("EventInvites")}>
           <Text
             style={{
@@ -320,6 +339,16 @@ const styles = StyleSheet.create({
   },
   postText: {
     padding: 10,
+  },
+  profileButton: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: "orange",
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "black",
+    borderWidth: 1,
   },
 });
 

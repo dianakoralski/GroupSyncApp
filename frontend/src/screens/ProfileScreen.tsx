@@ -25,7 +25,7 @@ export const ProfileScreen = () => {
     <View style={styles.container}>
       <View style={styles.topSection}>
         <View style={styles.searchBarContainer}>
-          <SearchBar placeholder="Search..." />
+          <SearchBar placeholder="Search..." onFoundUsers={true} />
         </View>
         <TouchableOpacity
           style={styles.settingsIcon}

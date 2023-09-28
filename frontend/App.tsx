@@ -20,6 +20,7 @@ import { EventChatScreen } from "./src/screens/EventChatScreen";
 import { EditEventScreen } from "./src/screens/EditEventScreen";
 import { InviteFriendsScreen } from "./src/screens/InviteFriendsScreen";
 import { SearchScreen } from "./src/screens/SearchScreen";
+import { CalendarScreen } from "./src/screens/CalendarScreen";
 
 import { Button } from "react-native";
 export type StackParams = {
@@ -42,6 +43,7 @@ export type StackParams = {
   EditEvent: object;
   InviteFriends: object;
   SearchScreen: object;
+  CalendarScreen: object;
 };
 
 const Stack = createStackNavigator<StackParams>();
@@ -87,6 +89,7 @@ export const Layout = () => {
               component={InviteFriendsScreen}
             />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
+            <Stack.Screen name="CalendarScreen" component={CalendarScreen} />
           </>
         ) : (
           <>

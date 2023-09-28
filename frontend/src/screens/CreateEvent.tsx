@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -14,16 +14,17 @@ import { API_URL, useAuth } from "../../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { StackParams } from "../../App";
+// import DateTimePicker from "@react-native-community/datetimepicker";
 
 export const CreateEvent = () => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(""); // State to store the selected date
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
-  const [isPublic, setIsPublic] = useState(false); // Track event visibility
+  const [isPublic, setIsPublic] = useState(false);
   const { userState } = useAuth();
 
   const handleCreateEvent = async () => {
@@ -80,6 +81,17 @@ export const CreateEvent = () => {
             value={date}
             onChangeText={(text) => setDate(text)}
           />
+          {/* Replace the Date input with the DatePicker component
+          <DateTimePicker
+            value={new Date()} // Set an initial date
+            mode="date"
+            display="spinner" // Change the display mode if needed
+            onChange={(event, selectedDate) => {
+              if (selectedDate) {
+                setDate(selectedDate.toISOString().split("T")[0]); // Update the date state
+              }
+            }}
+          /> */}
           <TextInput
             style={styles.input}
             placeholder="Time"
