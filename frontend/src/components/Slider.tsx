@@ -169,6 +169,7 @@ const SecondRoute = () => {
     setSelectedEvent(post);
     setIsEventDetailsVisible(true);
   };
+
   return (
     <View style={[styles.scene]}>
       <ScrollView
@@ -239,6 +240,9 @@ const SecondRoute = () => {
       <RouteTwoEventPopup
         isVisible={isEventDetailsVisible}
         onClose={() => setIsEventDetailsVisible(false)}
+        onLeave={(id) =>
+          setListOfPosts(listOfPosts.filter((post) => post.id != id))
+        }
         eventData={
           selectedEvent
             ? {

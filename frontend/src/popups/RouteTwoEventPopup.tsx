@@ -19,6 +19,7 @@ import ParticipantsList from "../components/ParticipantsList";
 interface RouteTwoEvent {
   isVisible: boolean;
   onClose: () => void;
+  onLeave: (id: number) => void;
   eventData: {
     id: number;
     title: string;
@@ -34,6 +35,7 @@ interface RouteTwoEvent {
 export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
   isVisible,
   onClose,
+  onLeave,
   eventData,
 }) => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
@@ -48,6 +50,7 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
       });
       setLeftEvent(true); // Set the state to indicate that the user has left the event
       onClose();
+      onLeave(eventData.id);
     } catch (error) {
       console.error("Couldn't leave event:", error);
     }
@@ -59,7 +62,7 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
       {
         text: "OK",
         onPress: () => {
-          setLeftEvent(false); // Reset the state
+          setLeftEvent(false);
         },
       },
     ]);
