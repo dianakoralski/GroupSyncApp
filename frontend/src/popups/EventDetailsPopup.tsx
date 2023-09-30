@@ -1,13 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  Alert,
-} from "react-native";
+import React from "react";
+import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
@@ -32,23 +24,13 @@ interface EventDetail {
   };
 }
 
-interface Participant {
-  userId: number;
-  firstName: string;
-  lastName: string;
-  profilePicture: string;
-}
-
 export const EventDetailScreen: React.FC<EventDetail> = ({
   isVisible,
   onClose,
   eventData,
 }) => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
-
   const { userState } = useAuth();
-  console.log("event id: ", eventData.id);
-  console.log("user id: ", userState?.id);
 
   const handleOnPressJoin = async () => {
     try {
@@ -59,8 +41,7 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
 
       // Check if the request was successful
       if (response.status === 200) {
-        showConfirm("Event successfully joined");
-        //onClose(); // Close the modal or perform other actions
+        onClose();
       } else {
         // Handle unexpected response status codes
         console.error("Unexpected response status:", response.status);
@@ -72,48 +53,12 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
         error.response.data.message
       ) {
         // Handle errors with error messages from the backend
-        //console.error("Couldn't join event:", error.response.data.message);
-        showAlert(error.response.data.message);
+        console.error("Couldn't join event:", error.response.data.message);
       } else {
         // Handle other types of errors (e.g., network issues)
         console.error("An error occurred while joining the event:", error);
-
-        // Display a generic error message to the user
-        showAlert("An error occurred. Please try again later."); // Set the error message in state
       }
     }
-  };
-
-  const showAlert = (message: string) => {
-    Alert.alert(
-      "Error",
-      message,
-      [
-        {
-          text: "OK",
-          onPress: () => {
-            onClose();
-          },
-        },
-      ],
-      { cancelable: false }
-    );
-  };
-
-  const showConfirm = (message: string) => {
-    Alert.alert(
-      "Success!",
-      message,
-      [
-        {
-          text: "OK",
-          onPress: () => {
-            onClose();
-          },
-        },
-      ],
-      { cancelable: false }
-    );
   };
 
   const handleOverlayPress = () => {
@@ -128,8 +73,8 @@ export const EventDetailScreen: React.FC<EventDetail> = ({
       onRequestClose={onClose}
     >
       <TouchableOpacity
-        style={styles.overlay} // Add this overlay
-        activeOpacity={1} // Prevents the overlay from passing the touch event to underlying components
+        style={styles.overlay}
+        activeOpacity={1}
         onPress={handleOverlayPress}
       >
         <ScrollView style={styles.centeredView}>
@@ -212,20 +157,9 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black color
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
-  },
-  participantItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  profilePicture: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
   },
 });
 
