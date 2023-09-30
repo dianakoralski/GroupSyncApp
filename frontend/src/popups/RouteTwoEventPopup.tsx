@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
@@ -40,7 +33,6 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
 }) => {
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
   const { userState } = useAuth();
-  const [leftEvent, setLeftEvent] = useState(false); // Track if the user has left the event
 
   const handleLeaveEvent = async () => {
     try {
@@ -48,38 +40,11 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
         userId: userState?.id,
         eventId: eventData.id,
       });
-      setLeftEvent(true); // Set the state to indicate that the user has left the event
       onClose();
       onLeave(eventData.id);
     } catch (error) {
       console.error("Couldn't leave event:", error);
     }
-  };
-
-  // Display an alert when the user successfully leaves the event
-  const showLeaveEventAlert = () => {
-    Alert.alert("Success", "You have successfully left the event.", [
-      {
-        text: "OK",
-        onPress: () => {
-          setLeftEvent(false);
-        },
-      },
-    ]);
-  };
-
-  // Render the alert message when the user leaves the event
-  const renderLeaveEventAlert = () => {
-    if (leftEvent) {
-      return (
-        <View style={styles.alertContainer}>
-          <Text style={styles.alertText}>
-            You have successfully left the event.
-          </Text>
-        </View>
-      );
-    }
-    return null;
   };
 
   return (
@@ -131,7 +96,6 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
                 }}
                 onPress={() => {
                   handleLeaveEvent();
-                  showLeaveEventAlert();
                 }}
               >
                 Leave Event
@@ -140,7 +104,6 @@ export const RouteTwoEventPopup: React.FC<RouteTwoEvent> = ({
           </View>
         </ScrollView>
       </TouchableOpacity>
-      {renderLeaveEventAlert()}
     </Modal>
   );
 };
@@ -185,16 +148,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     paddingHorizontal: 20,
-  },
-  alertContainer: {
-    backgroundColor: "rgba(0, 255, 0, 0.7)",
-    padding: 10,
-    borderRadius: 10,
-    marginTop: 10,
-  },
-  alertText: {
-    color: "green",
-    textAlign: "center",
   },
   overlay: {
     flex: 1,
