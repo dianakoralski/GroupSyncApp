@@ -12,10 +12,11 @@ import { StackParams } from "../../App";
 
 export const CalendarScreen = () => {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth()); // "+ 1" is to test month swich
 
-  // Generate calendar days for a specific month
+  // Generate calendar days for a specific year and month
   const generateCalendarDays = (year: number, month: number) => {
-    const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const daysInMonth = lastDayOfMonth.getDate();
 
@@ -32,9 +33,7 @@ export const CalendarScreen = () => {
     return calendarDays;
   };
 
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth();
-  const calendarDays = generateCalendarDays(currentYear, currentMonth);
+  const calendarDays = generateCalendarDays(year, month);
   const [time, setTime] = useState("");
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
@@ -44,7 +43,12 @@ export const CalendarScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>September 2023</Text>
+      <Text style={styles.header}>
+        {new Date(year, month).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+        })}
+      </Text>
       <View style={styles.daysHeader}>
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day, index) => (
           <Text key={index} style={styles.dayText}>
