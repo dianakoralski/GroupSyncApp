@@ -13,9 +13,29 @@ import { StackParams } from "../../App";
 export const CalendarScreen = () => {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(new Date().getMonth()); // "+ 1" is to test month swich
+  const [month, setMonth] = useState(new Date().getMonth()); // "+ 1" is to test month switch
 
-  // Generate calendar days for a specific year and month
+  const handlePreviousMonth = () => {
+    if (month === 0) {
+      // If current month is January, switch to December of previous year
+      setYear(year - 1);
+      setMonth(11); // December
+    } else {
+      setMonth(month - 1);
+    }
+  };
+
+  const handleNextMonth = () => {
+    if (month === 11) {
+      // If current month is December, switch to January of next year
+      setYear(year + 1);
+      setMonth(0); // January
+    } else {
+      setMonth(month + 1);
+    }
+  };
+
+  // Generate calendar days for the current year and month
   const generateCalendarDays = (year: number, month: number) => {
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const daysInMonth = lastDayOfMonth.getDate();
@@ -43,12 +63,20 @@ export const CalendarScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>
-        {new Date(year, month).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-        })}
-      </Text>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={handlePreviousMonth}>
+          <Text style={styles.navigationText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.header}>
+          {new Date(year, month).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+          })}
+        </Text>
+        <TouchableOpacity onPress={handleNextMonth}>
+          <Text style={styles.navigationText}>{">"}</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.daysHeader}>
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day, index) => (
           <Text key={index} style={styles.dayText}>
@@ -99,6 +127,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+  },
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+  },
+  navigationText: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
   header: {
     fontSize: 24,
