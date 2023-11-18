@@ -126,7 +126,7 @@ export const EditEventScreen = () => {
             style={styles.createButton}
             onPress={handleCreateEvent}
           >
-            <Text style={styles.createButtonText}>Create Event</Text>
+            <Text style={styles.createButtonText}>Save</Text>
           </TouchableOpacity>
         </View>
       </View>
