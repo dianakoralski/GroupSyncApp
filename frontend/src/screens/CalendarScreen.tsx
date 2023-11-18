@@ -14,10 +14,12 @@ export const CalendarScreen = () => {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth()); // "+ 1" is to test month switch
+  const [time, setTime] = useState("");
+  const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
 
   const handlePreviousMonth = () => {
     if (month === 0) {
-      // If current month is January, switch to December of previous year
       setYear(year - 1);
       setMonth(11); // December
     } else {
@@ -27,7 +29,6 @@ export const CalendarScreen = () => {
 
   const handleNextMonth = () => {
     if (month === 11) {
-      // If current month is December, switch to January of next year
       setYear(year + 1);
       setMonth(0); // January
     } else {
@@ -35,11 +36,9 @@ export const CalendarScreen = () => {
     }
   };
 
-  // Generate calendar days for the current year and month
   const generateCalendarDays = (year: number, month: number) => {
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const daysInMonth = lastDayOfMonth.getDate();
-
     const calendarDays = [];
 
     for (let day = 1; day <= daysInMonth; day++) {
@@ -54,7 +53,6 @@ export const CalendarScreen = () => {
   };
 
   const calendarDays = generateCalendarDays(year, month);
-  const [time, setTime] = useState("");
   const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
   const handleDayPress = (day: number) => {
@@ -63,62 +61,78 @@ export const CalendarScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={handlePreviousMonth}>
-          <Text style={styles.navigationText}>{"<"}</Text>
-        </TouchableOpacity>
-        <Text style={styles.header}>
-          {new Date(year, month).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-          })}
-        </Text>
-        <TouchableOpacity onPress={handleNextMonth}>
-          <Text style={styles.navigationText}>{">"}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.daysHeader}>
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day, index) => (
-          <Text key={index} style={styles.dayText}>
-            {day}
+      <View style={{ marginTop: "5%" }}>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity onPress={handlePreviousMonth}>
+            <Text style={styles.navigationText}>{"<"}</Text>
+          </TouchableOpacity>
+          <Text style={styles.header}>
+            {new Date(year, month).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+            })}
           </Text>
-        ))}
-      </View>
-      <View style={styles.calendarGrid}>
-        {calendarDays.map((dayInfo) => (
-          <TouchableOpacity
-            key={dayInfo.date.toString()}
-            onPress={() => handleDayPress(dayInfo.day)}
-            style={[
-              styles.calendarDay,
-              selectedDay === dayInfo.day && { backgroundColor: "orange" },
-            ]}
-          >
-            <Text
+          <TouchableOpacity onPress={handleNextMonth}>
+            <Text style={styles.navigationText}>{">"}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.daysHeader}>
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+            (day, index) => (
+              <Text key={index} style={styles.dayText}>
+                {day}
+              </Text>
+            )
+          )}
+        </View>
+        <View style={styles.calendarGrid}>
+          {calendarDays.map((dayInfo) => (
+            <TouchableOpacity
+              key={dayInfo.date.toString()}
+              onPress={() => handleDayPress(dayInfo.day)}
               style={[
-                styles.calendarDayText,
-                selectedDay === dayInfo.day && { color: "white" },
+                styles.calendarDay,
+                selectedDay === dayInfo.day && { backgroundColor: "orange" },
               ]}
             >
-              {dayInfo.day}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <Text
+                style={[
+                  styles.calendarDayText,
+                  selectedDay === dayInfo.day && { color: "white" },
+                ]}
+              >
+                {dayInfo.day}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View style={{ marginTop: "10%", marginBottom: "5%" }}>
+          <TextInput
+            style={styles.input}
+            placeholder="Time"
+            value={time}
+            onChangeText={(text) => setTime(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Location/Address"
+            value={location}
+            onChangeText={(text) => setLocation(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Description"
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.createButtonText}>Save</Text>
+        </TouchableOpacity>
       </View>
-      <View style={{ marginTop: "10%", marginBottom: "5%" }}>
-        <TextInput
-          style={styles.input}
-          placeholder="Time"
-          value={time}
-          onChangeText={(text) => setTime(text)}
-        />
-      </View>
-      <TouchableOpacity
-        style={styles.saveButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.createButtonText}>Save</Text>
-      </TouchableOpacity>
     </View>
   );
 };
